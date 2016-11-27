@@ -1,0 +1,37 @@
+[
+    {
+        "url": "nouvelobs.com",
+        "contenthead": ["article"],
+        "name": "Le Nouvel Observateur"
+    },
+    {
+        "url": "numerama.com",
+        "contenthead": ["article"],
+        "name": "numerama"
+    },
+    {
+        "url": "lemonde.fr",
+        "contenthead": ["article"],
+        "name": "Le Monde"
+    },
+    {
+        "url": "bfmtv.fr",
+        "contenthead": ["article"],
+        "name": "BFM"
+    },
+    {
+        "url": "exemple.fr",
+        "contenthead": ["article"],
+        "name": "Exemple"
+    },
+    {
+        "url": "deuchnord.tk",
+        "contenthead": ["div","body"],
+        "name": "Les logiciels Deuchnord"
+    },
+    {
+        "url": "folaefolc.hostux.fr",
+        "contenthead": ["div","post-content"],
+        "name": "We Are Coders"
+    }
+]

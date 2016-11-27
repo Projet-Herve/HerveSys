@@ -1,0 +1,39 @@
+{
+    "user": "default",
+    "theme": {
+        "actual":"Herve",
+        "update_time":60,
+        "Herve": {
+            "head":"",
+            "safeurl":"https://siteherve-julesmichael.c9users.io/static/safefile.json",
+            "css": [
+                {
+                    "url": "https://siteherve-julesmichael.c9users.io/static/css/stylesheet.css",
+                    "dir": "css/",
+                    "file": "stylesheet.css"
+                }
+            ],
+            "js": [
+                {
+                    "url": "https://siteherve-julesmichael.c9users.io/static/js/script.js",
+                    "dir": "js/",
+                    "file": "script.js"
+                }
+            ]
+        }
+    },
+    "herve_serveur": {
+        "url": "https://siteherve-julesmichael.c9users.io/"
+    },
+    "plugins": {
+        "webapp_dir": "plugins/webapp",
+        "chatbot_dir": "plugins/chatbot"
+    },
+    "templates": {
+        "dir": "templates/"
+    },
+    "static": {
+        "dir": "static/"
+    },
+    "job_file": "job.py"
+}

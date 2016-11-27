@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/stylesheet.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/gridpak.css') }}">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/script.js') }}"></script>
+    <title>Projet Hervé | {% block title %}Présentation du Projet{% endblock %}</title>
+</head>
+
+<body>
+    <nav id="nav">
+        <span class="button" onclick="openNav()">
+              &#9776;
+        </span>
+        {% block nav %}
+        <span class="text">HERVE</span>
+        {% endblock %}
+    </nav>
+    <div class="section" id="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" class="rounded" ></img>
+        <a href="/">Accueil</a>
+    <footer >
+        <div class="container">©JulesMichael</div>
+    </footer>
+    </div>
+    <div class="section" id="content">
+        <div class="container">
+        </div>
+        {% block content %}{% endblock %}
+    </div>
+
+    
+</body>
+
+</html>

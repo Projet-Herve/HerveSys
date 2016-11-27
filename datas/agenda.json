@@ -1,0 +1,16 @@
+{
+    "1": {
+        "heure": "hz", 
+        "annee": "zs", 
+        "jour": "z", 
+        "mois": "gz", 
+        "minute": "zs"
+    }, 
+    "1": {
+        "mois": "gz", 
+        "annee": "zs", 
+        "heure": "hmmmz", 
+        "jour": "zddddd", 
+        "minute": "zs"
+    }
+}
