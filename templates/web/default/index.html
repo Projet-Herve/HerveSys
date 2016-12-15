@@ -1,0 +1,23 @@
+{% extends "web/default/design.html" %} {% block title %}
+Dashboard
+{% endblock %}{% block content %}
+<script type="text/javascript" src="static/jms/widgets.jms"></script>
+<div class="container">
+    <div class="masonry" id="widgets">
+        <div class="item">
+            <div class="card white shadows">
+                <div class="messages">
+                    <p>Bonjour {{ session["utilisateur"]}}<br>
+                    Comment allez vous ?</p>
+                    <p class="me">Bien merci</p>
+                    <p>Dac dac</p>
+                </div>
+                <form action="/">
+                    <input type="text" name="" placeholder="..." onKeyPress="return checkSubmit(event)"/>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

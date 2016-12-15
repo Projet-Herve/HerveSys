@@ -1,0 +1,35 @@
+{
+    "name": "mywash",
+    "version": "0.1",
+    "description": "Gestionnez vos lavages",
+    "license": "AGPL-3.0",
+    "displayName": "My Wash",
+    "color": "#3BDA6C",
+    "icon-path": "app-icon.svg",
+    "author": "Demo <demo@demo.com>",
+    "contributors": [
+        "demo2"
+    ],
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "datas": [
+        "mywash.json"
+    ],
+    "templates": [
+        "index.html"
+    ],
+    "urls":{
+        "menu":{
+            "My Wash":"/mywash"   
+        },
+        "api":{}
+    },
+    "widgets":[
+    "#lavages_en_cours /mywash",
+    "#lavages_en_attente /mywash",
+    "#propose /mywash",
+    "#lavages_fini /mywash"
+]
+}

@@ -1,5 +1,8 @@
 {
     "user": "default",
+    "pushbullet":{
+        "api_key":""
+    },
     "theme": {
         "actual":"Herve",
         "update_time":60,
@@ -35,5 +38,9 @@
     "static": {
         "dir": "static/"
     },
-    "job_file": "job.py"
+    "job_file": "job.py",
+    "installed_apps":[
+        "meteo",
+        "mywash"
+    ]
 }

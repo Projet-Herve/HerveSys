@@ -2,49 +2,111 @@ html, body {
     margin: 0;padding: 0;
     background-color: #EEE;
     font-family: 'Roboto', sans-serif;
+    height: 100%;
+}
+
+.presentation{
+    height: calc(100% - 65px);
+    background-color: #46a28d;
+    width: 100%;
+    color: #fff;
+    margin:0px;
+}
+
+.presentation .content {
+    margin: auto;
+}
+.presentation h1{
+    color: #fff;
+    font-size: 50px;
+}
+button{
+    margin: 10px;
+    background-color: #46a28d;
+    border:2px solid #fff;
+    border-radius: 5px;
+    color:#fff;
+    padding:10px;
+    min-width: 200px;
+    font-size: 20px;
+}
+
+#video{
+    width: 0px;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+    transition: 0.5s;
+}
+nav  {
+    width: 100%;
+    /*padding:1px;*/
+    /*background-color: #F2F2F2;*/
+    background-color: #fff;
+    color: #46a28;
+    border-bottom: #46a28d solid 5px;
+    position: fixed;
+    top: 0px;
+    height: 60px;
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    z-index: 2;
 
 }
 
-nav  {
-    width: 100%;
-    padding:1px;
-    background-color: #46a28d;
-    margin-bottom: #fff solid 5px;
-    position: fixed;
-    top: 0px;
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+.sections {
+}
+.section { 
+    margin: 0px;
+    position: relative;
+    min-height: 100vh;
+}
+.section > .text {
+    background-color: rgba(255, 255, 255, 0.5);;
+    
+}
+.section img{
+    top:0px;
+    position: absolute;
+    height: 100vh;
 
+     -webkit-filter: blur(2px); /* Safari */
+    filter: blur(2px);
+    
 }
 
 nav .button {
-    color: #fff;
-    height:100%;
+    color: #46a28d;
     font-size: 40px;
     display: inline-block;
 }
 
 nav .text {
+    
     font-size: 40px;
     text-align: center;
-    color: #fff;
     margin: 0px;
     padding: 0px;
     display: inline-block;
+    color: #46a28d;
 }
 
+nav span{
+    color: #46a28d;
+}
 /* The side navigation menu */
 #sidenav {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
+    z-index: 3; /* Stay on top */
     top: 0;
     left: 0;
-    background-color: #25846D; /* Black*/
+    background-color: #25846D;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
     /*border-right: 5px #fff solid;*/
+    overflow-x: scroll;
 }
 
 /* The navigation menu links */
@@ -53,17 +115,11 @@ nav .text {
     text-decoration: none;
     font-size: 25px;
     display: block;
-    transition: 0.3s;
+    transition: 0.8s;
     color: #fff;
-
 }
 
-/* When you mouse over the navigation links, change their color */
-/*#sidenav a:hover, .offcanvas a:focus{*/
-/*    color: #f1f1f1;*/
-/*}*/
 
-/* Position and style the close button (top right corner) */
 #sidenav .closebtn {
     position: absolute;
     top: 0;
@@ -72,13 +128,6 @@ nav .text {
     margin-left: 50px;
 }
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#main {
-    transition: margin-left .5s;
-    padding: 20px;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
     #sidenav {padding-top: 15px;}
     #sidenav a {font-size: 18px;}
@@ -100,45 +149,29 @@ h1 {
 }
 
 #content {
-    margin-top: 50px;
+    margin-top: 65px;
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-
+    height: 100%;
 }
 
-.loginform{
-  padding: 20px;
-  width: 300px;
-  height: 425px;
-  margin: auto;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  border:5px solid #46a28d;
-  background-color: #fff;
-  
-}
 
-.loginform input{
-    height:30px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    width: 100%;
-
-}
-
-.loginform button {
-    background-color: #46a28d;
-    height:35px;
-    color:#fff;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    width: 100%;
-    border:none;
-}
 
 .card {
     margin-top: 25px;
     padding: 10px;
     border-radius: 3px;
+    overflow: hidden;
+    transition: 1s;
+
+}
+
+.card .backcard {
+    background-color: #000;
+    color: #fff;
+    min-width: 100%;
+    transition: 1s;
+    min-height: 100%:
+    
 }
 
 .shadows{
@@ -146,9 +179,7 @@ h1 {
     -moz-box-shadow: 4px 4px 8px 0px rgba(119, 119, 119, 0.2);
     -webkit-box-shadow: 4px 4px 8px 0px rgba(119, 119, 119, 0.2);
 }
-.white {
-    background-color: #fff;
-}
+
 
 ::-webkit-scrollbar {
     width: 12px;
@@ -164,21 +195,79 @@ h1 {
   background-color: #aaa;
 }
 
-.error{
+.white {
+    background-color: #fff;
+}
+
+.red{
     background-color: #FE2E2E;
 }
 
-.message{
+.green{
     background-color: #9FF781;
 }
 
 
+.masonry { /* Masonry container */
+    column-count: 1;
+    column-gap: 1em;
+}
+@media only screen and (min-width: 601px) {
+   .masonry { /* Masonry container */
+    column-count: 2;
+    column-gap: 1em;
+}
+}
+@media only screen and (min-width: 993px) {
+     .masonry { /* Masonry container */
+    column-count: 5;
+    column-gap: 1em;
+}
+}
+
+.item { /* Masonry bricks or child elements */
+    display: inline-block;
+    margin: 0 0 1em;
+    width: 100%;
+}
 
 
+footer {
+
+    bottom: 0px;
+    background-color:#46a28d;
+}
 
 
+input[type=text],input[type=password] {
+    margin: 10px;
+    height: 20px;
+    /*width: 100%;*/
+    border: none;
+    border-bottom: #25846D 2px solid;
+    outline: none;
+    transition: 0.2s;
+    min-width: 200px;
+    font-size: 20px;
 
+}
+input[type=text]:focus {
+    border: none;
+    border-bottom: #46a28d 5px solid;
+    outline: none;
+}
 
+    
+.messages p{
+    min-height: 20px;
+    padding: 15px;
+    background-color: #46a28d;
+    border-radius: 5px;
+}
+.messages .me {
+    background-color: #f2f2f2;
+    text-align: right;
+}
 
 
 

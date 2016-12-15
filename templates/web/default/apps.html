@@ -1,0 +1,22 @@
+{% extends "web/default/design.html" %}{% block title %}Vos applications{% endblock %} {% block content %}
+<div class="container">
+    <h1>Vos applications</h1>
+    <div class="masonry">
+
+        {% for app in myapp["apps"]%}
+        <div class="item">
+            <div class="card white shadows">
+                <h1>{{ app}}</h1>
+                {% for key in myapp["apps"][app] %}
+                    <p>{{key}}: {{myapp["apps"][app][key]}}</p>
+                {% endfor %}
+                <div class="backcard">
+                    <pre><code>{{myapp["apps"][app]|tojson|safe}}</code></pre>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

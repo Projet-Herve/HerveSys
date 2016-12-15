@@ -1,0 +1,20 @@
+$(function() {
+    for (var i = 0; i < widgets.length; i++) {
+        widget = widgets[i].split(" ");
+        widget = {"element":widget[0],"url":widget[1]}
+        element = document.createElement("div");
+        element.setAttribute("id", "result")
+        element.setAttribute("class", "item card")
+        document>#"widgets">append(element);
+        document>#"result".html>"<img scr='static/imgs/loader.gif'>";
+        str =  widget["url"]+" "+widget["element"];
+        log>str;
+        log>$("#result").load(str);
+        //element.html>widget[2];
+        element.setAttribute("id", widget["url"])
+        document>#"widgets">append(element);
+        element.setAttribute("class", "item")
+        log>(widget);
+        log>"____";
+    }
+});

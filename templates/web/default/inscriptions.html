@@ -1,0 +1,25 @@
+{% extends "web/default/design.html" %} {% block content %}
+
+<div style="padding: 20px;">
+    <h1>Inscriptions :</h1>
+    <div class="row">
+        <form method="post" action="" class="card white shadows">
+            <table>
+                <tr>
+                    <td>Prénom</td>
+                    <td>Code</td>
+                    <td>Code (2)</td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="nom"></td>
+                    <td><input class type="password" name="code1"></td>
+                    <td><input type="password" name="code2"></td>
+                </tr>
+            </table>
+            <button type="submite">Inscriptions !</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

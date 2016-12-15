@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/stylesheet.css') }}">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/script.js') }}"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+        widgets = {{ myapp.widgets|tojson}};
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Hervé > {% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <nav id="nav">
+        <span class="button" onclick="openNav()">
+              &#9776;
+        </span>
+        {% block nav %}
+        <span class="text">HERVE</span>
+        {% endblock %}
+    </nav>
+    <div class="" id="sidenav">
+        <div class="content">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            {% if session %}
+                <img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" class="rounded" ></img>
+                {% for i in myapp["menu"] %}
+                    <a href='{{myapp["menu"][i]}}'>{{i}}</a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    <footer >
+        <div class="container">©JulesMichael</div>
+    </footer>
+    </div>
+    <div class="section" id="content">
+            {% if datas.get('message')['succes'] %}
+            <div class="container">
+                <div class="card green shadows">
+                    {% for item in datas['message']['succes'] %}
+                        <p>{{ item }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if datas.get('message')['error'] %}
+            <div class="container">
+                <div class="card red shadows">
+                    {% for item in datas['message']['error'] %}
+                        <p>{{ item }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+
+    
+</body>
+
+</html>

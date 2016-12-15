@@ -1,25 +1,28 @@
-# from StringIO import StringIO
+from io import StringIO
+import requests
+
 @q.script(["herve"])
 def me(regex):
-	return "oui {civilite} ?"
+	return {"text":"oui {civilite} ?"}
+
+
 
 @q.script([r"cucu",r"bonjour",r"plop",r"salut",r"slt",r"hey",r"hello",r"yop","yo"])
 def salutation(regex):
-	reponse = {'soutenu' :['bonjour {civilite}','mes salutations {civilite}'],'courant' : ["plop","salut","slt","hey","hello","yop",]}
-	return (reponse)
+	return {"text":{'soutenu' :['bonjour {civilite}','mes salutations {civilite}'],'courant' : ["plop","salut","slt","hey","hello","yop",]}}
 
 @q.script([r"mets( la (télé|tele|télévision))? sur la (?P<chaine>.*)"])
 def changechain(regex):
 	import fbxremote
 	remote = fbxremote.remote(66412704)
 	print(remote.buttons(regex.group("chaine")))
-	return "J'ai changé de chaine"
+	return {"text":reponse({"text":"J'ai changé de chaine"})}
 
 @q.script([r"comment (?P<recherche>(\w|\s)+)"])
 def how(regex):
 	toreturn = StringIO()
 	if regex.group("recherche") == "vas":
-		return ["je vais bien {civilite}"]
+		return {"text":["je vais bien {civilite}"]}
 	else :
 		group = "comment " + regex.group('recherche')
 		requette = requests.get('https://searx.me', params = {'format':'json','q':group}).text
@@ -34,13 +37,12 @@ def how(regex):
 				print ("\n\t" + reponse[i]["title"] + "\n\t" + reponse[i]["url"],file=toreturn)
 		except :
 			print('excusé(e) moi {civilite}, je n\'est rien pu trouver',file=toreturn)
-
-		return toreturn.getvalue()
+		return {"text":toreturn.getvalue()}
 
 
 @q.script([r"commençons à nous connaître"])
 def learnaboutuser(regex):
-	return "tres bien"
+	return {"text":"tres bien"}
 
 @q.script([r"qui est (?P<personne>(\w|\s)+)"])
 def whois(regex):
@@ -54,19 +56,19 @@ def whois(regex):
 		else :
 			myjson = json.loads(requette)
 			reponse = "D'apres wikipedia :"+  str(myjson["results"][0]["content"])
-		return reponse
+		return {"text":reponse}
 
 
 @q.script([r"je t'aime"])
 def jtm(regex):
-	return "mais enfin {civilite} ce n'est pas possible"
+	return {"text":"mais enfin {civilite} ce n'est pas possible"}
 
 @q.script([r"lis moi (cet article |cette page )?(?P<url>(.)*)"])
 def lecteurarticle(regex):
 	import articleextractor
 	if regex.group("url"):
 		article = articleextractor.extract(regex.group("url"))
-		return("Voila votre article:\n"+article)
+		return({"text":"Voila votre article:\n"+article})
 
 @q.script([r"que puis(\-)?( )?je te dire( \?)?"])
 def listphrases(regex):
@@ -75,4 +77,4 @@ def listphrases(regex):
 	thislist = q.listphrases()
 	for i in thislist :
 		print ( "\t- " + str(i),file=toreturn)
-	return toreturn.getvalue()
+	return {"text":toreturn.getvalue()}
