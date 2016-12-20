@@ -46,7 +46,7 @@
             "dir": "templates/"
         },
         "pushbullet": {
-            "api_key": "o.tukoJV4HibX8gvSHWaNRPdSU60F376Lw"
+            "api_key": ""
         },
         "chatbot": {
             "history": {}
