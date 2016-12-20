@@ -15,7 +15,7 @@
             "mywash"
         ],
         "static": {
-            "dir": "static/"
+            "dir": "static/default/"
         },
         "plugins": {
             "chatbot_dir": "plugins/chatbot",
@@ -27,7 +27,7 @@
                 "js": [
                     {
                         "file": "script.js",
-                        "url": "https://siteherve-julesmichael.c9users.io/static/js/script.js",
+                        "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js",
                         "dir": "js/"
                     }
                 ],
@@ -35,11 +35,11 @@
                 "css": [
                     {
                         "file": "stylesheet.css",
-                        "url": "https://siteherve-julesmichael.c9users.io/static/css/stylesheet.css",
+                        "url": "https://siteherve-julesmichael.c9users.io/static/default/css/stylesheet.css",
                         "dir": "css/"
                     }
                 ],
-                "safeurl": "https://siteherve-julesmichael.c9users.io/static/safefile.json"
+                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json"
             },
             "actual": "Herve"
         },
@@ -59,13 +59,13 @@
     },
     "sys": {
         "actived_apps": [
-            "mywash",
+            "mywash"
         ],
         "profile": {
             "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
         },
         "installed_apps": [
-            "mywash",
+            "mywash"
         ]
     }
 }

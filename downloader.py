@@ -8,9 +8,9 @@ class downloader(Thread):
 	def download(self,url):
 		
 		if '://youtube.' in self.file_url or '://www.youtube.' in url  :
-			os.system('cd static/cloud/ && youtube-dl'+ url)
+			os.system('cd static/default/cloud/ && youtube-dl'+ url)
 		else :
-			os.system('cd static/cloud/ && wget '+url)
+			os.system('cd static/default/cloud/ && wget '+url)
 		
 		
 	def run (self):

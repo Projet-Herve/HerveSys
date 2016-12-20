@@ -44,7 +44,7 @@ def musique(request):
 		return render(request ,'html/error/405.html', {'menuliste':liste_menu,'message_error':'Vous ne pouvez pas utiliser la method post !'})
 	else :
 		if "STOP" ==  musiqueetat()['state']   :
-			os.system("mocp -S && mocp -c && mocp -a static/cloud")
+			os.system("mocp -S && mocp -c && mocp -a static/default/cloud")
 		if request.GET.get("etat"):
 			return HttpResponse(json.dumps(musiqueetat()),content_type="application/json")
 		if request.GET.get('start'):

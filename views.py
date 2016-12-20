@@ -328,7 +328,7 @@ def variable():
 #############
 ### CLOUD ###
 #############
-	cloudfilesliste = os.listdir('static/cloud/')
+	cloudfilesliste = os.listdir('static/default/cloud/')
 	cloudfiles = []
 	def typefile (i,type_,liste):
 
@@ -707,17 +707,17 @@ def filemodif(request):
 
 	if  request.method == 'POST':
 		if request.POST.get("modifiquation") :
-			with open('static/cloud/'+request.POST.get("modifiquation")) as file:
+			with open('static/default/cloud/'+request.POST.get("modifiquation")) as file:
 				fileextention = request.POST.get("modifiquation").split('.')[-1]
 				filecontent = file.read()
 				return render(request,'html/modifiquation.html',{'files':cloudfiles,'filecontent':filecontent,'filename':request.POST.get("modifiquation"),'fileextention':fileextention,'menuliste':liste_menu})
 		if request.POST.get("modif"):
-			with open('static/cloud/'+request.POST.get("file"),'r+') as file:
+			with open('static/default/cloud/'+request.POST.get("file"),'r+') as file:
 				file.write(str(request.POST.get('content')))
 				return render(request,'html/modifiquation.html',{'files':cloudfiles,'filecontent':request.POST.get('content'),'filename':request.POST.get("file"),'fileextention':request.POST.get("file").split('.')[-1],'menuliste':liste_menu})
 		if request.POST.get('execut'):
-			os.system('python3 static/cloud/'+str(request.POST.get('file')))
-			return render(request,'html/modifiquation.html',{'files':cloudfiles,'filecontent':open('static/cloud/'+request.POST.get('file')).read(),'filename':request.POST.get("file"),'fileextention':request.POST.get("file").split('.')[-1],'menuliste':liste_menu})
+			os.system('python3 static/default/cloud/'+str(request.POST.get('file')))
+			return render(request,'html/modifiquation.html',{'files':cloudfiles,'filecontent':open('static/default/cloud/'+request.POST.get('file')).read(),'filename':request.POST.get("file"),'fileextention':request.POST.get("file").split('.')[-1],'menuliste':liste_menu})
 
 #############
 ### CLOUD ###
@@ -729,7 +729,7 @@ def cloud(request):
 		return render(request,'html/multimedia.html',{'files':cloudfiles,'menuliste':liste_menu})
 	if request.method == 'POST':
 		if request.POST.get("delet") :
-			os.system('cd static/cloud && rm -R '+request.POST.get("delet"))
+			os.system('cd static/default/cloud && rm -R '+request.POST.get("delet"))
 			return render(request,'html/multimedia.html',{'files':cloudfiles,'menuliste':liste_menu})
 
 def cloudapi(request):
@@ -739,7 +739,7 @@ def cloudapi(request):
 def cloud_envoyer_fichier(request):
 
 	if request.GET.get('nom_fichier'):
-		fichier_base_64 = fichier_vers_base64('static/cloud/' + request.GET.get('nom_fichier'))
+		fichier_base_64 = fichier_vers_base64('static/default/cloud/' + request.GET.get('nom_fichier'))
 		#print(fichier_base_64[:6].decode('utf-8'))
 	return render(request,'html/multimedia.html',{'files':cloudfiles,'menuliste':liste_menu,'message_réussite':'Le fichier a bien été envoyé'})
 
@@ -860,7 +860,7 @@ def musique(request):
 		return render(request ,'html/error/405.html', {'menuliste':liste_menu,'message_error':'Vous ne pouvez pas utiliser la mehode post !'})
 	else :
 		if "STOP" ==  musiqueetat()['state']   :
-			os.system("mocp -S && mocp -c && mocp -a static/cloud")
+			os.system("mocp -S && mocp -c && mocp -a static/default/cloud")
 		if request.GET.get("etat"):
 			return HttpResponse(json.dumps(musiqueetat()),content_type="application/json")
 		if request.GET.get('start'):

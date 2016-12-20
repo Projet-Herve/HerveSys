@@ -80,10 +80,10 @@ def index():
 		return redirect("/connexion", code=302)
 		
 
-@webapp.route('/static/jms/<script>')
+@webapp.route('/static/default/jms/<script>')
 def jms_page(script):
 	try :
-		return Response(response=parse(open('static/jms/'+script,'r').read()),status=200,mimetype="text/javascript")
+		return Response(response=parse(open('static/default/jms/'+script,'r').read()),status=200,mimetype="text/javascript")
 	except:
 		return Response(response="console.log('Fichier jms non trouvé ! (Fichier : " + script +") ; Ou erreur interne du au serveur :/');",status=200,mimetype="text/javascript")
 
@@ -316,4 +316,39 @@ def index_{name}():
 		print("Création de l'application terminée")
 	else:
 		print("Cette application éxiste déja")
+	
+if "exportapp" in argv:
+	try:
+		name = argv[argv.index("exportapp")+1]
+	except IndexError :
+		name = input("Quel est le nom de l'application à exporter ?\n>")
+	try:
+		path = argv[argv.index("exportapp")+2]
+	except IndexError :
+		path = input("Où exporter l'application ?\n>")
+	if os.path.isdir(path):
+		if os.path.isdir("apps/"+name):
+			print("Exportation de "+name+" dans "+path+" ...")
+			os.system("mkdir "+path+"/"+name+" && cp -r apps/"+name+" "+path+"/")
+			dirs = ["datas/apps/","static/default/apps/","templates/apps/"]
+			for dir in dirs :
+				if os.path.isdir(dir+name):
+					print("Création de "+path+"/"+name+"/"+dir.split("/")[0])
+					print("Copie récursif des fichiers contenus dans "+dir+name)
+					os.system("cp -r "+dir+name+" "+path+"/"+name+"/"+dir.split("/")[0])
+			print("L'application a été exportée")
+		else:
+			print("/!\ L'application que vous essayez d'exporter n'existe pas.")
+	else :
+		while 1:
+			r = input("/!\ Le chemin indiqué n'existe pas.\nVoulez le créer ? [y/n]\n>")
+			if r == "y":
+				os.system("mkdir "+path)
+				print("Relancez la commande pour procéder à l'instalation.")
+				break
+			elif r == "n":
+				print("Exportation annulée.")
+				break
+		
+		
 	
