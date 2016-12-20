@@ -103,16 +103,12 @@ def inscriptions():
 
 		if not nom :
 			message["error"].append('Veillez choisir un nom d\'utilistaur')
-
 		if not code1 :
 			message["error"].append('Veillez choisir un code de securite')
-
 		if not code2 :
 			message["error"].append('Veillez retapper votre code de securite')
-
 		if code1 != code2 :
 			message["error"].append('Veillez entrer deux fois le meme code')		
-		
 		if not message['error']:
 			nouveauutilisateur = {
 				"id":len(datas),
@@ -266,10 +262,58 @@ if "installapp" in argv :
 					if not packetmanifest["name"] in sys["sys"]["installed_apps"]:
 						sys["sys"]["installed_apps"].append(packetmanifest["name"])
 						update_datas(sys,"settings")
-						print ("\n******** Application installée ********")
+						print ("\n******** L'application a été installée ********")
 					else:
-						print ("\n******** Application déja installée ********")
+						print ("\n******** L'application a déja été installée ********")
 					break
-				elif yesornot == "n":print("\n******** Instalation anulée ********");break
+				elif yesornot == "n":print("\n******** L'instalation a été anulée ********");break
 		else:print("/!\ Le fichier manifest n'existe pas")
 	else:print("/!\ Ce packet n'existe pas")
+	
+if "creatapp" in argv:
+	try:
+		name = argv[argv.index("creatapp")+1]
+	except IndexError :
+		name = input("Quel est le nom que voulez-vous appliquer à votre packet ?\n>")
+	sys = load_datas("settings")
+	if not name in sys["sys"]["installed_apps"]:
+		description =input("Quel est le but de votre application?\n>")
+		license = input("Quel license choisissez vous pour cette application?\n>")
+		displayName = input("Quel nom doit être affiché?\n>")
+		author = input("Qui êtes vous?\n>")
+		manifest = {"name": name,"version": "0.1","description": description,"license": license,"displayName": displayName,"author": author,"datas": [],"templates": ["index.html"],"urls":{"menu":{},"api":[]},"widgets":[]}
+		print("Création de l'application (préinstallée)...")
+		print("Pour exporter votre application une fois finie executée: exportapp "+name)
+		os.system("mkdir apps/"+name)
+		open("apps/"+name+"/manifest.json","w").write(json.dumps(manifest,indent=4,ensure_ascii=False))
+		print("Le fichier apps/"+name+"/manifest.json de votre packet a été créé.")
+		open("apps/"+name+"/"+name+".py","w").write("""import json
+from flask import *
+from __main__ import login_required
+ 
+@webapp.route("/{name}")
+@login_required
+def index_{name}():
+	'''
+	Votre code
+	'''
+	return render_template("apps/{name}/index.html",datas=locals(),myapp=myapp)
+		""".format(name=name))
+		print("Le fichier apps/"+name+"/"+name+".py de votre packet a été créé.")
+		os.system("mkdir templates/apps/"+name)
+		open("templates/apps/"+name+"/index.html","w").write("""{% extends "default/design.html" %}{% block title %}"""+displayName+"""{% endblock %}
+{% block content %}
+	<div class="container">
+		<h1>"""+displayName+""""</h1>
+	</div>
+{% endblock %}
+	""")
+		print("Le fichier templates/apps/"+name+"/index.html a été créé")
+		print("L'utilisateur sys peux y acceder")
+		sys["sys"]["installed_apps"].append(name)
+		sys["sys"]["actived_apps"].append(name)
+		update_datas(sys,"settings")
+		print("Création de l'application terminée")
+	else:
+		print("Cette application éxiste déja")
+	
