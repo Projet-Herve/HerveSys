@@ -1,3 +1,14 @@
+"""
+	Fichier issu de la précédente version ne pas prendre en compte
+"""
+
+
+
+
+
+
+
+
 #####################
 ### Django import ###
 #####################

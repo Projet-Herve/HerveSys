@@ -4,7 +4,6 @@ from functools import wraps
 from flask import *
 from flask import session
 
-import job
 from time import sleep
 import schedule,threading
 import hashlib
@@ -45,15 +44,15 @@ def authenticate():
 
 @webapp.errorhandler(404)
 def page_not_found(e):
-    return render_template('web/default/error.html',datas=locals(),myapp = myapp)
+    return render_template('default/error.html',datas=locals(),myapp=myapp)
 
 @webapp.errorhandler(403)
 def Forbidden(e):
-    return render_template('web/default/error.html',datas=locals(),myapp = myapp)
+    return render_template('default/error.html',datas=locals(),myapp = myapp)
 
 @webapp.errorhandler(500)
 def Internal_Server_Error(e):
-    return render_template('web/default/error.html',datas=locals(),myapp = myapp)
+    return render_template('default/error.html',datas=locals(),myapp = myapp)
 
 def login_required(f):
     @wraps(f)
@@ -76,7 +75,7 @@ def requires_auth(f):
 @webapp.route('/')
 def index():
 	if session.get("utilisateur") :
-		return render_template("web/default/index.html",datas=locals(),myapp = myapp)
+		return render_template("default/index.html",datas=locals(),myapp = myapp)
 	else :
 		return redirect("/connexion", code=302)
 		
@@ -91,7 +90,7 @@ def jms_page(script):
 @webapp.route('/apps', methods=['GET'])
 @login_required
 def apps():
-	return render_template("web/default/apps.html",datas=locals(),myapp=myapp)
+	return render_template("default/apps.html",datas=locals(),myapp=myapp)
 
 @webapp.route('/inscriptions', methods=['GET','POST'])
 def inscriptions():
@@ -124,19 +123,19 @@ def inscriptions():
 			user = {
 				nom:{
 					"profile":nouveauutilisateur,
-					"installed_apps": [
-						"meteo"
+					"actived_apps": [
+						"mywash"
 				]
 				}
 			}
 			datas.update(user)
 			myapp.users.update(user)
 			update_datas(datas,"settings")
-			message["succes"].append('Bravo '+nom+" vous etes des à present inscrit! Ceci est votre DashBoard")
+			message["succes"].append('Bravo '+nom+" vous êtes dès à present inscrit! Ceci est votre DashBoard")
 			updateuserdatas()
-		return render_template("web/default/index.html",datas=locals(),myapp = myapp)
+		return render_template("default/index.html",datas=locals(),myapp = myapp)
 	else :
-		return render_template("web/default/inscriptions.html",datas=locals(),myapp = myapp)
+		return render_template("default/inscriptions.html",datas=locals(),myapp = myapp)
 		
 @webapp.route('/connexion', methods=['GET','POST'])
 def connexion():
@@ -155,8 +154,8 @@ def connexion():
 			else :
 				message["succes"].append("Vous etes connecté")
 		if  len(message["error"])  == 0 :
-			return render_template("web/default/index.html",datas=locals(),myapp = myapp)
-	return render_template("web/default/connexion.html",datas=locals(),myapp = myapp)
+			return render_template("default/index.html",datas=locals(),myapp = myapp)
+	return render_template("default/connexion.html",datas=locals(),myapp = myapp)
 
 @webapp.route('/widgets',methods=['POST'])
 @login_required
@@ -173,7 +172,7 @@ def deconnexion():
 		message["succes"] =['Vous avez été deconnecté']
 	else:
 		message["error"] =['Vous n\'étiez pas connecté']
-	return render_template("web/default/connexion.html",datas=locals(),myapp = myapp)
+	return render_template("default/connexion.html",datas=locals(),myapp = myapp)
 
 
 def loadsystemdatas():
@@ -236,3 +235,41 @@ if "run" in argv:
     if "-p" in argv:
         port = int(argv[argv.index("-p")+1])
     webapp.run(host=host,port=port,debug=True)
+    
+if "installapp" in argv :
+	try:
+		dir = argv[argv.index("installapp")+1]
+		
+	except IndexError :
+		print("Quel est le nom de votre packet ?")
+		dir = input(">")
+	if os.path.isdir(dir):
+		if os.path.isfile(dir+"/"+"manifest.json"):
+			print("Lecture du manifest...")
+			packetmanifest = json.loads(open(dir+"/"+"manifest.json").read())
+			print("Description: "+packetmanifest["description"])
+			print("V:"+packetmanifest["version"])
+			print ("Voulez vous vraiment installer cette application ?")
+			while 1 : 
+				yesornot = input("y/n>")
+				if  yesornot == "y":
+					print("Déplacement du packet")
+					os.system("mv "+dir+" apps")
+					packetfiles = os.listdir("apps/"+packetmanifest["name"])
+					for element in packetfiles :
+						elementapppath = "apps/"+packetmanifest["name"]+"/"+element
+						print("Traitement de:",elementapppath)
+						if os.path.isdir(elementapppath) and os.path.isdir(element):
+							print("Déplacement de "+elementapppath)
+							os.system("mv "+elementapppath+" "+element+"/apps")
+					sys = load_datas("settings")
+					if not packetmanifest["name"] in sys["sys"]["installed_apps"]:
+						sys["sys"]["installed_apps"].append(packetmanifest["name"])
+						update_datas(sys,"settings")
+						print ("\n******** Application installée ********")
+					else:
+						print ("\n******** Application déja installée ********")
+					break
+				elif yesornot == "n":print("\n******** Instalation anulée ********");break
+		else:print("/!\ Le fichier manifest n'existe pas")
+	else:print("/!\ Ce packet n'existe pas")
