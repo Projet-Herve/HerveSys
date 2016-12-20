@@ -5,5 +5,5 @@ def load_datas(file):
     return json.loads(file)
 
 def update_datas(var,file):
-	with open("datas/"+file,"w") as filedata:
+	with open("datas/"+file.split(".")[0]+".json","w") as filedata:
 		filedata.write(json.dumps(var,indent=4,ensure_ascii=False))#.encode('utf8'))

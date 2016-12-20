@@ -1,22 +1,37 @@
 {% extends "web/default/design.html" %}{% block title %}Vos applications{% endblock %} {% block content %}
 <div class="container">
+    <h1>Installer une application</h1>
+    <div class="masonry">
+        <div class="item card white shadows">
+            <form>
+                <input type="text" placeholder="URL / depot git" name="url"/>
+                <button type="submit" value="Submit">Installer</button>
+            </form>
+        </div>
+        <div class="item card white shadows">
+            <form>
+                <input type="file" placeholder="Fichier" name="file"/>
+                <button type="submit" value="Submit">Installer</button>
+            </form>
+        </div>
+    </div>
     <h1>Vos applications</h1>
     <div class="masonry">
 
-        {% for app in myapp["apps"]%}
+        {% for app in myapp.users[session["utilisateur"]]["apps"]%}
         <div class="item">
             <div class="card white shadows">
                 <h1>{{ app}}</h1>
-                {% for key in myapp["apps"][app] %}
-                    <p>{{key}}: {{myapp["apps"][app][key]}}</p>
+                {% for key in myapp.users[session["utilisateur"]]["apps"][app] %}
+                    <p>{{key}}: {{myapp.users[session["utilisateur"]]["apps"][app][key]}}</p>
                 {% endfor %}
                 <div class="backcard">
-                    <pre><code>{{myapp["apps"][app]|tojson|safe}}</code></pre>
+                    <pre><code>{{myapp.users[session["utilisateur"]]["apps"][app]|tojson|safe}}</code></pre>
                 </div>
             </div>
         </div>
         {% endfor %}
-
     </div>
+    
 </div>
 {% endblock %}

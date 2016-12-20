@@ -1,46 +1,62 @@
 {
-    "user": "default",
-    "pushbullet":{
-        "api_key":""
-    },
-    "theme": {
-        "actual":"Herve",
-        "update_time":60,
-        "Herve": {
-            "head":"",
-            "safeurl":"https://siteherve-julesmichael.c9users.io/static/safefile.json",
-            "css": [
-                {
-                    "url": "https://siteherve-julesmichael.c9users.io/static/css/stylesheet.css",
-                    "dir": "css/",
-                    "file": "stylesheet.css"
-                }
-            ],
-            "js": [
-                {
-                    "url": "https://siteherve-julesmichael.c9users.io/static/js/script.js",
-                    "dir": "js/",
-                    "file": "script.js"
-                }
-            ]
+    "Demo": {
+        "plugins": {
+            "chatbot_dir": "plugins/chatbot",
+            "webapp_dir": "plugins/webapp"
+        },
+        "actived_apps":[ "meteo"],
+        "static": {
+            "dir": "static/"
+        },
+        "profile": {
+            "civilite": "monsieur",
+            "nom": "Demo",
+            "id": 1,
+            "age": 40,
+            "prenom": "Demo",
+            "phrase": "courant",
+            "email": "Demo@demomail.com",
+            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
+            "sexe": "h"
+        },
+        "job_file": "job.py",
+        "theme": {
+            "Herve": {
+                "js": [
+                    {
+                        "file": "script.js",
+                        "dir": "js/",
+                        "url": "https://siteherve-julesmichael.c9users.io/static/js/script.js"
+                    }
+                ],
+                "safeurl": "https://siteherve-julesmichael.c9users.io/static/safefile.json",
+                "css": [
+                    {
+                        "file": "stylesheet.css",
+                        "dir": "css/",
+                        "url": "https://siteherve-julesmichael.c9users.io/static/css/stylesheet.css"
+                    }
+                ],
+                "head": ""
+            },
+            "update_time": 60,
+            "actual": "Herve"
+        },
+        "templates": {
+            "dir": "templates/"
+        },
+        "pushbullet": {
+            "api_key": "o.tukoJV4HibX8gvSHWaNRPdSU60F376Lw"
+        },
+        "chatbot": {
+            "history": {}
+        },
+        "herve_serveur": {
+            "url": "https://siteherve-julesmichael.c9users.io/"
         }
     },
-    "herve_serveur": {
-        "url": "https://siteherve-julesmichael.c9users.io/"
-    },
-    "plugins": {
-        "webapp_dir": "plugins/webapp",
-        "chatbot_dir": "plugins/chatbot"
-    },
-    "templates": {
-        "dir": "templates/"
-    },
-    "static": {
-        "dir": "static/"
-    },
-    "job_file": "job.py",
-    "installed_apps":[
-        "meteo",
-        "mywash"
-    ]
+    "sys": {
+        "installed_apps":[ "meteo","mywash"],
+        "actived_apps":[ "meteo","mywash"]
+    }
 }

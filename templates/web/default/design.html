@@ -10,7 +10,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
     <script>
         hljs.initHighlightingOnLoad();
-        widgets = {{ myapp.widgets|tojson}};
+        {% if session %}user = "{{session["utilisateur"]}}";{% endif %}
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <title>Hervé > {% block title %}{% endblock %}</title>
@@ -25,13 +25,14 @@
         <span class="text">HERVE</span>
         {% endblock %}
     </nav>
-    <div class="" id="sidenav">
+    <div id="sidenav">
         <div class="content">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             {% if session %}
                 <img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" class="rounded" ></img>
-                {% for i in myapp["menu"] %}
-                    <a href='{{myapp["menu"][i]}}'>{{i}}</a>
+                <a>{{session["utilisateur"]}}</a>
+                {% for i in myapp.users[session["utilisateur"]]["menu"] %}
+                    <a href='{{myapp.users[session["utilisateur"]]["menu"][i]}}'>{{i}}</a>
                 {% endfor %}
             {% endif %}
         </div>
@@ -39,7 +40,7 @@
         <div class="container">©JulesMichael</div>
     </footer>
     </div>
-    <div class="section" id="content">
+    <div id="content">
             {% if datas.get('message')['succes'] %}
             <div class="container">
                 <div class="card green shadows">

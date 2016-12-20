@@ -1,20 +1,23 @@
+function update(widget){
+    $("#widgets").append('<div class="item"><div id="'+widget["element"].slice(1, -1)+'" class="card white shadows"><center><img src="/static/imgs/loader.gif"/></center></div></div>')
+    $.get(widget["url"], function(datas) {
+        var html = $('<div/>').append(jQuery.parseHTML(datas)).find(widget["element"]).html();
+        if (html != undefined){
+            $("#"+widget["element"].slice(1, -1)).html(html);
+        }
+    });
+}
 $(function() {
-    for (var i = 0; i < widgets.length; i++) {
-        widget = widgets[i].split(" ");
-        widget = {"element":widget[0],"url":widget[1]}
-        element = document.createElement("div");
-        element.setAttribute("id", "result")
-        element.setAttribute("class", "item card")
-        document>#"widgets">append(element);
-        document>#"result".html>"<img scr='static/imgs/loader.gif'>";
-        str =  widget["url"]+" "+widget["element"];
-        log>str;
-        log>$("#result").load(str);
-        //element.html>widget[2];
-        element.setAttribute("id", widget["url"])
-        document>#"widgets">append(element);
-        element.setAttribute("class", "item")
-        log>(widget);
-        log>"____";
-    }
+    $.post("/widgets", {
+        user: user
+    }, function(widgets) {
+        for(var i = 0; i< widgets.length; i++) {
+            widget = widgets[i].split(" ");
+            widget = {
+                    "element": widget[0],
+                    "url": widget[1]
+                }
+            update(widget);
+        }
+    });
 });

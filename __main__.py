@@ -1,5 +1,4 @@
 import sys, os
-import json
 
 from functools import wraps
 from flask import *
@@ -8,29 +7,33 @@ from flask import session
 import job
 from time import sleep
 import schedule,threading
+import hashlib
 
 import qreaction
 from myhtml import tag
 from datas import load_datas,update_datas
 from jms import parse
-
-
+from notify import *
 
 argv = sys.argv[1:]
 
 webapp = Flask(__name__)
 webapp.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
-
 script_path = os.path.dirname(os.path.realpath(__file__))
 
 class herveapp:
 	def __init__(self):
-		self.menu = {"Accueil":"/","Déconnexion":"logout","Apps":"/apps"}
-		self.widgets = [".humanoid_top_area http://www.frandroid.com"]
 		self.settings = json.loads(open("datas/settings.json").read())
-		self.apps = {}
+		self.users = dict()
+		for user in self.settings :
+			self.users[user] = {
+					"apps" : {},
+					"menu" : {"Accueil":"/","Déconnexion":"logout","Apps":"/apps"},
+					"widgets" : [],
+					#"agenda" : agenda()
+				}
 
-		
+myapp = herveapp()
 
 def authenticate():
     """Sends a 401 response that enables basic auth"""
@@ -39,7 +42,6 @@ def authenticate():
     'You have to login with proper credentials', 401,
     {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
-myapp = herveapp()
 
 @webapp.errorhandler(404)
 def page_not_found(e):
@@ -93,12 +95,11 @@ def apps():
 
 @webapp.route('/inscriptions', methods=['GET','POST'])
 def inscriptions():
-	datas = load_datas("users.json")
-
+	datas = load_datas("settings")
 	if request.method == 'POST':
 		nom = str(request.form.get('nom'))
-		code1 = int(request.form.get('code1'))
-		code2 = int(request.form.get('code2'))
+		code1 = request.form.get('code1')
+		code2 = request.form.get('code2')
 		message = {"error":[],"succes":[]}
 
 		if not nom :
@@ -117,14 +118,23 @@ def inscriptions():
 			nouveauutilisateur = {
 				"id":len(datas),
 				"nom":nom,
-				"code":code1*22*10/11
+				"code":hashlib.sha224(code1.encode('utf8')).hexdigest()
 			}
 			session['utilisateur'] = nom
-			user = {nom:nouveauutilisateur}
+			user = {
+				nom:{
+					"profile":nouveauutilisateur,
+					"installed_apps": [
+						"meteo"
+				]
+				}
+			}
 			datas.update(user)
-			update_datas(datas,"users.json")
-			message["succes"].append('Bravo '+nom+" vous etes des a present inscrit! Vous pouvez dessormais accerder au <a href='/'>dashboard</a>.")
-		return render_template("web/default/inscriptions.html",datas=locals(),myapp = myapp,messages=message)
+			myapp.users.update(user)
+			update_datas(datas,"settings")
+			message["succes"].append('Bravo '+nom+" vous etes des à present inscrit! Ceci est votre DashBoard")
+			updateuserdatas()
+		return render_template("web/default/index.html",datas=locals(),myapp = myapp)
 	else :
 		return render_template("web/default/inscriptions.html",datas=locals(),myapp = myapp)
 		
@@ -137,8 +147,8 @@ def connexion():
 		if not request.form.get("code") :
 			message["error"].append("Vous devez entrer votre code")
 		if request.form.get("code") and request.form.get("nom") :
-			if load_datas("users.json").get(request.form.get("nom")):
-				if load_datas("users.json")[request.form.get("nom")]["code"] == int(request.form.get("code"))*22*10/11 :
+			if load_datas("settings").get(request.form.get("nom")):
+				if load_datas("settings")[request.form.get("nom")]["profile"]["code"] == hashlib.sha224(request.form.get("code").encode('utf8')).hexdigest() :
 					session["utilisateur"] = request.form.get("nom")
 			if not session.get("utilisateur") :
 				message["error"].append("Vous n'avez pas pu etre connecté")
@@ -147,48 +157,74 @@ def connexion():
 		if  len(message["error"])  == 0 :
 			return render_template("web/default/index.html",datas=locals(),myapp = myapp)
 	return render_template("web/default/connexion.html",datas=locals(),myapp = myapp)
-		
+
+@webapp.route('/widgets',methods=['POST'])
+@login_required
+def widget():
+	user = request.form.get("user")
+	toreturn =json.dumps(myapp.users[user]["widgets"])
+	return(Response(response=toreturn,status=200,mimetype="application/json"))
+	
 @webapp.route('/logout')		
 def deconnexion():
 	message = {}
 	if session.get("utilisateur"):
 		del(session["utilisateur"])
-		message["succes"] =['Vous avec été deconnecté']
+		message["succes"] =['Vous avez été deconnecté']
 	else:
-		message["error"] =['Vous n\'etiez pas connecté']
+		message["error"] =['Vous n\'étiez pas connecté']
 	return render_template("web/default/connexion.html",datas=locals(),myapp = myapp)
 
-	
 
+def loadsystemdatas():
+	for app in myapp.settings["sys"]["installed_apps"]:
+		dir = app
+		file = app+".py"
+		if os.path.isdir("apps/"+dir):
+			app_src = open("apps/"+dir+"/"+file)
+			src = app_src.read()
+			try:
+				exec(src)
+			except Exception as e:
+				print("\nUne erreur est survenu lors de l'éxécution du module "+dir)
+				print("----------------------------\n",e,"\n----------------------------\n")
+		else :
+			print ("L'application '"+dir+"' n'éxiste pas !")
 
-for app in myapp.settings["installed_apps"]:
-    dir = app
-    file = app+".py"
-    if os.path.isdir("apps/"+dir):
-        app_src = open("apps/"+dir+"/"+file)
-        src = app_src.read()
-        exec(src)
-        manifest = json.loads(open("apps/"+dir+"/manifest.json").read())
-        myapp.widgets.extend(manifest["widgets"])
-        myapp.menu.update(manifest["urls"]["menu"])
-        myapp.apps.update({manifest["displayName"]:manifest})
-    else :
-        raise appnotexist("L'application '"+dir+"' n'existe pas !")
+def updateuserdatas():
+	for user in myapp.settings:
+		for app in myapp.settings[user]["actived_apps"]:
+			dir = app
+			file = app+".py"
+			if os.path.isdir("apps/"+dir):
+				manifest = json.loads(open("apps/"+dir+"/manifest.json").read())
+				myapp.users[user]["widgets"].extend(manifest["widgets"])
+				myapp.users[user]["menu"].update(manifest["urls"]["menu"])
+				myapp.users[user]["apps"].update({manifest["displayName"]:manifest})
+			else :
+				print ("L'application '"+dir+"' n'éxiste pas !")
+        
 	
 def myjob():
-	print("job")
+	#print("job")
+	#send_pushbullet_note("Bonjour","BOJOUR")
+	pass
 
 def for_true():
-	while True:
-	    schedule.run_pending()
-	    sleep(1)
-
+	while 1:
+		try :
+			schedule.run_pending()
+			sleep(2)
+		except:
+			break
 
 if "run" in argv:
-    #myjob()
+    loadsystemdatas()
+    updateuserdatas()
+    schedule.every(10).seconds.do(myjob)
     #schedule.every(myapp.settings["theme"]["update_time"]).seconds.do(myjob)
-    #threading.Thread(target=for_true).start()
-    threading.Thread(target=qreaction.scanner_qr).start()
+    threading.Thread(target=for_true).start()
+    #threading.Thread(target=qreaction.scanner_qr).start()
     host = "localhost"
     port = 8080
     if "--host" in argv:

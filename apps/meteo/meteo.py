@@ -16,8 +16,11 @@ def getnow(joursdeplus=0):
 	maintenant = datetime.now()
 	heures = [1, 4, 7, 10, 13, 16, 19, 22]
 	for heure in heures:
-		if heure< maintenant.hour < heures[heures.index(heure)+1]:
-			break
+		if heure > 22 :
+			if heure< maintenant.hour < heures[heures.index(heure)+1]:
+				break
+		else :
+			heure = 22
 	key = "{}-{}-{} {}:00:00".format(str(maintenant.year),str(maintenant.month) if len(str(maintenant.month)) ==2 else "0"+str(maintenant.month) ,str(maintenant.day+joursdeplus) if len(str(maintenant.day+joursdeplus)) ==2 else "0"+str(maintenant.day+joursdeplus),heure)
 	return get()[key]
 
@@ -26,6 +29,5 @@ def getnow(joursdeplus=0):
 @login_required
 def meteo():
 	meteo = getnow()
-	users = json.load(open("datas/users.json"))
 	return render_template("web/apps/meteo/index.html",datas=locals(),myapp=myapp,getnow=getnow)
 

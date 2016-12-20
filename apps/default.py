@@ -1,6 +1,6 @@
 from io import StringIO
 import requests
-
+import json
 @q.script(["herve"])
 def me(regex):
 	return {"text":"oui {civilite} ?"}
@@ -20,24 +20,28 @@ def changechain(regex):
 
 @q.script([r"comment (?P<recherche>(\w|\s)+)"])
 def how(regex):
-	toreturn = StringIO()
+	toreturn = ""
+	html = ""
 	if regex.group("recherche") == "vas":
-		return {"text":["je vais bien {civilite}"]}
+		return {"text":["Je vais bien {civilite}"]}
 	else :
-		group = "comment " + regex.group('recherche')
-		requette = requests.get('https://searx.me', params = {'format':'json','q':group}).text
-		try :
-			myjson = json.loads(requette)
-			reponse = myjson["results"]
-			print ("Voila le meilleur résultat que j'ai pu trouver :",file=toreturn)
-			print ("\n\t" + reponse[0]["title"] + "\n\t" + reponse[0]["url"],file=toreturn)
-			print("\nJ'ai aussi trouvé :",file=toreturn)
-			for i in range(4):
-				i +=1
-				print ("\n\t" + reponse[i]["title"] + "\n\t" + reponse[i]["url"],file=toreturn)
-		except :
-			print('excusé(e) moi {civilite}, je n\'est rien pu trouver',file=toreturn)
-		return {"text":toreturn.getvalue()}
+		pass
+		# group = "comment " + regex.group('recherche')
+		# requette = requests.get('http://api.duckduckgo.com/', params = {'format':'json','q':group}).text
+		# try :
+		# 	myjson = json.loads(requette)
+		# 	reponse = myjson["results"]
+		# 	toreturn += "Voila le meilleur résultat que j'ai pu trouver :"
+		# 	toreturn += "\n\t" + reponse[0]["title"] + "\n\t" + reponse[0]["url"]
+		# 	toreturn += "\nJ'ai aussi trouvé :"
+		# 	for i in range(4):
+		# 		i +=1
+		# 		html += tag("a",href=reponse[i]["url"],contenu=reponse[i]["title"])
+		# 		toreturn += ("\n\t" + reponse[i]["title"] + "\n\t" + reponse[i]["url"])
+		# except Exception as e  :
+		# 	toreturn = 'Excusé{e} moi {civilite}, je n\'est rien pu trouver'
+		# 	print (e,requette)
+		return {"text":toreturn,"html":html}
 
 
 @q.script([r"commençons à nous connaître"])
@@ -51,7 +55,7 @@ def whois(regex):
 		requette = requests.get('https://searx.me', params = {'format':'json','q':recherche}).text
 		if regex.group('personne') == "jules michael":
 			reponse= "Mon créateur"
-		elif requette == "Rate limit exceeded" :
+		elif requette == u"Rate limit exceeded" :
 			reponse =  "Impossible de vous dire qui est " + regex.group('personne') + " car searx.me n'authorise plus de requette"
 		else :
 			myjson = json.loads(requette)
@@ -72,9 +76,8 @@ def lecteurarticle(regex):
 
 @q.script([r"que puis(\-)?( )?je te dire( \?)?"])
 def listphrases(regex):
-	toreturn = StringIO()
-	print ("Vous pouvez me dire :",file=toreturn)
+	toreturn =  "Vous pouvez me dire :"
 	thislist = q.listphrases()
 	for i in thislist :
-		print ( "\t- " + str(i),file=toreturn)
-	return {"text":toreturn.getvalue()}
+		toreturn+=  "\t- " + str(i)
+	return {"text":toreturn}

@@ -1,10 +1,8 @@
 from pushbullet import Pushbullet
 import datas
 
-pb = Pushbullet(datas.load_datas("setings")["pushbullet"]["api_key"])
 
-def send_pushbullet_note(title,body):
-	return pb.push_note("{title} - From Hervé",body)
 
-def pushbullet():
-	return Pushbullet
+def send_pushbullet_note(user,title,body):
+    pb = Pushbullet(datas.load_datas("settings")[user]["pushbullet"]["api_key"])
+    return pb.push_note("{title} - From Hervé".format(title=title),body)

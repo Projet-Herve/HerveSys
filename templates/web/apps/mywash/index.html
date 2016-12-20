@@ -7,8 +7,8 @@
                     <h1>Lavages en cours:</h1>
                     {% for lavage in datas.lavages.encours %}
                     <div class=" span_4">
-                        <p>Couleur : {{ datas.lavages.liste[lavage].couleur }}</p>
-                        <p>Matière : {{ datas.lavages.liste[lavage].matiere }}</p>
+                        <p>Couleur: {{ datas.lavages.liste[lavage].couleur }}</p>
+                        <p>Matière: {{ datas.lavages.liste[lavage].matiere }}</p>
                     </div>
                     {% endfor %}
                 </div>
@@ -17,16 +17,16 @@
         </div>
         <div class="item">
 
-            <div class="card white shadows" id="lavages_en_attente:">
+            <div class="card white shadows" id="lavages_en_attente">
 
                 <h1>Lavages en attente:</h1>
                 {% for lavage in datas.lavages.enattente %}
                 <div>
                     <p>
-                        Matiere :{{ datas.lavages.liste[lavage]['matiere'] }}<br>
+                        Matiere: {{ datas.lavages.liste[lavage]['matiere'] }}<br>
                         Bac n°{{ datas.lavages.liste[lavage]['bac'] }}<br>
-                        Couleur :{{ datas.lavages.liste[lavage]['couleur'] }}<br>
-                        Le :{{ datas.lavages.liste[lavage]['date'] }}<br>
+                        Couleur: {{ datas.lavages.liste[lavage]['couleur'] }}<br>
+                        Le: {{ datas.lavages.liste[lavage]['date'] }}<br>
                         
                     </p>
                 </div>
@@ -40,15 +40,15 @@
                     {% for lavage in datas.lavages.proposes %}
                     <div class=" span_1">
 
-                        <p>Couleur : {{ datas["lavages"]["liste"][lavage]["couleur"]}}</p>
-                        <p>Matière : {{ datas["lavages"]["liste"][lavage]["matiere"]}}</p>
-                        <p>Par : {{users[datas["lavages"]["liste"][lavage]["par"]]["nom"] }}</p>
-                        <p>Enplacement : bac n°{{datas["lavages"]["liste"][lavage]["bac"]}}</p>
+                        <p>Couleur: {{ datas["lavages"]["liste"][lavage]["couleur"]}}</p>
+                        <p>Matière: {{ datas["lavages"]["liste"][lavage]["matiere"]}}</p>
+                        <p>Par: {{users[datas["lavages"]["liste"][lavage]["par"]]["profile"]["nom"] }}</p>
+                        <p>Enplacement: bac n°{{datas["lavages"]["liste"][lavage]["bac"]}}</p>
                         <p><button>Ajouter du linge</button></p>
                     </div>
                     {% endfor %}
                     <div class="span_1 add">
-                        <h1>Proposer un lavage : <button>+</button></h1>
+                        <h1>Proposer un lavage: <button>+</button></h1>
                     </div>
                 </div>
             </div>
@@ -59,10 +59,10 @@
                 {% for lavage in datas.lavages.fini %}
                 <div>
                     <p>
-                        Matiere :{{ datas.lavages.liste[lavage]['matiere'] }}<br>
+                        Matiere: {{ datas.lavages.liste[lavage]['matiere'] }}<br>
                         Bac n°{{ datas.lavages.liste[lavage]['bac'] }}<br>
-                        Couleur :{{ datas.lavages.liste[lavage]['couleur'] }}<br>
-                        Le :{{ datas.lavages.liste[lavage]['date'] }}<br>
+                        Couleur: {{ datas.lavages.liste[lavage]['couleur'] }}<br>
+                        Le: {{ datas.lavages.liste[lavage]['date'] }}<br>
                         
                     </p>
                 </div>
