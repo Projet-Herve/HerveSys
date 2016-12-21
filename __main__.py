@@ -22,6 +22,7 @@ script_path = os.path.dirname(os.path.realpath(__file__))
 
 class herveapp:
 	def __init__(self):
+		self.forever_ = []
 		self.settings = json.loads(open("datas/settings.json").read())
 		self.users = dict()
 		for user in self.settings :
@@ -31,7 +32,30 @@ class herveapp:
 					"widgets" : [],
 					#"agenda" : agenda()
 				}
-
+	def forever(self,function):
+		def decorator(function):
+			try:
+				self.forever_.append(function)
+				return True
+			except Exception as e:
+				print("[erreur] "+e)
+				return False
+		return decorator(function)
+		
+	def start(self):
+		def __forever():
+			while True :
+				for function in self.forever_ :
+					function()
+		def forschedule():
+			while True:
+				schedule.run_pending()
+				sleep(1)
+		
+		threading.Thread(target=__forever).start()
+		#threading.Thread(target=forschedule).start()
+		#threading.Thread(target=qreaction.scanner_qr).start()
+	
 myapp = herveapp()
 
 def authenticate():
@@ -190,7 +214,6 @@ def updateuserdatas():
 	for user in myapp.settings:
 		for app in myapp.settings[user]["actived_apps"]:
 			dir = app
-			file = app+".py"
 			if os.path.isdir("apps/"+dir):
 				manifest = json.loads(open("apps/"+dir+"/manifest.json").read())
 				myapp.users[user]["widgets"].extend(manifest["widgets"])
@@ -199,27 +222,11 @@ def updateuserdatas():
 			else :
 				print ("L'application '"+dir+"' n'éxiste pas !")
         
-	
-def myjob():
-	#print("job")
-	#send_pushbullet_note("Bonjour","BOJOUR")
-	pass
-
-def for_true():
-	while 1:
-		try :
-			schedule.run_pending()
-			sleep(2)
-		except:
-			break
 
 if "run" in argv:
     loadsystemdatas()
     updateuserdatas()
-    schedule.every(10).seconds.do(myjob)
-    #schedule.every(myapp.settings["theme"]["update_time"]).seconds.do(myjob)
-    threading.Thread(target=for_true).start()
-    #threading.Thread(target=qreaction.scanner_qr).start()
+    myapp.start()
     host = "localhost"
     port = 8080
     if "--host" in argv:
@@ -235,9 +242,8 @@ if "run" in argv:
 if "installapp" in argv :
 	try:
 		dir = argv[argv.index("installapp")+1]
-		
 	except IndexError :
-		print("Quel est le nom de votre packet ?")
+		print("Quel est le chemin de votre packet ?")
 		dir = input(">")
 	if os.path.isdir(dir):
 		if os.path.isfile(dir+"/"+"manifest.json"):
