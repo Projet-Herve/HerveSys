@@ -5,25 +5,22 @@
     <div class="masonry">
         <div class="item">
             <h1>Vos widgets </h1>
+            {% for widget in myapp.users[session["utilisateur"]]["widgets"]%}
             <div class="card white shadows">
-                {% for widget in myapp.users[session["utilisateur"]]["widgets"]%}
                 <p>{{ widget }}</p>
-                <p><a class="del button error" href="{{url_for('remove_', type='widget', what=widget|safe )}}">Supprimer</a></p>
-                {% endfor %}
+                <p><a class="del button error" href="{{url_for('desactive', type='widget', what=widget|safe )}}">Enlever</a></p>
             </div>
+            {% endfor %}
         </div>
         <div class="item">
             <h1>Widgets disponibles : </h1>
             {% for widget in myapp.users["sys"]["widgets"]%}{% if not widget in myapp.users[session["utilisateur"]]["widgets"]%}
             <div class="card white shadows">
                 <p>{{ widget }} </p>
-                <p><a class="new button" href="{{url_for('install', type='widget', what=widget|safe )}}">Ajouter</a></p>
+                <p><a class="new button" href="{{url_for('active', type='widget', what=widget|safe )}}">Ajouter</a></p>
             </div>
             {% endif %}{% endfor %}
-
         </div>
     </div>
-
-
 </div>
 {% endblock %}

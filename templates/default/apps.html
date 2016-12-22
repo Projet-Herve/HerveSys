@@ -1,5 +1,7 @@
 {% extends "default/design.html" %}{% block title %}Vos applications{% endblock %} {% block content %}
+ <script type="text/javascript" src="/static/default/jms/managewidgets.jms"></script>
 <div class="container">
+    {{myapp.users[session["utilisateur"]]["apps"]}}
     <div class="masonry">
         <div class="item">
             <h1>Installer une application</h1>
@@ -15,29 +17,33 @@
             {% for app in myapp.users[session["utilisateur"]]["apps"]%}
             <div class="item">
                 <div class="card white shadows">
-                    <h1>{{ app}}</h1>
+                    <h1>{{app}}</h1>
                     {% for key in myapp.users[session["utilisateur"]]["apps"][app] %}
                     <p>{{key}}: {{myapp.users[session["utilisateur"]]["apps"][app][key]}}</p>
                     {% endfor %}
                     <div class="backcard">
                         <pre><code>{{myapp.users[session["utilisateur"]]["apps"][app]|tojson|safe}}</code></pre>
                     </div>
+                    <p><a class="del button" href="{{url_for('desactive', type='application', what=myapp.users['sys']['apps'][app]['name'] )}}">Désactiver</a></p>
                 </div>
             </div>
             {% endfor %}
         </div>
         <div class="item">
-            <h1>Applications installées</h1>
+            <h1>Applications disponibles</h1>
             {% for app in myapp.users["sys"]["apps"]%}
-            <div class="card white shadows">
-                <h1>{{ app}}</h1>
-                {% for key in myapp.users["sys"]["apps"][app] %}
-                <p>{{key}}: {{myapp.users["sys"]["apps"][app][key]}}</p>
-                {% endfor %}
-                <div class="backcard">
-                    <pre><code>{{myapp.users["sys"]["apps"][app]|tojson|safe}}</code></pre>
-                </div>
-            </div>
+                {% if not app in myapp.users[session["utilisateur"]]["apps"]%}
+                    <div class="card white shadows">
+                        <h1>{{ app}}</h1>
+                        {% for key in myapp.users["sys"]["apps"][app] %}
+                        <p>{{key}}: {{myapp.users["sys"]["apps"][app][key]}}</p>
+                        {% endfor %}
+                        <div class="backcard">
+                            <pre><code>{{myapp.users["sys"]["apps"][app]|tojson|safe}}</code></pre>
+                        </div>
+                        <p><a class="new button" href="{{url_for('active', type='application', what=myapp.users['sys']['apps'][app]['name'] )}}">Ajouter</a></p>
+                    </div>
+            {% endif %}
             {% endfor %}
         </div>
     </div>

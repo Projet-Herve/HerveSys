@@ -157,7 +157,6 @@ def inscriptions():
 				nom:{
 					"profile":nouveauutilisateur,
 					"actived_apps": [
-						"mywash"
 				]
 				}
 			}
@@ -202,9 +201,9 @@ def list_user_widget():
 def widgets():
 	return render_template("default/widgets.html",datas=locals(),myapp = myapp)
 	
-@webapp.route('/install/<type>/<what>')
+@webapp.route('/active/<type>/<what>')
 @login_required
-def install(type,what):
+def active(type,what):
 	if type == "widget" :
 		settings = load_datas("settings")
 		settings[session["utilisateur"]]["widgets"].append(what)
@@ -212,14 +211,34 @@ def install(type,what):
 		update_datas(settings,"settings")
 		toreturn =json.dumps("ok")
 		return(Response(response=toreturn,status=200,mimetype="application/json"))
+	
+	if type == "application":
+		settings = load_datas("settings")
+		settings[session["utilisateur"]]["actived_apps"].append(what)
+		update_datas(settings,"settings")
+		toreturn =json.dumps("ok")
+		#loadsystemdatas()
+		updateuserdatas()
+		return(Response(response=toreturn,status=200,mimetype="application/json"))
 		
-@webapp.route('/del/<type>/<what>')
+@webapp.route('/desactive/<type>/<what>')
 @login_required
-def remove_(type,what):
+def desactive(type,what):
 	if type == "widget" :
 		settings = load_datas("settings")
 		settings[session["utilisateur"]]["widgets"].remove(what)
 		myapp.users[session["utilisateur"]]["widgets"].remove(what)
+		update_datas(settings,"settings")
+		toreturn =json.dumps("ok")
+		return(Response(response=toreturn,status=200,mimetype="application/json"))
+		
+	if type == "application" :
+		manifest = json.loads(open("apps/"+what+"/manifest.json").read())
+		settings = load_datas("settings")
+		settings[session["utilisateur"]]["actived_apps"].remove(what)
+		del myapp.users[session["utilisateur"]]["apps"][manifest["displayName"]]
+		for widget in manifest["widgets"]:
+			if widget.replace("/","%2F") in myapp.users[session["utilisateur"]]["widgets"] : myapp.users[session["utilisateur"]]["widgets"].remove(widget.replace("/","%2F"))
 		update_datas(settings,"settings")
 		toreturn =json.dumps("ok")
 		return(Response(response=toreturn,status=200,mimetype="application/json"))
