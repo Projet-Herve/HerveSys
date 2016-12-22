@@ -241,6 +241,7 @@ def desactive(type,what):
 			if widget.replace("/","%2F") in myapp.users[session["utilisateur"]]["widgets"] : myapp.users[session["utilisateur"]]["widgets"].remove(widget.replace("/","%2F"))
 		update_datas(settings,"settings")
 		toreturn =json.dumps("ok")
+		updateuserdatas()
 		return(Response(response=toreturn,status=200,mimetype="application/json"))
 		
 @webapp.route('/logout')
@@ -255,6 +256,7 @@ def deconnexion():
 
 
 def loadsystemdatas():
+	
 	for app in myapp.settings["sys"]["installed_apps"]:
 		dir = app
 		file = app+".py"
@@ -270,6 +272,7 @@ def loadsystemdatas():
 			print ("L'application '"+dir+"' n'éxiste pas !")
 
 def updateuserdatas():
+	myapp.__init__()
 	for user in myapp.settings:
 		for app in myapp.settings[user]["actived_apps"]:
 			dir = app

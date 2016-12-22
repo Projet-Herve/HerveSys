@@ -1,7 +1,6 @@
 {% extends "default/design.html" %}{% block title %}Vos applications{% endblock %} {% block content %}
  <script type="text/javascript" src="/static/default/jms/managewidgets.jms"></script>
 <div class="container">
-    {{myapp.users[session["utilisateur"]]["apps"]}}
     <div class="masonry">
         <div class="item">
             <h1>Installer une application</h1>

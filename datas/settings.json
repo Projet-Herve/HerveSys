@@ -1,53 +1,53 @@
 {
     "Demo": {
-        "herve_serveur": {
-            "url": "https://siteherve-julesmichael.c9users.io/"
+        "templates": {
+            "dir": "templates/"
+        },
+        "chatbot": {
+            "history": {}
         },
         "profile": {
-            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
-            "id": 1,
+            "email": "Demo@demomail.com",
             "phrase": "courant",
             "nom": "Demo",
             "prenom": "Demo",
-            "email": "Demo@demomail.com",
-            "age": 40,
+            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
+            "sexe": "h",
+            "id": 1,
             "civilite": "monsieur",
-            "sexe": "h"
+            "age": 40
         },
-        "actived_apps": [],
-        "chatbot": {
-            "history": {}
+        "widgets": [],
+        "herve_serveur": {
+            "url": "https://siteherve-julesmichael.c9users.io/"
+        },
+        "theme": {
+            "actual": "Herve",
+            "update_time": 60,
+            "Herve": {
+                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json",
+                "js": [
+                    {
+                        "file": "script.js",
+                        "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js",
+                        "dir": "js/"
+                    }
+                ],
+                "head": "",
+                "css": [
+                    {
+                        "file": "stylesheet.css",
+                        "url": "https://siteherve-julesmichael.c9users.io/static/default/css/stylesheet.css",
+                        "dir": "css/"
+                    }
+                ]
+            }
         },
         "pushbullet": {
             "api_key": ""
         },
-        "templates": {
-            "dir": "templates/"
-        },
-        "job_file": "job.py",
-        "widgets": [],
-        "theme": {
-            "actual": "Herve",
-            "Herve": {
-                "js": [
-                    {
-                        "file": "script.js",
-                        "dir": "js/",
-                        "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js"
-                    }
-                ],
-                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json",
-                "css": [
-                    {
-                        "file": "stylesheet.css",
-                        "dir": "css/",
-                        "url": "https://siteherve-julesmichael.c9users.io/static/default/css/stylesheet.css"
-                    }
-                ],
-                "head": ""
-            },
-            "update_time": 60
-        }
+        "actived_apps": [],
+        "job_file": "job.py"
     },
     "sys": {
         "profile": {
