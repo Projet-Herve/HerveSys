@@ -274,7 +274,10 @@ input[type=text]:focus {
     text-align: right;
 }
 
-
+.chatbot {
+    max-height:200px;
+    overflow-y: scroll;
+}
 
 .row {
     margin-left: auto;

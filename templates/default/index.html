@@ -2,18 +2,17 @@
 Dashboard
 {% endblock %}{% block content %}
 <script type="text/javascript" src="static/default/jms/widgets.jms"></script>
+<script type="text/javascript" src="static/default/jms/chatbot.js"></script>
 <div class="container">
     <div class="masonry" id="widgets">
         <div class="item">
-            <div class="card white shadows">
+            <div class="card white shadows chatbot">
                 <div class="messages">
-                    <p>Bonjour {{ session["utilisateur"]}}<br>
-                    Comment allez vous ?</p>
-                    <p class="me">Bien merci</p>
-                    <p>Dac dac</p>
+                   
                 </div>
-                <form action="/">
-                    <input type="text" name="" placeholder="..." onKeyPress="return checkSubmit(event)"/>
+                <form id="chatbot" action="/chatbot" style="padding: 0px;margin: 0px;">
+                    <input type="text" name="text" id="chatbottext" placeholder="..."/>
+                    <button type="submit">Envoyer</button>
                 </form>
             </div>
         </div>

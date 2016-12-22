@@ -7,7 +7,7 @@ def me(regex):
 
 
 
-@q.script([r"cucu",r"bonjour",r"plop",r"salut",r"slt",r"hey",r"hello",r"yop","yo"])
+@q.script([r"cucu",r"bonjour",r"plop",r"salut",r"slt",r"hey",r"hello",r"yop","yo",r"coucou"])
 def salutation(regex):
 	return {"text":{'soutenu' :['bonjour {civilite}','mes salutations {civilite}'],'courant' : ["plop","salut","slt","hey","hello","yop",]}}
 
@@ -22,7 +22,7 @@ def changechain(regex):
 def how(regex):
 	toreturn = ""
 	html = ""
-	if regex.group("recherche") == "vas":
+	if regex.group("recherche") == "vas tu" or regex.group("recherche") == "vas-tu":
 		return {"text":["Je vais bien {civilite}"]}
 	else :
 		pass

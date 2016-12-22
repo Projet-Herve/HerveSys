@@ -30,7 +30,7 @@ class question ():
 		self.listdephrases = []
 		self.plugins = []
 
-	def load_user(self,user="Default"):
+	def load_user(self,user="Demo"):
 		users = load_datas("settings")
 		try:
 			self.user = users[user]
@@ -47,6 +47,9 @@ class question ():
 				exec(src, {'q': self})
 		return True
 
+	def load_history (self,history):
+		self.history = history
+		
 	def checkortho(self):
 		nbcoorection = 0
 		while nbcoorection < 25:

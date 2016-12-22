@@ -8,12 +8,12 @@ from time import sleep
 import schedule,threading
 import hashlib
 
-import qreaction
+#import qreaction
 from myhtml import tag
 from datas import load_datas,update_datas
 from jms import parse
 from notify import *
-
+import chatbot
 argv = sys.argv[1:]
 
 webapp = Flask(__name__)
@@ -196,6 +196,21 @@ def list_user_widget():
 	toreturn =json.dumps(myapp.users[user]["widgets"])
 	return(Response(response=toreturn,status=200,mimetype="application/json"))
 
+@webapp.route('/chatbot',methods=["POST"])
+@login_required
+def chatbot_request():
+	text = request.form.get("text")
+	q = chatbot.question(text)
+	q.load_user(session["utilisateur"])
+	q.load_plugins(["default"])
+	try :
+		r = q.json()
+		return(Response(response=r,status=200,mimetype="application/json"))
+	except Exception as e :
+		print("\nUne erreur est survenu lors d'une requette au chatbot")
+		print("----------------------------\n",e,"\n----------------------------\n")
+		return(Response(response=json.dumps("ERREUR"),status=200,mimetype="application/json"))
+
 @webapp.route('/widgets')
 @login_required
 def widgets():
@@ -256,7 +271,6 @@ def deconnexion():
 
 
 def loadsystemdatas():
-	
 	for app in myapp.settings["sys"]["installed_apps"]:
 		dir = app
 		file = app+".py"
