@@ -8,7 +8,7 @@ function update(widget){
     });
 }
 $(function() {
-    $.post("/widgets", {
+    $.post("/list/widgets", {
         user: user
     }, function(widgets) {
         for(var i = 0; i< widgets.length; i++) {

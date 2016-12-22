@@ -1,0 +1,28 @@
+{% extends "default/design.html" %}{% block title %}Widgets{% endblock %} {% block content %}
+<div class="container">
+    <script type="text/javascript" src="/static/default/jms/newwidget.jms"></script>
+    <h1>Widgets:</h1>
+    <div class="masonry">
+        <div class="item">
+            <h1>Vos widgets </h1>
+            <div class="card white shadows">
+                {% for widget in myapp.users[session["utilisateur"]]["widgets"]%}
+                <p>{{ widget }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="item">
+            <h1>Widgets disponibles : </h1>
+            {% for widget in myapp.users["sys"]["widgets"]%}{% if not widget in myapp.users[session["utilisateur"]]["widgets"]%}
+            <div class="card white shadows">
+                <p>{{ widget }} </p>
+                <p><a class="new button" href="{{url_for('install', type='widget', what=widget.replace('/','%2F')|safe )}}">Ajouter</a></p>
+            </div>
+            {% endif %}{% endfor %}
+
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

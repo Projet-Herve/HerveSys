@@ -1,11 +1,6 @@
-import json
-from flask import *
-from __main__ import login_required
- 
-
-#webapp = datas["webapp"]
 @webapp.route('/mywash', methods=['GET'])
 @login_required
+@need_app_active
 def index_mywash():
 	mywashdatas = json.loads(open("datas/apps/mywash/mywash.json","r").read())
 	users = load_datas("settings")

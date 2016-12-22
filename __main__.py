@@ -2,7 +2,7 @@ import sys, os
 
 from functools import wraps
 from flask import *
-from flask import session
+
 
 from time import sleep
 import schedule,threading
@@ -28,10 +28,12 @@ class herveapp:
 		for user in self.settings :
 			self.users[user] = {
 					"apps" : {},
-					"menu" : {"Accueil":"/","Déconnexion":"logout","Apps":"/apps"},
-					"widgets" : [],
+					"menu" : {"Accueil":"/","Déconnexion":"logout","Apps":"/apps","Widgets":"/widgets"},
+					"widgets" : self.settings[user]["widgets"],
+					"urls":[]
 					#"agenda" : agenda()
 				}
+				
 	def forever(self,function):
 		def decorator(function):
 			try:
@@ -53,7 +55,7 @@ class herveapp:
 				sleep(1)
 		
 		threading.Thread(target=__forever).start()
-		#threading.Thread(target=forschedule).start()
+		threading.Thread(target=forschedule).start()
 		#threading.Thread(target=qreaction.scanner_qr).start()
 	
 myapp = herveapp()
@@ -64,19 +66,6 @@ def authenticate():
     'Could not verify your access level for that URL.\n'
     'You have to login with proper credentials', 401,
     {'WWW-Authenticate': 'Basic realm="Login Required"'})
-
-
-@webapp.errorhandler(404)
-def page_not_found(e):
-    return render_template('default/error.html',datas=locals(),myapp=myapp)
-
-@webapp.errorhandler(403)
-def Forbidden(e):
-    return render_template('default/error.html',datas=locals(),myapp = myapp)
-
-@webapp.errorhandler(500)
-def Internal_Server_Error(e):
-    return render_template('default/error.html',datas=locals(),myapp = myapp)
 
 def login_required(f):
     @wraps(f)
@@ -94,6 +83,30 @@ def requires_auth(f):
             return authenticate()
         return f(*args, **kwargs)
     return decorated
+    
+def need_app_active(f):
+	@wraps(f)
+	def decorated(*args, **kwargs):
+		requesturl = "/"+"/".join(request.url.split("/")[3:])
+		if not requesturl in myapp.users[session["utilisateur"]]["urls"] :
+			return redirect("/",code=302)
+		return f(*args, **kwargs)
+	return decorated
+
+	
+@webapp.errorhandler(404)
+def page_not_found(e):
+    return render_template('default/error.html',datas=locals(),myapp=myapp)
+
+@webapp.errorhandler(403)
+def Forbidden(e):
+    return render_template('default/error.html',datas=locals(),myapp = myapp)
+
+@webapp.errorhandler(500)
+def Internal_Server_Error(e):
+    return render_template('default/error.html',datas=locals(),myapp = myapp)
+
+
     
 @webapp.route('/index')
 @webapp.route('/')
@@ -177,14 +190,30 @@ def connexion():
 			return render_template("default/index.html",datas=locals(),myapp = myapp)
 	return render_template("default/connexion.html",datas=locals(),myapp = myapp)
 
-@webapp.route('/widgets',methods=['POST'])
+@webapp.route('/list/widgets',methods=['POST'])
 @login_required
-def widget():
+def list_user_widget():
 	user = request.form.get("user")
 	toreturn =json.dumps(myapp.users[user]["widgets"])
 	return(Response(response=toreturn,status=200,mimetype="application/json"))
+
+@webapp.route('/widgets')
+@login_required
+def widgets():
+	return render_template("default/widgets.html",datas=locals(),myapp = myapp)
 	
-@webapp.route('/logout')		
+@webapp.route('/install/<type>/<what>')
+@login_required
+def install(type,what):
+	if type == "widget" :
+		settings = load_datas("settings")
+		settings[session["utilisateur"]]["widgets"].append(what)
+		myapp.users[session["utilisateur"]]["widgets"].append(what)
+		update_datas(settings,"settings")
+		toreturn =json.dumps("ok")
+		return(Response(response=toreturn,status=200,mimetype="application/json"))
+		
+@webapp.route('/logout')
 def deconnexion():
 	message = {}
 	if session.get("utilisateur"):
@@ -216,9 +245,12 @@ def updateuserdatas():
 			dir = app
 			if os.path.isdir("apps/"+dir):
 				manifest = json.loads(open("apps/"+dir+"/manifest.json").read())
-				myapp.users[user]["widgets"].extend(manifest["widgets"])
-				myapp.users[user]["menu"].update(manifest["urls"]["menu"])
+				if manifest["urls"].get("menu"):
+					myapp.users[user]["menu"].update(manifest["urls"]["menu"])
+					for url in manifest["urls"]["menu"] :
+						myapp.users[user]["urls"].append(manifest["urls"]["menu"][url])
 				myapp.users[user]["apps"].update({manifest["displayName"]:manifest})
+				
 			else :
 				print ("L'application '"+dir+"' n'éxiste pas !")
         
@@ -267,6 +299,7 @@ if "installapp" in argv :
 					sys = load_datas("settings")
 					if not packetmanifest["name"] in sys["sys"]["installed_apps"]:
 						sys["sys"]["installed_apps"].append(packetmanifest["name"])
+						sys["sys"]["widgets"].extend(packetmanifest.get("widgets",[]))
 						update_datas(sys,"settings")
 						print ("\n******** L'application a été installée ********")
 					else:
@@ -287,15 +320,13 @@ if "creatapp" in argv:
 		license = input("Quel license choisissez vous pour cette application?\n>")
 		displayName = input("Quel nom doit être affiché?\n>")
 		author = input("Qui êtes vous?\n>")
-		manifest = {"name": name,"version": "0.1","description": description,"license": license,"displayName": displayName,"author": author,"datas": [],"templates": ["index.html"],"urls":{"menu":{},"api":[]},"widgets":[]}
+		manifest = {"name": name,"version": "0.1","description": description,"license": license,"displayName": displayName,"author": author,"datas": [],"templates": ["index.html"],"urls":{"menu":{displayName:"/"+name},"api":[]},"widgets":[]}
 		print("Création de l'application (préinstallée)...")
 		print("Pour exporter votre application une fois finie executée: exportapp "+name)
 		os.system("mkdir apps/"+name)
 		open("apps/"+name+"/manifest.json","w").write(json.dumps(manifest,indent=4,ensure_ascii=False))
 		print("Le fichier apps/"+name+"/manifest.json de votre packet a été créé.")
-		open("apps/"+name+"/"+name+".py","w").write("""import json
-from flask import *
-from __main__ import login_required
+		open("apps/"+name+"/"+name+".py","w").write("""
  
 @webapp.route("/{name}")
 @login_required
@@ -355,6 +386,3 @@ if "exportapp" in argv:
 			elif r == "n":
 				print("Exportation annulée.")
 				break
-		
-		
-	

@@ -1,71 +1,74 @@
 {
     "Demo": {
+        "herve_serveur": {
+            "url": "https://siteherve-julesmichael.c9users.io/"
+        },
         "profile": {
-            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
-            "prenom": "Demo",
-            "email": "Demo@demomail.com",
-            "id": 1,
-            "sexe": "h",
-            "phrase": "courant",
             "nom": "Demo",
+            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
+            "phrase": "courant",
+            "sexe": "h",
             "age": 40,
+            "id": 1,
+            "email": "Demo@demomail.com",
+            "prenom": "Demo",
             "civilite": "monsieur"
+        },
+        "job_file": "job.py",
+        "templates": {
+            "dir": "templates/"
         },
         "actived_apps": [
             "mywash"
         ],
-        "static": {
-            "dir": "static/default/"
-        },
-        "plugins": {
-            "chatbot_dir": "plugins/chatbot",
-            "webapp_dir": "plugins/webapp"
-        },
-        "theme": {
-            "update_time": 60,
-            "Herve": {
-                "js": [
-                    {
-                        "file": "script.js",
-                        "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js",
-                        "dir": "js/"
-                    }
-                ],
-                "head": "",
-                "css": [
-                    {
-                        "file": "stylesheet.css",
-                        "url": "https://siteherve-julesmichael.c9users.io/static/default/css/stylesheet.css",
-                        "dir": "css/"
-                    }
-                ],
-                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json"
-            },
-            "actual": "Herve"
-        },
         "chatbot": {
             "history": {}
         },
+        "theme": {
+            "actual": "Herve",
+            "update_time": 60,
+            "Herve": {
+                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json",
+                "js": [
+                    {
+                        "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js",
+                        "file": "script.js",
+                        "dir": "js/"
+                    }
+                ],
+                "css": [
+                    {
+                        "url": "https://siteherve-julesmichael.c9users.io/static/default/css/stylesheet.css",
+                        "file": "stylesheet.css",
+                        "dir": "css/"
+                    }
+                ],
+                "head": ""
+            }
+        },
+        "widgets": [
+            "#lavages_en_cours /mywash",
+            "#lavages_en_attente %2Fmywash"
+        ],
         "pushbullet": {
             "api_key": ""
-        },
-        "herve_serveur": {
-            "url": "https://siteherve-julesmichael.c9users.io/"
-        },
-        "templates": {
-            "dir": "templates/"
-        },
-        "job_file": "job.py"
+        }
     },
     "sys": {
         "actived_apps": [
             "mywash"
         ],
-        "profile": {
-            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
-        },
         "installed_apps": [
             "mywash"
-        ]
+        ],
+        "widgets": [
+            "#lavages_en_cours /mywash",
+            "#lavages_en_attente /mywash",
+            "#propose /mywash",
+            "#lavages_fini /mywash"
+        ],
+        "profile": {
+            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
+        }
     }
 }
