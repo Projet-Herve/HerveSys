@@ -1,6 +1,6 @@
 {% extends "default/design.html" %}{% block title %}Widgets{% endblock %} {% block content %}
 <div class="container">
-    <script type="text/javascript" src="/static/default/jms/newwidget.jms"></script>
+    <script type="text/javascript" src="/static/default/jms/managewidgets.jms"></script>
     <h1>Widgets:</h1>
     <div class="masonry">
         <div class="item">
@@ -8,6 +8,7 @@
             <div class="card white shadows">
                 {% for widget in myapp.users[session["utilisateur"]]["widgets"]%}
                 <p>{{ widget }}</p>
+                <p><a class="del button error" href="{{url_for('remove_', type='widget', what=widget|safe )}}">Supprimer</a></p>
                 {% endfor %}
             </div>
         </div>
@@ -16,7 +17,7 @@
             {% for widget in myapp.users["sys"]["widgets"]%}{% if not widget in myapp.users[session["utilisateur"]]["widgets"]%}
             <div class="card white shadows">
                 <p>{{ widget }} </p>
-                <p><a class="new button" href="{{url_for('install', type='widget', what=widget.replace('/','%2F')|safe )}}">Ajouter</a></p>
+                <p><a class="new button" href="{{url_for('install', type='widget', what=widget|safe )}}">Ajouter</a></p>
             </div>
             {% endif %}{% endfor %}
 

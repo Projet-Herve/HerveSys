@@ -29,7 +29,7 @@ class herveapp:
 			self.users[user] = {
 					"apps" : {},
 					"menu" : {"Accueil":"/","Déconnexion":"logout","Apps":"/apps","Widgets":"/widgets"},
-					"widgets" : self.settings[user]["widgets"],
+					"widgets" : list(map(lambda x: x.replace("/","%2F"),self.settings[user]["widgets"])),
 					"urls":[]
 					#"agenda" : agenda()
 				}
@@ -209,6 +209,17 @@ def install(type,what):
 		settings = load_datas("settings")
 		settings[session["utilisateur"]]["widgets"].append(what)
 		myapp.users[session["utilisateur"]]["widgets"].append(what)
+		update_datas(settings,"settings")
+		toreturn =json.dumps("ok")
+		return(Response(response=toreturn,status=200,mimetype="application/json"))
+		
+@webapp.route('/del/<type>/<what>')
+@login_required
+def remove_(type,what):
+	if type == "widget" :
+		settings = load_datas("settings")
+		settings[session["utilisateur"]]["widgets"].remove(what)
+		myapp.users[session["utilisateur"]]["widgets"].remove(what)
 		update_datas(settings,"settings")
 		toreturn =json.dumps("ok")
 		return(Response(response=toreturn,status=200,mimetype="application/json"))
