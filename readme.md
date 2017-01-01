@@ -66,7 +66,7 @@ Ainsi vous pourrez sélectionner votre widget de la sorte :
 ...
 
 "widgets":[
-	".my_class /name"
+	".my_class /url"
 ],
 
 ...
@@ -101,6 +101,15 @@ Pour rendre une fonction perpétuelle, utilisez le décorateur `myapp.forever`
 @myapp.forever
 def mafonctionperpetuel():
 	print("Je fonctionne")
+```
+##### Définir une tache en arrière plant
+
+Pour exécuter une fonction en background, utilisez le décorateur `myapp.in_thread`
+
+```python
+@myapp.in_thread
+def mafonction():
+	print("Je fonctionne en background")
 ```
 
 ### Exportation d'une application

@@ -3,17 +3,16 @@ import sys, os
 from functools import wraps
 from flask import *
 
-
 from time import sleep
 import schedule,threading
 import hashlib
 
-#import qreaction
 from myhtml import tag
 from datas import load_datas,update_datas
 from jms import parse
 from notify import *
 import chatbot
+
 argv = sys.argv[1:]
 
 webapp = Flask(__name__)
@@ -33,7 +32,7 @@ class herveapp:
 					"urls":[]
 					#"agenda" : agenda()
 				}
-				
+
 	def forever(self,function):
 		def decorator(function):
 			try:
@@ -43,7 +42,10 @@ class herveapp:
 				print("[erreur] "+e)
 				return False
 		return decorator(function)
-		
+	
+	def in_thread(self,function):
+		threading.Thread(target=function).start()
+
 	def start(self):
 		def __forever():
 			while True :
@@ -53,11 +55,11 @@ class herveapp:
 			while True:
 				schedule.run_pending()
 				sleep(1)
-		
+
 		threading.Thread(target=__forever).start()
 		threading.Thread(target=forschedule).start()
 		#threading.Thread(target=qreaction.scanner_qr).start()
-	
+
 myapp = herveapp()
 
 def authenticate():
@@ -74,7 +76,7 @@ def login_required(f):
             return redirect("/connexion", code=302)
         return f(*args, **kwargs)
     return decorated_function
-    
+
 def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -83,7 +85,7 @@ def requires_auth(f):
             return authenticate()
         return f(*args, **kwargs)
     return decorated
-    
+
 def need_app_active(f):
 	@wraps(f)
 	def decorated(*args, **kwargs):
@@ -93,7 +95,7 @@ def need_app_active(f):
 		return f(*args, **kwargs)
 	return decorated
 
-	
+
 @webapp.errorhandler(404)
 def page_not_found(e):
     return render_template('default/error.html',datas=locals(),myapp=myapp)
@@ -107,7 +109,7 @@ def Internal_Server_Error(e):
     return render_template('default/error.html',datas=locals(),myapp = myapp)
 
 
-    
+
 @webapp.route('/index')
 @webapp.route('/')
 def index():
@@ -115,7 +117,7 @@ def index():
 		return render_template("default/index.html",datas=locals(),myapp = myapp)
 	else :
 		return redirect("/connexion", code=302)
-		
+
 
 @webapp.route('/static/default/jms/<script>')
 def jms_page(script):
@@ -145,7 +147,7 @@ def inscriptions():
 		if not code2 :
 			message["error"].append('Veillez retapper votre code de securite')
 		if code1 != code2 :
-			message["error"].append('Veillez entrer deux fois le meme code')		
+			message["error"].append('Veillez entrer deux fois le meme code')
 		if not message['error']:
 			nouveauutilisateur = {
 				"id":len(datas),
@@ -156,8 +158,8 @@ def inscriptions():
 			user = {
 				nom:{
 					"profile":nouveauutilisateur,
-					"actived_apps": [
-				]
+					"actived_apps": [],
+					"widgets":[]
 				}
 			}
 			datas.update(user)
@@ -165,10 +167,12 @@ def inscriptions():
 			update_datas(datas,"settings")
 			message["succes"].append('Bravo '+nom+" vous êtes dès à present inscrit! Ceci est votre DashBoard")
 			updateuserdatas()
-		return render_template("default/index.html",datas=locals(),myapp = myapp)
+			return render_template("default/index.html",datas=locals(),myapp = myapp)
+		else:
+			return render_template("default/inscriptions.html",datas=locals(),myapp = myapp)
 	else :
 		return render_template("default/inscriptions.html",datas=locals(),myapp = myapp)
-		
+
 @webapp.route('/connexion', methods=['GET','POST'])
 def connexion():
 	if request.method == "POST":
@@ -202,20 +206,21 @@ def chatbot_request():
 	text = request.form.get("text")
 	q = chatbot.question(text)
 	q.load_user(session["utilisateur"])
-	q.load_plugins(["default"])
+	q.load_plugins(["default","blagues"])
+	#q.checkortho()
 	try :
 		r = q.json()
 		return(Response(response=r,status=200,mimetype="application/json"))
 	except Exception as e :
 		print("\nUne erreur est survenu lors d'une requette au chatbot")
 		print("----------------------------\n",e,"\n----------------------------\n")
-		return(Response(response=json.dumps("ERREUR"),status=200,mimetype="application/json"))
+		return(Response(response=json.dumps({"ERREUR":e}),status=200,mimetype="application/json"))
 
 @webapp.route('/widgets')
 @login_required
 def widgets():
 	return render_template("default/widgets.html",datas=locals(),myapp = myapp)
-	
+
 @webapp.route('/active/<type>/<what>')
 @login_required
 def active(type,what):
@@ -226,7 +231,7 @@ def active(type,what):
 		update_datas(settings,"settings")
 		toreturn =json.dumps("ok")
 		return(Response(response=toreturn,status=200,mimetype="application/json"))
-	
+
 	if type == "application":
 		settings = load_datas("settings")
 		settings[session["utilisateur"]]["actived_apps"].append(what)
@@ -235,7 +240,7 @@ def active(type,what):
 		#loadsystemdatas()
 		updateuserdatas()
 		return(Response(response=toreturn,status=200,mimetype="application/json"))
-		
+
 @webapp.route('/desactive/<type>/<what>')
 @login_required
 def desactive(type,what):
@@ -246,7 +251,7 @@ def desactive(type,what):
 		update_datas(settings,"settings")
 		toreturn =json.dumps("ok")
 		return(Response(response=toreturn,status=200,mimetype="application/json"))
-		
+
 	if type == "application" :
 		manifest = json.loads(open("apps/"+what+"/manifest.json").read())
 		settings = load_datas("settings")
@@ -258,7 +263,7 @@ def desactive(type,what):
 		toreturn =json.dumps("ok")
 		updateuserdatas()
 		return(Response(response=toreturn,status=200,mimetype="application/json"))
-		
+
 @webapp.route('/logout')
 def deconnexion():
 	message = {}
@@ -297,10 +302,9 @@ def updateuserdatas():
 					for url in manifest["urls"]["menu"] :
 						myapp.users[user]["urls"].append(manifest["urls"]["menu"][url])
 				myapp.users[user]["apps"].update({manifest["displayName"]:manifest})
-				
+
 			else :
 				print ("L'application '"+dir+"' n'éxiste pas !")
-        
 
 if "run" in argv:
     loadsystemdatas()
@@ -317,7 +321,7 @@ if "run" in argv:
     if "-p" in argv:
         port = int(argv[argv.index("-p")+1])
     webapp.run(host=host,port=port,debug=True)
-    
+
 if "installapp" in argv :
 	try:
 		dir = argv[argv.index("installapp")+1]
@@ -331,7 +335,7 @@ if "installapp" in argv :
 			print("Description: "+packetmanifest["description"])
 			print("V:"+packetmanifest["version"])
 			print ("Voulez vous vraiment installer cette application ?")
-			while 1 : 
+			while 1 :
 				yesornot = input("y/n>")
 				if  yesornot == "y":
 					print("Déplacement du packet")
@@ -355,7 +359,7 @@ if "installapp" in argv :
 				elif yesornot == "n":print("\n******** L'instalation a été anulée ********");break
 		else:print("/!\ Le fichier manifest n'existe pas")
 	else:print("/!\ Ce packet n'existe pas")
-	
+
 if "creatapp" in argv:
 	try:
 		name = argv[argv.index("creatapp")+1]
@@ -374,7 +378,7 @@ if "creatapp" in argv:
 		open("apps/"+name+"/manifest.json","w").write(json.dumps(manifest,indent=4,ensure_ascii=False))
 		print("Le fichier apps/"+name+"/manifest.json de votre packet a été créé.")
 		open("apps/"+name+"/"+name+".py","w").write("""
- 
+
 @webapp.route("/{name}")
 @login_required
 def index_{name}():
@@ -400,7 +404,7 @@ def index_{name}():
 		print("Création de l'application terminée")
 	else:
 		print("Cette application éxiste déja")
-	
+
 if "exportapp" in argv:
 	try:
 		name = argv[argv.index("exportapp")+1]

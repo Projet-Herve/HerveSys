@@ -1,34 +1,19 @@
 {% extends "default/design.html" %} {% block title %}Connexion{% endblock %} {% block content %}
-<div style="padding: 20px;">
-    <h1>Connexion :</h1>
-    <div class="row">
-        <div class="col s12 m6">
-        <form method="post" action="/connexion" class="card white shadows">
-            <div class="row">
-                <div class="col s12 m6">Prénom</div>
-                <div class="col s12 m6"><input type="text" name="nom"></div>
-                <div class="col s12 m6">Code</div>
-                <div class="col s12 m6"><input type="password" name="code"></div><br>
-                <div class="col s12"><button type="submit">Connexion !</button></div>
+<div class="container">
+    
+    <div class="card white shadows logincard">
+        <div class="header"><h1>Connexion</h1></div>
+        <form class="content" method="post" action="/connexion">
+            <div>
+                <input placeholder="Prénom" type="text" name="nom">
             </div>
-            
-        </form>
-    </div>
-    <div class="col s12 m6">
-        <form method="post" action="/inscriptions" class="card white shadows">
-            <div class="row">
-                    <div class="col s12 m6">Prénom</div>
-                    <div class="col s12 m6"><input type="text" name="nom"></div>
-                    <div class="col s12 m6">Code</div>
-                    <div class="col s12 m6"><input class type="password" name="code1"></div>
-                    <div class="col s12 m6">Code (2)</div>
-                    <div class="col s12 m6"><input type="password" name="code2"></div>
-                    <div class="col s12"><button type="submite">Inscriptions !</button></div>
+            <div>
+                <input placeholder="Mot de passe" type="password" name="code">
             </div>
+            <button type="submit">Connexion !</button>
         </form>
-    </div>
+        <div class="footer"><a style="color:#fff;" href="/inscriptions">Se créer un compte</a></div>
     </div>
 </div>
-
 
 {% endblock %}

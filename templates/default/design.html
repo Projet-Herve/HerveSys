@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="static/default/css/stylesheet.css">
@@ -9,8 +8,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
     <script>
-        hljs.initHighlightingOnLoad();
-        {% if session %}user = "{{session["utilisateur"]}}";{% endif %}
+        hljs.initHighlightingOnLoad(); 
+        {%if session %}user = '{{session["utilisateur"]}}';{% endif %}
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <title>Hervé > {% block title %}{% endblock %}</title>
@@ -20,49 +19,48 @@
     <nav id="nav">
         <span class="button" onclick="openNav()">
               &#9776;
-        </span>
-        {% block nav %}
-        <span class="text">HERVE</span>
-        {% endblock %}
+        </span> {% block nav %}
+        <span class="text">ADMIMEN</span> {% endblock %}
     </nav>
     <div id="sidenav">
         <div class="content">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            {% if session %}
-                <img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" class="rounded" ></img>
-                <a>{{session["utilisateur"]}}</a>
-                {% for i in myapp.users[session["utilisateur"]]["menu"] %}
-                    <a href='{{myapp.users[session["utilisateur"]]["menu"][i]}}'>{{i}}</a>
-                {% endfor %}
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> {% if session %}
+            <img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" class="rounded"></img>
+            <a>{{session["utilisateur"]}}</a> {% for i in myapp.users[session["utilisateur"]]["menu"] %}
+            <a href='{{myapp.users[session["utilisateur"]]["menu"][i]}}'>{{i}}</a> {% endfor %}
+            {% else %}
+                <a href="#">Votre menu est actuelement vide. Pour cause, vous n'êtes pas connecté(e)</a>
+                <a href="/connexion">Se connecter</a>
+                <a href="/inscriptions">S'inscrir</a>
             {% endif %}
         </div>
-    <footer >
-        <div class="container">©JulesMichael</div>
-    </footer>
+        <footer>
+            <div class="container">©JulesMichael</div>
+        </footer>
     </div>
     <div id="content">
-            {% if datas.get('message')['succes'] %}
-            <div class="container">
-                <div class="card green shadows">
+        {% if datas.get('message')['succes'] %}
+        <div class="container">
+            <div class="card green shadows">
+                <div class="content">
                     {% for item in datas['message']['succes'] %}
-                        <p>{{ item }}</p>
+                    <p>{{ item }}</p>
                     {% endfor %}
                 </div>
             </div>
-            {% endif %}
-            {% if datas.get('message')['error'] %}
-            <div class="container">
-                <div class="card red shadows">
+        </div>
+        {% endif %} {% if datas.get('message')['error'] %}
+        <div class="container">
+            <div class="card red shadows">
+                <div class="content">
                     {% for item in datas['message']['error'] %}
-                        <p>{{ item }}</p>
+                    <p>{{ item }}</p>
                     {% endfor %}
                 </div>
             </div>
-            {% endif %}
-        {% block content %}{% endblock %}
+        </div>
+        {% endif %} {% block content %}{% endblock %}
     </div>
-
-    
 </body>
 
 </html>

@@ -4,11 +4,12 @@ import random
 import requests
 from myhtml import tag
 from datas import *
+
 class Reponse():
 	"""docstring for reponse"""
 	def __init__(self, arg={}):
 		self.text = arg.get("text","")
-		self.links = arg.get("link","")
+		self.links = arg.get("links","")
 		self.html = arg.get("html","")
 		self.datas = arg.get("datas","") 
 	def get_text(self):
@@ -58,6 +59,7 @@ class question ():
 				requette = requests.get("http://herveprojet.hol.es/web-app/api/ortho.php",params={'text':tocorect}).text
 				correct = json.loads(requette)["AutoCorrectedText"].lower()
 			except:
+				print("can't correct")
 				correct = tocorect
 			if tocorect == correct :
 				break
@@ -98,6 +100,7 @@ class question ():
 		# return self.final["reponses"]
 
 	def json(self):
+		the_l = self.reponse()
 		toreturn = {
 			"text": {
 				"initial":self.message[0],
@@ -105,14 +108,24 @@ class question ():
 				"corrected":self.message[2]
 			},
 			"reponses":{
-				"text": ". ".join(list(map(lambda x: self.getreponse(x.get_text()).format(**self.user["profile"]),self.final["reponses"]))),
-				"html": "".join(list(map(lambda x: self.getreponse(x.get_html()).format(**self.user["profile"]),self.final["reponses"]))),
-				"links": ". ".join(list(map(lambda x: self.getreponse(x.get_links()),self.final["reponses"]))),
-				"list" : list(map(lambda x: self.getreponse(x.get_text()).format(**self.user["profile"]),self.final["reponses"]))
+				"text": " ".join(the_l),
+				"html": "".join(
+					list(
+						map(
+							lambda x: self.getreponse(x.get_html()).format(**self.user["profile"]),
+							self.final["reponses"]
+							)
+						)
+					),
+				"links": [],
+				"list" : the_l
 			},
 			"regexs" : self.final["regexs"],
 			"nbcorrection" : self.final["nbcorrection"]
 		}
+		for res_ in self.final["reponses"] :
+			toreturn["reponses"]["links"].extend(res_.get_links())
+		
 		#toreturn["regexs"] = self.final["regexs"]
 		toreturn = json.dumps(toreturn, sort_keys=True, indent=4)
 		return toreturn

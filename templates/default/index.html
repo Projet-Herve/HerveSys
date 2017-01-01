@@ -1,19 +1,20 @@
-{% extends "default/design.html" %} {% block title %}
-Dashboard
-{% endblock %}{% block content %}
+{% extends "default/design.html" %} {% block title %} Dashboard {% endblock %}{% block content %}
 <script type="text/javascript" src="static/default/jms/widgets.jms"></script>
 <script type="text/javascript" src="static/default/jms/chatbot.js"></script>
+<script type="text/javascript" src="static/default/jms/localisation.js"></script>
 <div class="container">
     <div class="masonry" id="widgets">
         <div class="item">
-            <div class="card white shadows chatbot">
-                <div class="messages">
-                   
+            <div class="card white shadows">
+                <div class="content">
+                    <div class="messages chatbot"></div>
+                    <center>
+                        <form id="chatbot" action="/chatbot" style="padding: 0px;margin: 0px;">
+                            <input type="text" name="text" id="chatbottext" placeholder="..." />
+                            <button type="submit">Envoyer</button>
+                        </form>
+                    </center>
                 </div>
-                <form id="chatbot" action="/chatbot" style="padding: 0px;margin: 0px;">
-                    <input type="text" name="text" id="chatbottext" placeholder="..."/>
-                    <button type="submit">Envoyer</button>
-                </form>
             </div>
         </div>
     </div>

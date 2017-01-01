@@ -1,25 +1,68 @@
-{% extends "default/design.html" %} {% block content %}
-
-<div style="padding: 20px;">
-    <h1>Inscriptions :</h1>
-    <div class="row">
-        <form method="post" action="" class="card white shadows">
-            <table>
-                <tr>
-                    <td>Prénom</td>
-                    <td>Code</td>
-                    <td>Code (2)</td>
-                </tr>
-                <tr>
-                    <td><input type="text" name="nom"></td>
-                    <td><input class type="password" name="code1"></td>
-                    <td><input type="password" name="code2"></td>
-                </tr>
-            </table>
-            <button type="submite">Inscriptions !</button>
+{% extends "default/design.html" %} {% block title %}Inscriptions{% endblock %} {% block content %}
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
+<div class="card white shadows logincard">
+    <div class="header">
+        <h1>Inscriptions</h1>
+    </div>
+    <div class="content">
+        <form method="post" action="/inscriptions">
+            <div class="slide">
+                <div>
+                    <img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" class="rounded"></img>
+                    <p>Bonjour, ceci est la procédure de création d'un compte. Je vais vous poser un certain nombre de questions à propos de vous. Ainsi, je pourais répondre à vos besoins.</p>
+                </div>
+                <div>
+                    <div>
+                        <input placeholder="Nom" type="text" name="nom">
+                    </div>
+                    <!--<div>
+                        <input placeholder="Prénom" type="text" name="prenom">
+                    </div>-->
+                    <div>
+                        <input placeholder="Mot de passe" class type="password" name="code1">
+                    </div>
+                    <div>
+                        <input placeholder="Vérification" type="password" name="code2">
+                    </div>
+                    <!--<div>
+                        <input placeholder="Email" type="email" name="email" />
+                    </div>-->
+                    <!--<div>
+                        <input placeholder="Ville" type="text" name="ville" />
+                    </div>-->
+                </div>
+                <!--<div>
+                    <div>
+                        <input placeholder="Votre age" type="number" name="nom">
+                    </div>
+                    <div>
+                        <select name="select">
+                          <option value="" selected>Je suis :</option> 
+                          <option value="homme" >un homme</option>
+                          <option value="femme">une femme</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit">Inscriptions !</button>
+                    </div>
+                </div>-->
+            </div>
+            <p class="status"></p>
+            <a class="btn prev">Précédent</a>
+            <a class="btn next">Suivant</a><br><br>
         </form>
     </div>
+    <div class="footer"><a style="color:#fff;" href="/connexion">J'ai déjà un compte</a></div>
 </div>
-
-
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.slide').slick({
+            infinite: false,
+            prevArrow: $('.prev'),
+            nextArrow: $('.next'),
+            focusOnSelect: false,
+        });
+    });
+</script>
 {% endblock %}
