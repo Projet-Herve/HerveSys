@@ -1,5 +1,14 @@
 # Hervé | Documentation :
 
+## Installer Hervé
+
+```shell
+cd $HOME
+git clone http://github.com/Projet-Herve/HerveSys
+cd HerveSys/
+./run
+```
+
 /!\ Toutes les commandes indiquées doivent être exécutées dans le dossier Hervé !
 
 ## Exécuter Hervé :
@@ -8,6 +17,12 @@ Pour exécuter Hervé utilisez la commande :
 
 ```shell
 python3 __main__.py run [-h/--host] [IP] [-p/--port] [PORT]
+```
+
+ou simplement (les librairies seront mises à jours si besoin):
+
+```shell
+./run 
 ```
 
 ## Les applications :
@@ -112,7 +127,7 @@ def mafonction():
 	print("Je fonctionne en background")
 ```
 
-##### Autoriser l'acces qu'aux utilisateurs ayants activés l'application
+##### Autoriser l'acces qu'aux utilisateurs ayants activés l'application :
 
 ```python
 @need_app_active
