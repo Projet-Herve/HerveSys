@@ -11,10 +11,10 @@
         hljs.initHighlightingOnLoad(); 
         {%if session %}user = '{{session["utilisateur"]}}';{% endif %}
     </script>
+   
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <title>Hervé > {% block title %}{% endblock %}</title>
 </head>
-
 <body>
     <nav id="nav">
         <span class="button" onclick="openNav()">
@@ -62,5 +62,4 @@
         {% endif %} {% block content %}{% endblock %}
     </div>
 </body>
-
 </html>

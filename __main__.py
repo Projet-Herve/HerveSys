@@ -27,24 +27,11 @@ class herveapp:
 		for user in self.settings :
 			self.users[user] = {
 					"apps" : {},
-					"menu" : {"Accueil":"/","Déconnexion":"logout","Apps":"/apps","Widgets":"/widgets"},
+					"menu" : {"Accueil":"/","Déconnexion":"/deconnexion","Apps":"/apps","Widgets":"/widgets"},
 					"widgets" : list(map(lambda x: x.replace("/","%2F"),self.settings[user]["widgets"])),
 					"urls":[]
 					#"agenda" : agenda()
 				}
-
-	def forever(self,function):
-		def decorator(function):
-			try:
-				self.forever_.append(function)
-				return True
-			except Exception as e:
-				print("[erreur] "+e)
-				return False
-		return decorator(function)
-	
-	def in_thread(self,function):
-		threading.Thread(target=function).start()
 
 	def start(self):
 		def __forever():
@@ -55,12 +42,27 @@ class herveapp:
 			while True:
 				schedule.run_pending()
 				sleep(1)
-
 		threading.Thread(target=__forever).start()
 		threading.Thread(target=forschedule).start()
-		#threading.Thread(target=qreaction.scanner_qr).start()
+	
+	# Décorateurs
+	
+	def forever(self,function):
+		def decorator(function):
+			try:
+				self.forever_.append(function)
+				return True
+			except Exception as e:
+				print("----------------------------\n",e,"\n----------------------------\n")
+				return False
+		return decorator(function)
+	
+	def in_thread(self,function):
+		threading.Thread(target=function).start()
 
 myapp = herveapp()
+
+# Décorteurs
 
 def authenticate():
     """Sends a 401 response that enables basic auth"""
@@ -94,7 +96,8 @@ def need_app_active(f):
 			return redirect("/",code=302)
 		return f(*args, **kwargs)
 	return decorated
-
+	
+# Erreurs
 
 @webapp.errorhandler(404)
 def page_not_found(e):
@@ -109,6 +112,20 @@ def Internal_Server_Error(e):
     return render_template('default/error.html',datas=locals(),myapp = myapp)
 
 
+@webapp.route('/static/default/jms/<script>')
+def jms_page(script):
+	try :
+		return Response(response=parse(open('static/default/jms/'+script,'r').read()),status=200,mimetype="text/javascript")
+	except:
+		print("fichier '"+script+"' introuvable" )
+		return Response(response="console.log('Fichier jms non trouvé ! (Fichier : " + script +") ; Ou erreur interne du au serveur :/');",status=200,mimetype="text/javascript")
+
+# Vues simples
+
+@webapp.route('/apps', methods=['GET'])
+@login_required
+def apps():
+	return render_template("default/apps.html",datas=locals(),myapp=myapp)
 
 @webapp.route('/index')
 @webapp.route('/')
@@ -118,19 +135,12 @@ def index():
 	else :
 		return redirect("/connexion", code=302)
 
-
-@webapp.route('/static/default/jms/<script>')
-def jms_page(script):
-	try :
-		return Response(response=parse(open('static/default/jms/'+script,'r').read()),status=200,mimetype="text/javascript")
-	except:
-		return Response(response="console.log('Fichier jms non trouvé ! (Fichier : " + script +") ; Ou erreur interne du au serveur :/');",status=200,mimetype="text/javascript")
-
-@webapp.route('/apps', methods=['GET'])
+@webapp.route('/widgets')
 @login_required
-def apps():
-	return render_template("default/apps.html",datas=locals(),myapp=myapp)
+def widgets():
+	return render_template("default/widgets.html",datas=locals(),myapp = myapp)		
 
+# Inscriptions Connexion Deconnexion
 @webapp.route('/inscriptions', methods=['GET','POST'])
 def inscriptions():
 	datas = load_datas("settings")
@@ -139,7 +149,6 @@ def inscriptions():
 		code1 = request.form.get('code1')
 		code2 = request.form.get('code2')
 		message = {"error":[],"succes":[]}
-
 		if not nom :
 			message["error"].append('Veillez choisir un nom d\'utilistaur')
 		if not code1 :
@@ -192,7 +201,17 @@ def connexion():
 		if  len(message["error"])  == 0 :
 			return render_template("default/index.html",datas=locals(),myapp = myapp)
 	return render_template("default/connexion.html",datas=locals(),myapp = myapp)
-
+	
+@webapp.route('/deconnexion')
+def deconnexion():
+	message = {}
+	if session.get("utilisateur"):
+		del(session["utilisateur"])
+		message["succes"] =['Vous avez été deconnecté']
+	else:
+		message["error"] =['Vous n\'étiez pas connecté']
+	return render_template("default/connexion.html",datas=locals(),myapp = myapp)
+	
 @webapp.route('/list/widgets',methods=['POST'])
 @login_required
 def list_user_widget():
@@ -215,11 +234,6 @@ def chatbot_request():
 		print("\nUne erreur est survenu lors d'une requette au chatbot")
 		print("----------------------------\n",e,"\n----------------------------\n")
 		return(Response(response=json.dumps({"ERREUR":e}),status=200,mimetype="application/json"))
-
-@webapp.route('/widgets')
-@login_required
-def widgets():
-	return render_template("default/widgets.html",datas=locals(),myapp = myapp)
 
 @webapp.route('/active/<type>/<what>')
 @login_required
@@ -264,16 +278,6 @@ def desactive(type,what):
 		updateuserdatas()
 		return(Response(response=toreturn,status=200,mimetype="application/json"))
 
-@webapp.route('/logout')
-def deconnexion():
-	message = {}
-	if session.get("utilisateur"):
-		del(session["utilisateur"])
-		message["succes"] =['Vous avez été deconnecté']
-	else:
-		message["error"] =['Vous n\'étiez pas connecté']
-	return render_template("default/connexion.html",datas=locals(),myapp = myapp)
-
 
 def loadsystemdatas():
 	for app in myapp.settings["sys"]["installed_apps"]:
@@ -306,11 +310,13 @@ def updateuserdatas():
 			else :
 				print ("L'application '"+dir+"' n'éxiste pas !")
 
+			
+
 if "run" in argv:
     loadsystemdatas()
     updateuserdatas()
     myapp.start()
-    host = "localhost"
+    host = "0.0.0.0"
     port = 8080
     if "--host" in argv:
         host = argv[argv.index("--host")+1]

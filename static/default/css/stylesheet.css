@@ -200,6 +200,28 @@ a {
     max-width:60%;
 }
 
+.card{
+    transition: 1s;
+
+}
+
+.card .front{
+    position: absolute:
+    top:0px;
+    z-index: 100;
+    backface-visibility: hidden;
+}
+
+.card .back{
+    position: absolute:
+    top:0px;
+    z-index: 50;
+    transform: rotateY(-180deg);
+}
+.front:hover{
+    transform: rotateY(180deg);
+}
+
 .card .content {
     margin-top: 25px;
     padding: 10px;

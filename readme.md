@@ -112,6 +112,12 @@ def mafonction():
 	print("Je fonctionne en background")
 ```
 
+##### Autoriser l'acces qu'aux utilisateurs ayants activés l'application
+
+```python
+@need_app_active
+```
+
 ### Exportation d'une application
 
 Pour exporter votre application par exemple pour le store, exécutez la commande :

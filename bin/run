@@ -1,3 +1,0 @@
-#!/bin/bash
-
-python3 __main__.py run -h $IP -p $PORT

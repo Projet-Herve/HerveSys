@@ -40,7 +40,7 @@
                     {% for key in myapp.users["sys"]["apps"][app] %}
                     <p>{{key}}: {{myapp.users["sys"]["apps"][app][key]}}</p>
                     {% endfor %}
-                    <div class="backcard">
+                    <div class="back">
                         <pre><code>{{myapp.users["sys"]["apps"][app]|tojson|safe}}</code></pre>
                     </div>
                     <p><a class="new button" href="{{url_for('active', type='application', what=myapp.users['sys']['apps'][app]['name'] )}}">Ajouter</a></p>

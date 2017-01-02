@@ -1,77 +1,77 @@
 {
-    "sys": {
-        "widgets": [
-            "#lavages_en_cours /mywash",
-            "#lavages_en_attente /mywash",
-            "#propose /mywash",
-            "#lavages_fini /mywash"
-        ],
+    "Demo": {
         "profile": {
-            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
+            "prenom": "Demo",
+            "email": "Demo@demomail.com",
+            "civilite": "monsieur",
+            "id": 1,
+            "nom": "Demo",
+            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
+            "age": 40,
+            "sexe": "h",
+            "phrase": "courant",
+            "location": "paris"
         },
-        "installed_apps": [
-            "mywash"
+        "widgets": [
+            "#lavages_en_cours %2Fmywash",
+            "#lavages_en_attente %2Fmywash",
+            "#propose %2Fmywash",
+            "#lavages_fini %2Fmywash"
         ],
+        "theme": {
+            "update_time": 60,
+            "actual": "Herve",
+            "Herve": {
+                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json",
+                "head": "",
+                "js": [
+                    {
+                        "dir": "js/",
+                        "file": "script.js",
+                        "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js"
+                    }
+                ],
+                "css": [
+                    {
+                        "dir": "css/",
+                        "file": "stylesheet.css",
+                        "url": "https://siteherve-julesmichael.c9users.io/static/default/css/stylesheet.css"
+                    }
+                ]
+            }
+        },
+        "pushbullet": {
+            "api_key": ""
+        },
+        "job_file": "job.py",
         "actived_apps": [
             "mywash"
-        ]
-    },
-    "Demo": {
-        "chatbot": {
-            "history": {}
-        },
+        ],
         "templates": {
             "dir": "templates/"
         },
         "herve_serveur": {
             "url": "https://siteherve-julesmichael.c9users.io/"
         },
+        "chatbot": {
+            "history": {}
+        }
+    },
+    "sys": {
+        "installed_apps": [
+            "mywash"
+        ],
         "actived_apps": [
             "mywash"
         ],
-        "theme": {
-            "actual": "Herve",
-            "Herve": {
-                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json",
-                "js": [
-                    {
-                        "dir": "js/",
-                        "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js",
-                        "file": "script.js"
-                    }
-                ],
-                "css": [
-                    {
-                        "dir": "css/",
-                        "url": "https://siteherve-julesmichael.c9users.io/static/default/css/stylesheet.css",
-                        "file": "stylesheet.css"
-                    }
-                ],
-                "head": ""
-            },
-            "update_time": 60
+        "profile": {
+            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
         },
         "widgets": [
-            "#lavages_fini %2Fmywash",
-            "#propose %2Fmywash",
-            "#lavages_en_attente %2Fmywash",
-            "#lavages_en_cours %2Fmywash"
-        ],
-        "profile": {
-            "age": 40,
-            "sexe": "h",
-            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
-            "email": "Demo@demomail.com",
-            "civilite": "monsieur",
-            "nom": "Demo",
-            "id": 1,
-            "location": "paris",
-            "phrase": "courant",
-            "prenom": "Demo"
-        },
-        "job_file": "job.py",
-        "pushbullet": {
-            "api_key": ""
-        }
+            "#lavages_en_cours /mywash",
+            "#lavages_en_attente /mywash",
+            "#propose /mywash",
+            "#lavages_fini /mywash"
+        ]
     }
 }
