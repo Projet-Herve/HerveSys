@@ -184,6 +184,8 @@ def inscriptions():
 
 @webapp.route('/connexion', methods=['GET','POST'])
 def connexion():
+	if len(myapp.users) == 1 :
+		return redirect("/inscriptions", code=302) 
 	if request.method == "POST":
 		message = {"error":[],"succes":[]}
 		if not request.form.get("nom") :
