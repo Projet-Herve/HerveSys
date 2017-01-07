@@ -44,9 +44,9 @@ class herveapp:
 				sleep(1)
 		threading.Thread(target=__forever).start()
 		threading.Thread(target=forschedule).start()
-	
+
 	# Décorateurs
-	
+
 	def forever(self,function):
 		def decorator(function):
 			try:
@@ -56,7 +56,7 @@ class herveapp:
 				print("----------------------------\n",e,"\n----------------------------\n")
 				return False
 		return decorator(function)
-	
+
 	def in_thread(self,function):
 		threading.Thread(target=function).start()
 
@@ -96,7 +96,7 @@ def need_app_active(f):
 			return redirect("/",code=302)
 		return f(*args, **kwargs)
 	return decorated
-	
+
 # Erreurs
 
 @webapp.errorhandler(404)
@@ -138,7 +138,7 @@ def index():
 @webapp.route('/widgets')
 @login_required
 def widgets():
-	return render_template("default/widgets.html",datas=locals(),myapp = myapp)		
+	return render_template("default/widgets.html",datas=locals(),myapp = myapp)
 
 # Inscriptions Connexion Deconnexion
 @webapp.route('/inscriptions', methods=['GET','POST'])
@@ -185,7 +185,7 @@ def inscriptions():
 @webapp.route('/connexion', methods=['GET','POST'])
 def connexion():
 	if len(myapp.users) == 1 :
-		return redirect("/inscriptions", code=302) 
+		return redirect("/inscriptions", code=302)
 	if request.method == "POST":
 		message = {"error":[],"succes":[]}
 		if not request.form.get("nom") :
@@ -203,7 +203,7 @@ def connexion():
 		if  len(message["error"])  == 0 :
 			return render_template("default/index.html",datas=locals(),myapp = myapp)
 	return render_template("default/connexion.html",datas=locals(),myapp = myapp)
-	
+
 @webapp.route('/deconnexion')
 def deconnexion():
 	message = {}
@@ -213,7 +213,7 @@ def deconnexion():
 	else:
 		message["error"] =['Vous n\'étiez pas connecté']
 	return render_template("default/connexion.html",datas=locals(),myapp = myapp)
-	
+
 @webapp.route('/list/widgets',methods=['POST'])
 @login_required
 def list_user_widget():
@@ -312,7 +312,7 @@ def updateuserdatas():
 			else :
 				print ("L'application '"+dir+"' n'éxiste pas !")
 
-			
+
 
 if "run" in argv:
     loadsystemdatas()
@@ -337,7 +337,7 @@ if "installapp" in argv :
 		print("Quel est le chemin de votre packet ?")
 		dir = input(">")
 	if os.path.isdir(dir):
-		if os.path.isfile(dir+"/"+"manifest.json"):
+		if os.path.isfile(dir + "/manifest.json"):
 			print("Lecture du manifest...")
 			packetmanifest = json.loads(open(dir+"/"+"manifest.json").read())
 			print("Description: "+packetmanifest["description"])
@@ -368,7 +368,7 @@ if "installapp" in argv :
 		else:print("/!\ Le fichier manifest n'existe pas")
 	else:print("/!\ Ce packet n'existe pas")
 
-if "creatapp" in argv:
+if "createapp" in argv:
 	try:
 		name = argv[argv.index("creatapp")+1]
 	except IndexError :

@@ -3,26 +3,18 @@
 ## Installer Hervé
 
 ```shell
-cd $HOME
 git clone http://github.com/Projet-Herve/HerveSys
 cd HerveSys/
-./run
+virtualenv venv
+source venv/bin/activate
+pip install --upgrade -r requirements.txt
+python __main__.py run
 ```
-
-/!\ Toutes les commandes indiquées doivent être exécutées dans le dossier Hervé !
 
 ## Exécuter Hervé :
 
-Pour exécuter Hervé utilisez la commande :
-
 ```shell
-python3 __main__.py run [-h/--host] [IP] [-p/--port] [PORT]
-```
-
-ou simplement (les librairies seront mises à jours si besoin):
-
-```shell
-./run 
+python __main__.py run [-h/--host IP] [-p/--port PORT]
 ```
 
 ## Les applications :
@@ -33,10 +25,10 @@ ou simplement (les librairies seront mises à jours si besoin):
 Que les applications créées soient des applications web ou backend elles s'initialisent de la même façon. Pour en créer une, exécutez dans le dossier Hervé la commande :
 
 ```shell
-python3 __main__.py creatapp [nom du packet]
+python3 __main__.py createapp [nom du packet]
 ```
 
-Cette commande aura pour effet de poser certaines questions puis générer une application déjà installée dans Hervé. Seul l'utilisateur `sys` pourra utiliser l'application par défaut. Les utilisateurs devrons l'activée eux-mêmes.
+Cette commande aura pour effet de poser certaines questions puis générer une application déjà installée dans Hervé. Seul l'utilisateur `sys` pourra utiliser l'application par défaut. Les utilisateurs devrons l'activer eux-mêmes.
 
 #### Pendant le développement :
 
