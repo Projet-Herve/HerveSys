@@ -1,9 +1,12 @@
 import subprocess
+
+
 def musiqueetat():
-	etat = subprocess.Popen(['mocp','-Q','%state:/%file:/%title:/%artist:/%song:/%album:/%tt:/%tl:/%ts:/%ct:/%cs:/%b:/%r'], stdout=subprocess.PIPE).communicate()[0].decode("utf-8").split(':/')
-	finaletat = {}
-	
-	"""
+    etat = subprocess.Popen(['mocp', '-Q', '%state:/%file:/%title:/%artist:/%song:/%album:/%tt:/%tl:/%ts:/%ct:/%cs:/%b:/%r'],
+                            stdout=subprocess.PIPE).communicate()[0].decode("utf-8").split(':/')
+    finaletat = {}
+
+    """
 	data_keys = ['state', 'file', 'title', 'artist', 'album', 'song', ...]
     ["state" ,"file" ,"title" ,"artist" ,"song" ,"album" ,"tt" ,"tl" ,"ts" ,"ct" ,"cs" ,"b" ,"r"]
 	mocp_args = '%' + ':/%'.join(data_keys)
@@ -11,31 +14,31 @@ def musiqueetat():
 	data = zip(data_keys, data_values)
 	"""
 
-
-	if 'FATAL_ERROR' in etat[0] or '' == etat[0]:
-		finaletat['state'] = 'STOP'
-	else :
-		finaletat['state']=  etat[0]
-		finaletat['file']=   etat[1]
-		finaletat['title']=  etat[2]
-		finaletat['artist']= etat[3]
-		finaletat['song']=   etat[4]
-		finaletat['album']=  etat[5]
-		finaletat['tt']=     etat[6]
-		finaletat['tl']= etat[7]
-		finaletat['ts']= etat[8]
-		finaletat['ct']= etat[9]
-		finaletat['cs']= etat[10]
-		finaletat['b']= etat[11]
-		finaletat['r']= etat[12]
-		try :
-			if int(finaletat['ts']) > 1 and int(finaletat['cs']) > 1:
-				finaletat['p'] = str((int(finaletat['cs']) / int(finaletat['ts']) * 100).__round__(5)).replace(',','.')
-			else :
-				finaletat['p'] = 0
-		except:
-			finaletat['p'] = 0
-	return finaletat
+    if 'FATAL_ERROR' in etat[0] or '' == etat[0]:
+        finaletat['state'] = 'STOP'
+    else:
+        finaletat['state'] = etat[0]
+        finaletat['file'] = etat[1]
+        finaletat['title'] = etat[2]
+        finaletat['artist'] = etat[3]
+        finaletat['song'] = etat[4]
+        finaletat['album'] = etat[5]
+        finaletat['tt'] = etat[6]
+        finaletat['tl'] = etat[7]
+        finaletat['ts'] = etat[8]
+        finaletat['ct'] = etat[9]
+        finaletat['cs'] = etat[10]
+        finaletat['b'] = etat[11]
+        finaletat['r'] = etat[12]
+        try:
+            if int(finaletat['ts']) > 1 and int(finaletat['cs']) > 1:
+                finaletat['p'] = str(
+                    (int(finaletat['cs']) / int(finaletat['ts']) * 100).__round__(5)).replace(',', '.')
+            else:
+                finaletat['p'] = 0
+        except:
+            finaletat['p'] = 0
+    return finaletat
 
 
 """

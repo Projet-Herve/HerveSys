@@ -13,20 +13,30 @@ import re
 # document.appendChild(element)	                    Add an HTML element                             document>append()
 # document.replaceChild(element)	                Replace an HTML element                         document>replace()
 # document.write(text)	                            Write into the HTML output stream               document>write()
-# console.log                                       Log things                                      log>"My log";
+# console.log                                       Log things
+# log>"My log";
 
 
 def parse(document):
-    document = re.sub(r'log>(?P<log>.*) {0,1};','console.log(\g<log>);',document)
-    document = re.sub(r'>[.](?P<class>("|\')?[a-zA-Z]*("|\')?)','.getElementsByClassName(\g<class>)',document)
-    document = re.sub(r'[.]html>','.innerHTML = ',document)
-    document = re.sub(r'[.]att>','.attribute = ',document)
-    document = re.sub(r'>new\((?P<element>.*)\)','.createElement(\g<element>)',document)
-    document = re.sub(r'>del\((?P<element>.*)\)','.removeChild(\g<element>)',document)
-    document = re.sub(r'>append\((?P<element>.*)\)','.appendChild(\g<element>)',document)
-    document = re.sub(r'>write\((?P<element>.*)\)','.write(\g<element>)',document)
-    document = re.sub(r'>replace\((?P<element>.*)\)','.replaceChild(\g<element>)',document)
-    document = re.sub(r'[.]css>\{(?P<css>.*)\}','.style.property = "\g<css>"',document)
-    document = re.sub(r'>#(?P<id>("|\')?[a-zA-Z]*("|\')?)','.getElementById(\g<id>)',document)
+    document = re.sub(
+        r'log>(?P<log>.*) {0,1};', 'console.log(\g<log>);', document)
+    document = re.sub(r'>[.](?P<class>("|\')?[a-zA-Z]*("|\')?)',
+                      '.getElementsByClassName(\g<class>)', document)
+    document = re.sub(r'[.]html>', '.innerHTML = ', document)
+    document = re.sub(r'[.]att>', '.attribute = ', document)
+    document = re.sub(r'>new\((?P<element>.*)\)',
+                      '.createElement(\g<element>)', document)
+    document = re.sub(r'>del\((?P<element>.*)\)',
+                      '.removeChild(\g<element>)', document)
+    document = re.sub(r'>append\((?P<element>.*)\)',
+                      '.appendChild(\g<element>)', document)
+    document = re.sub(r'>write\((?P<element>.*)\)',
+                      '.write(\g<element>)', document)
+    document = re.sub(r'>replace\((?P<element>.*)\)',
+                      '.replaceChild(\g<element>)', document)
+    document = re.sub(r'[.]css>\{(?P<css>.*)\}',
+                      '.style.property = "\g<css>"', document)
+    document = re.sub(
+        r'>#(?P<id>("|\')?[a-zA-Z]*("|\')?)', '.getElementById(\g<id>)', document)
     #document = re.sub(r'>(?P<tag>("|\')?[a-zA-Z]*("|\')?)','.getElementsByTagName(\g<tag>)',document)
     return document
