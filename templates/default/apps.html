@@ -21,7 +21,7 @@
                         {% for key in myapp.users[session["utilisateur"]]["apps"][app] %}
                         <p>{{key}}: {{myapp.users[session["utilisateur"]]["apps"][app][key]}}</p>
                         {% endfor %}
-                        <div class="backcard">
+                        <div class="">
                             <pre><code>{{myapp.users[session["utilisateur"]]["apps"][app]|tojson|safe}}</code></pre>
                         </div>
                         <p><a class="del button" href="{{url_for('desactive', type='application', what=myapp.users['sys']['apps'][app]['name'] )}}">Désactiver</a></p>
@@ -40,7 +40,7 @@
                     {% for key in myapp.users["sys"]["apps"][app] %}
                     <p>{{key}}: {{myapp.users["sys"]["apps"][app][key]}}</p>
                     {% endfor %}
-                    <div class="back">
+                    <div class="">
                         <pre><code>{{myapp.users["sys"]["apps"][app]|tojson|safe}}</code></pre>
                     </div>
                     <p><a class="new button" href="{{url_for('active', type='application', what=myapp.users['sys']['apps'][app]['name'] )}}">Ajouter</a></p>
