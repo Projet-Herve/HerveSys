@@ -1,39 +1,41 @@
 import requests
 
+
 class remote():
-	"""docstring for remote"""
-	def __init__(self,code,box=1):
-		self.box = box
-		self.code = code
+    """docstring for remote"""
 
-	def request(self,button,long=False):
-		box = "hd"+str(self.box)
+    def __init__(self, code, box=1):
+        self.box = box
+        self.code = code
 
-		if long == False:
-			long = "false"
-		else :
-			long = "true"
-		
-		params = {
-			"code":self.code,
-			"key":button,
-			"long":long,
-		}
+    def request(self, button, long=False):
+        box = "hd" + str(self.box)
 
-		result= requests.get(
-			url="http://{box}.freebox.fr/pub/remote_control/".format(box=box),
-			params=params
-		)
-		
-		return result
+        if long == False:
+            long = "false"
+        else:
+            long = "true"
 
-	def buttons(self,buttons,long=False):
-		results = []
-		for button in buttons:
-			result = self.request(button,long=long)
-			results.append(result)
-		return results
-	
+        params = {
+            "code": self.code,
+            "key": button,
+            "long": long,
+        }
+
+        result = requests.get(
+            url="http://{box}.freebox.fr/pub/remote_control/".format(box=box),
+            params=params
+        )
+
+        return result
+
+    def buttons(self, buttons, long=False):
+        results = []
+        for button in buttons:
+            result = self.request(button, long=long)
+            results.append(result)
+        return results
+
 """
 
 "red" // Bouton rouge
