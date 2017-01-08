@@ -1,70 +1,70 @@
 {
-    "Demo": {
-        "widgets": [
-            "#vosmusiques %2Fmusique"
-        ],
-        "job_file": "job.py",
-        "herve_serveur": {
-            "url": "https://siteherve-julesmichael.c9users.io/"
-        },
-        "profile": {
-            "prenom": "Demo",
-            "phrase": "courant",
-            "nom": "Demo",
-            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
-            "id": 1,
-            "civilite": "monsieur",
-            "age": 40,
-            "sexe": "h",
-            "location": "paris",
-            "email": "Demo@demomail.com"
-        },
-        "chatbot": {
-            "history": {}
-        },
-        "pushbullet": {
-            "api_key": ""
-        },
-        "theme": {
-            "update_time": 60,
-            "Herve": {
-                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json",
-                "css": [
-                    {
-                        "dir": "css/",
-                        "url": "https://siteherve-julesmichael.c9users.io/static/default/css/stylesheet.css",
-                        "file": "stylesheet.css"
-                    }
-                ],
-                "js": [
-                    {
-                        "dir": "js/",
-                        "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js",
-                        "file": "script.js"
-                    }
-                ],
-                "head": ""
-            },
-            "actual": "Herve"
-        },
-        "actived_apps": [
-            "musique"
-        ],
-        "templates": {
-            "dir": "templates/"
-        }
-    },
     "sys": {
-        "widgets": [
-            "#vosmusiques /musique"
+        "installed_apps": [
+            "musique"
         ],
         "profile": {
             "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
         },
+        "widgets": [
+            ".vosmusiques /widgets/vosmusiques"
+        ],
         "actived_apps": [
             "musique"
+        ]
+    },
+    "Demo": {
+        "theme": {
+            "update_time": 60,
+            "actual": "Herve",
+            "Herve": {
+                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json",
+                "head": "",
+                "js": [
+                    {
+                        "file": "script.js",
+                        "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js",
+                        "dir": "js/"
+                    }
+                ],
+                "css": [
+                    {
+                        "file": "stylesheet.css",
+                        "url": "https://siteherve-julesmichael.c9users.io/static/default/css/stylesheet.css",
+                        "dir": "css/"
+                    }
+                ]
+            }
+        },
+        "templates": {
+            "dir": "templates/"
+        },
+        "pushbullet": {
+            "api_key": ""
+        },
+        "herve_serveur": {
+            "url": "https://siteherve-julesmichael.c9users.io/"
+        },
+        "profile": {
+            "location": "paris",
+            "id": 1,
+            "phrase": "courant",
+            "nom": "Demo",
+            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
+            "prenom": "Demo",
+            "civilite": "monsieur",
+            "email": "Demo@demomail.com",
+            "sexe": "h",
+            "age": 40
+        },
+        "job_file": "job.py",
+        "chatbot": {
+            "history": {}
+        },
+        "widgets": [
+            ".vosmusiques %2Fwidgets%2Fvosmusiques"
         ],
-        "installed_apps": [
+        "actived_apps": [
             "musique"
         ]
     }
