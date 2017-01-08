@@ -17,7 +17,7 @@ $(document).ready(function() {
             // Envoi de la requête HTTP en mode asynchrone
             $.ajax({
                 url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
-                type: "POST", // La méthode indiquée dans le formulaire (get ou post)
+                type: "GET", // La méthode indiquée dans le formulaire (get ou post)
                 data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
                 success: function(json) { // Je récupère la réponse du fichier PHP
                     $this.closest('form').find("input[type=text]").val("");

@@ -7,12 +7,29 @@ body {
     height: 100%;
 }
 
+hr {
+    border: 0;
+    height: 3px;
+    background: #46a28d;
+    /*background-image: linear-gradient(to right, #ccc, #333, #ccc);*/
+}
+.player{
+    width:100%;
+    height:70%;
+    border:0px;
+    margin:0px;
+    padding:0px;
+}
 .presentation {
     height: calc(100% - 65px);
     background-color: #46a28d;
     width: 100%;
     color: #fff;
     margin: 0px;
+}
+
+.fixed {
+    position:fixed;
 }
 
 .presentation .content {
@@ -126,7 +143,7 @@ nav span {
     overflow-x: scroll;
 }
 
-#sidenav footer {
+footer {
     position:absolute;
     bottom: 0px;
     background-color: #46a28d;

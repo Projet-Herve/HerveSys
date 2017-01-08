@@ -7,7 +7,10 @@ function openNav() {
     document.getElementById("sidenav").style.width = "250px";
     //document.getElementById("content").style.marginLeft = "250px";
     //document.getElementById("nav").style.marginLeft = "215px";
-    //document.getElementById("content").style.backgroundColor = "rgba(0,0,0,0.4)"; 
+    document.getElementById("content").style.filter = "blur(10px)";
+    $("#content").click(function(){
+        closeNav();
+    });
     
     
 }
@@ -16,7 +19,7 @@ function closeNav() {
     document.getElementById("sidenav").style.width = "0";
     //document.getElementById("content").style.marginLeft = "0";
     //document.getElementById("nav").style.marginLeft = "0px";
-    //document.getElementById("content").style.backgroundColor = "#E6E6E6";
+    document.getElementById("content").style.filter = "blur(0px)";
 }
 
 function checkSubmit(e) {

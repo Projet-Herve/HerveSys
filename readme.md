@@ -148,3 +148,18 @@ Pour installer une application, exécutez la commande :
 ```python3__main__.py installapp [path de l'application] ```
 
 L'application devrait être installée si les arguments donnés ne sont pas erronés. Seul l'utilisateur `sys` pourra utiliser l'application par défaut. Les utilisateurs devrons l'activée eux-mêmes.
+
+## Les utilisateurs :
+
+Par défaut, il existe deux utilisateurs.
+
+| Utilisateur  | Demo   | sys  |
+|--------------|--------|------|
+|  Mot de passe|  1234  | 1234 |
+
+L'utilisateur sys est le super-utilisateur il a donc tout les pouvoirs sur votre infrastructure.
+L'utilisateur demo est un utilisateur classique.
+
+Il n'est pas encore possible de modifier un profile sauf en éditant le fichier `settings.json` qui se trouve dans `/datas`.
+
+L'utilisateur sys est le seul utilisateur qui ne doit pas être supprimé. Si une supprésion a lieux, votre installation Hervé ne fonctionnera plus.

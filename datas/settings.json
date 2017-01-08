@@ -1,23 +1,34 @@
 {
     "Demo": {
-        "pushbullet": {
-            "api_key": ""
-        },
-        "templates": {
-            "dir": "templates/"
-        },
+        "widgets": [
+            "#vosmusiques %2Fmusique"
+        ],
+        "job_file": "job.py",
         "herve_serveur": {
             "url": "https://siteherve-julesmichael.c9users.io/"
+        },
+        "profile": {
+            "prenom": "Demo",
+            "phrase": "courant",
+            "nom": "Demo",
+            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
+            "id": 1,
+            "civilite": "monsieur",
+            "age": 40,
+            "sexe": "h",
+            "location": "paris",
+            "email": "Demo@demomail.com"
         },
         "chatbot": {
             "history": {}
         },
+        "pushbullet": {
+            "api_key": ""
+        },
         "theme": {
-            "actual": "Herve",
             "update_time": 60,
             "Herve": {
                 "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json",
-                "head": "",
                 "css": [
                     {
                         "dir": "css/",
@@ -31,46 +42,30 @@
                         "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js",
                         "file": "script.js"
                     }
-                ]
-            }
+                ],
+                "head": ""
+            },
+            "actual": "Herve"
         },
         "actived_apps": [
-            "mywash"
+            "musique"
         ],
-        "job_file": "job.py",
-        "widgets": [
-            "#lavages_en_attente %2Fmywash",
-            "#propose %2Fmywash",
-            "#lavages_fini %2Fmywash"
-        ],
-        "profile": {
-            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
-            "id": 1,
-            "age": 40,
-            "nom": "Demo",
-            "phrase": "courant",
-            "location": "paris",
-            "email": "Demo@demomail.com",
-            "civilite": "monsieur",
-            "prenom": "Demo",
-            "sexe": "h"
+        "templates": {
+            "dir": "templates/"
         }
     },
     "sys": {
-        "actived_apps": [
-            "mywash"
-        ],
-        "installed_apps": [
-            "mywash"
+        "widgets": [
+            "#vosmusiques /musique"
         ],
         "profile": {
             "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
         },
-        "widgets": [
-            "#lavages_en_cours /mywash",
-            "#lavages_en_attente /mywash",
-            "#propose /mywash",
-            "#lavages_fini /mywash"
+        "actived_apps": [
+            "musique"
+        ],
+        "installed_apps": [
+            "musique"
         ]
     }
 }

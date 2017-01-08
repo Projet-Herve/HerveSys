@@ -88,7 +88,8 @@ def requires_auth(f):
         return f(*args, **kwargs)
     return decorated
 
-def need_app_active(f):
+def git status
+need_app_active(f):
 	@wraps(f)
 	def decorated(*args, **kwargs):
 		requesturl = "/"+"/".join(request.url.split("/")[3:])
@@ -214,17 +215,17 @@ def deconnexion():
 		message["error"] =['Vous n\'étiez pas connecté']
 	return render_template("default/connexion.html",datas=locals(),myapp = myapp)
 	
-@webapp.route('/list/widgets',methods=['POST'])
+@webapp.route('/list/widgets',methods=['GET'])
 @login_required
 def list_user_widget():
-	user = request.form.get("user")
+	user = session["utilisateur"]
 	toreturn =json.dumps(myapp.users[user]["widgets"])
 	return(Response(response=toreturn,status=200,mimetype="application/json"))
 
-@webapp.route('/chatbot',methods=["POST"])
+@webapp.route('/chatbot',methods=["GET"])
 @login_required
 def chatbot_request():
-	text = request.form.get("text")
+	text = request.args.get("text")
 	q = chatbot.question(text)
 	q.load_user(session["utilisateur"])
 	q.load_plugins(["default","blagues"])
@@ -400,7 +401,7 @@ def index_{name}():
 		open("templates/apps/"+name+"/index.html","w").write("""{% extends "default/design.html" %}{% block title %}"""+displayName+"""{% endblock %}
 {% block content %}
 	<div class="container">
-		<h1>"""+displayName+""""</h1>
+		<h1>"""+displayName+"""</h1>
 	</div>
 {% endblock %}
 	""")

@@ -10,9 +10,7 @@ function update(widget){
     });
 }
 $(function() {
-    $.post("/list/widgets", {
-        user: user
-    }, function(widgets) {
+    $.get("/list/widgets", {}, function(widgets) {
         for(var i = 0; i< widgets.length; i++) {
             widget = widgets[i].split(" ");
             widget = {
