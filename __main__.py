@@ -410,7 +410,7 @@ if "installapp" in argv:
 
 if "createapp" in argv:
     try:
-        name = argv[argv.index("creatapp") + 1]
+        name = argv[argv.index("createapp") + 1]
     except IndexError:
         name = input(
             "Quel est le nom que voulez-vous appliquer à votre packet ?\n>")
