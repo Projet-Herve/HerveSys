@@ -59,12 +59,12 @@ Généralement les widgets sont des éléments déjà présent dans les template
 @login_required
 def index_mynewapp():
 	html = tag("div",
-		class_ = "my_class",
+		class_ = ["my_class"],
 			contenu=tag("p",
 				contenu="Mon super text"
 		)
 	)
-	return Response(response=html),status=200,mimetype="text/html")
+	return Response(response=html,status=200,mimetype="text/html")
 ```
 
 Ainsi vous pourrez sélectionner votre widget de la sorte :
