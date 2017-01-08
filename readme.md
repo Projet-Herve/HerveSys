@@ -1,4 +1,5 @@
 # Hervé | Documentation :
+![](https://img.shields.io/badge/language-python3-green.svg)
 
 ## Installer Hervé
 
@@ -146,9 +147,11 @@ L'application devrait être installée si les arguments donnés ne sont pas erro
 
 Par défaut, il existe deux utilisateurs.
 
-| Utilisateur  | Demo   | sys  |
-|--------------|--------|------|
-|  Mot de passe|  1234  | 1234 |
+| Id           | 1      | null  |
+|--------------|--------|-------|
+| Pseudo       | Demo   | sys   |
+| Mot de passe | 1234   | 1234  |
+| Profile      | Oui    | Non   |
 
 L'utilisateur sys est le super-utilisateur il a donc tout les pouvoirs sur votre infrastructure.
 L'utilisateur demo est un utilisateur classique.
