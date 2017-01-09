@@ -8,14 +8,14 @@ git clone http://github.com/Projet-Herve/HerveSys
 cd HerveSys/
 virtualenv venv
 source venv/bin/activate
-pip install --upgrade -r requirements.txt
-python __main__.py run
+pip3 install --upgrade -r requirements.txt
+python3 __main__.py run
 ```
 
 ## Exécuter Hervé :
 
 ```shell
-python __main__.py run [-h/--host IP] [-p/--port PORT]
+python3 __main__.py run [-h/--host IP] [-p/--port PORT]
 ```
 
 ## Les applications :
