@@ -1,5 +1,5 @@
 # Hervé | Documentation :
-![](https://img.shields.io/badge/language-python3-green.svg)
+![](https://img.shields.io/badge/language-python3.4-green.svg)
 
 ## Installer Hervé
 
