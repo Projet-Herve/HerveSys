@@ -3,11 +3,13 @@ import os
 
 from functools import wraps
 from flask import *
+from werkzeug.routing import BaseConverter
 
 from time import sleep
 import schedule
 import threading
 import hashlib
+import pygeoip
 
 from myhtml import tag
 from datas import load_datas, update_datas
@@ -19,7 +21,16 @@ argv = sys.argv[1:]
 
 webapp = Flask(__name__)
 webapp.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+class RegexConverter(BaseConverter):
+    def __init__(self, url_map, *items):
+        super(RegexConverter, self).__init__(url_map)
+        self.regex = items[0]
+
+
+webapp.url_map.converters['regex'] = RegexConverter
+
 script_path = os.path.dirname(os.path.realpath(__file__))
+
 
 
 class herveapp:
@@ -125,10 +136,10 @@ def Internal_Server_Error(e):
     return render_template('default/error.html', datas=locals(), myapp=myapp)
 
 
-@webapp.route('/static/default/jms/<script>')
-def jms_page(script):
+@webapp.route('/static/<regex("[a-zA-Z//]*"):path>/jms/<script>')
+def jms_page(path,script):
     try:
-        return Response(response=parse(open('static/default/jms/' + script, 'r').read()), status=200, mimetype="text/javascript")
+        return Response(response=parse(open('static/'+path+'/jms/' + script, 'r').read()), status=200, mimetype="text/javascript")
     except:
         print("fichier '" + script + "' introuvable")
         return Response(response="console.log('Fichier jms non trouvé ! (Fichier : " + script + ") ; Ou erreur interne du au serveur :/');", status=200, mimetype="text/javascript")
@@ -306,6 +317,21 @@ def desactive(type, what):
         updateuserdatas()
         return(Response(response=toreturn, status=200, mimetype="application/json"))
 
+@webapp.route('/localiser')
+@login_required
+def localiser():
+    message = {"error":[],"message":[]}
+    ip = request.args.get("ip")
+    rawdata = pygeoip.GeoIP('datas/GeoLiteCity.dat')
+    data = rawdata.record_by_name(ip)
+    if data :
+        message["result"] = data
+    else:
+        message["error"].append("Aucune IP n'a été renseignée")
+    return(Response(response=json.dumps(message), status=200, mimetype="application/json")) 
+        
+
+#schedule.every(10).minutes().do(localiser)
 
 def loadsystemdatas():
     for app in myapp.settings["sys"]["installed_apps"]:
@@ -473,7 +499,7 @@ if "exportapp" in argv:
             print("Exportation de " + name + " dans " + path + " ...")
             os.system("mkdir " + path + "/" + name +
                       " && cp -r apps/" + name + " " + path + "/")
-            dirs = ["datas/apps/", "static/default/apps/", "templates/apps/"]
+            dirs = ["datas/apps/", "static/apps/", "templates/apps/"]
             for dir in dirs:
                 if os.path.isdir(dir + name):
                     print("Création de " + path + "/" +
