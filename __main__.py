@@ -10,6 +10,7 @@ import schedule
 import threading
 import hashlib
 import pygeoip
+from geopy.distance import vincenty
 
 from myhtml import tag
 from datas import load_datas, update_datas
@@ -258,17 +259,23 @@ def list_user_widget():
 @login_required
 def chatbot_request():
 	text = request.args.get("text")
+	settings = load_datas("settings")
+	settings[session["utilisateur"]]["chatbot"]["history"].append("USER - "+text)
 	q = chatbot.question(text)
 	q.load_user(session["utilisateur"])
 	q.load_plugins(["default","blagues"])
 	#q.checkortho()
 	try :
 		r = q.json()
+		settings[session["utilisateur"]]["chatbot"]["history"].append("SYS - "+str(r))
+		update_datas(settings,"settings")
 		return(Response(response=r,status=200,mimetype="application/json"))
 	except Exception as e :
 		print("\nUne erreur est survenu lors d'une requette au chatbot")
 		print("----------------------------\n",e,"\n----------------------------\n")
 		return(Response(response=json.dumps({"ERREUR":e}),status=200,mimetype="application/json"))
+
+	    
 
 @webapp.route('/active/<type>/<what>')
 @login_required
@@ -323,9 +330,19 @@ def localiser():
     message = {"error":[],"message":[]}
     ip = request.args.get("ip")
     rawdata = pygeoip.GeoIP('datas/GeoLiteCity.dat')
-    data = rawdata.record_by_name(ip)
-    if data :
-        message["result"] = data
+    #dataclient = rawdata.record_by_name(ip)
+    #dataserver = rawdata.record_by_name(load_datas("settings")["sys"]["house_ip"])
+    #cordoneesclient = (dataclient["longitude"],dataclient["latitude"])
+    #cordoneesserver = (dataserver["longitude"],dataserver["latitude"])
+    #d = vincenty(cordoneesclient, cordoneesserver).meters
+    #if d > 5 * 1000 :
+    #    print ("Vous êtes loins de votre maison ! ({km} km)".format(km=d/1000))
+    #elif d == 0:
+    #    print("Vous etes chez vous.")
+    #else:
+    #    print("Vous êtes proche de chez vous.")
+    if dataclient :
+        message["result"] = dataclient
     else:
         message["error"].append("Aucune IP n'a été renseignée")
     return(Response(response=json.dumps(message), status=200, mimetype="application/json")) 

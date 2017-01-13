@@ -1,69 +1,63 @@
 {
     "sys": {
-        "installed_apps": [],
         "profile": {
             "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
         },
-        "widgets": [
-            
-        ],
-        "actived_apps": [
-      
-        ]
+        "widgets": [],
+        "actived_apps": [],
+        "installed_apps": [],
+        "serveur_ip":"#",
+        "house_ip":"#"
     },
     "Demo": {
+        "templates": {
+            "dir": "templates/"
+        },
+        "job_file": "job.py",
+        "profile": {
+            "prenom": "Demo",
+            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
+            "phrase": "courant",
+            "sexe": "h",
+            "age": 40,
+            "location": "paris",
+            "nom": "Demo",
+            "email": "Demo@demomail.com",
+            "civilite": "monsieur",
+            "id": 1
+        },
+        "widgets": [],
+        "chatbot": {
+            "history": []
+        },
+        "actived_apps": [],
+        "herve_serveur": {
+            "url": "https://siteherve-julesmichael.c9users.io/"
+        },
         "theme": {
             "update_time": 60,
-            "actual": "Herve",
             "Herve": {
-                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json",
                 "head": "",
                 "js": [
                     {
-                        "file": "script.js",
+                        "dir": "js/",
                         "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js",
-                        "dir": "js/"
+                        "file": "script.js"
                     }
                 ],
                 "css": [
                     {
-                        "file": "stylesheet.css",
+                        "dir": "css/",
                         "url": "https://siteherve-julesmichael.c9users.io/static/default/css/stylesheet.css",
-                        "dir": "css/"
+                        "file": "stylesheet.css"
                     }
-                ]
-            }
-        },
-        "templates": {
-            "dir": "templates/"
+                ],
+                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json"
+            },
+            "actual": "Herve"
         },
         "pushbullet": {
             "api_key": ""
-        },
-        "herve_serveur": {
-            "url": "https://siteherve-julesmichael.c9users.io/"
-        },
-        "profile": {
-            "location": "paris",
-            "id": 1,
-            "phrase": "courant",
-            "nom": "Demo",
-            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
-            "prenom": "Demo",
-            "civilite": "monsieur",
-            "email": "Demo@demomail.com",
-            "sexe": "h",
-            "age": 40
-        },
-        "job_file": "job.py",
-        "chatbot": {
-            "history": {}
-        },
-        "widgets": [
-
-        ],
-        "actived_apps": [
-
-        ]
+        }
     }
 }
