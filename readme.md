@@ -23,6 +23,7 @@ python3 __main__.py run [-h/--host IP] [-p/--port PORT]
 ### Création d'une application :
 
 
+
 Que les applications créées soient des applications web ou backend elles s'initialisent de la même façon. Pour en créer une, exécutez dans le dossier Hervé la commande :
 
 ```shell
@@ -30,6 +31,7 @@ python3 __main__.py createapp [nom du packet]
 ```
 
 Cette commande aura pour effet de poser certaines questions puis générer une application déjà installée dans Hervé. Seul l'utilisateur `sys` pourra utiliser l'application par défaut. Les utilisateurs devrons l'activer eux-mêmes.
+
 
 #### Pendant le développement :
 
@@ -126,6 +128,8 @@ def mafonction():
 @need_app_active
 ```
 
+<!--
+
 ### Exportation d'une application
 
 Pour exporter votre application par exemple pour le store, exécutez la commande :
@@ -142,6 +146,7 @@ Pour installer une application, exécutez la commande :
 
 L'application devrait être installée si les arguments donnés ne sont pas erronés. Seul l'utilisateur `sys` pourra utiliser l'application par défaut. Les utilisateurs devrons l'activée eux-mêmes.
 
+-->
 
 ## Les utilisateurs :
 

@@ -11,12 +11,16 @@ import threading
 import hashlib
 import pygeoip
 from geopy.distance import vincenty
+from pyftpdlib.handlers import FTPHandler
+from pyftpdlib.servers import FTPServer
+from pyftpdlib.authorizers import DummyAuthorizer, AuthenticationFailed
 
 from myhtml import tag
 from datas import load_datas, update_datas
 from jms import parse
 from notify import *
-import chatbot
+import arduino
+
 
 argv = sys.argv[1:]
 
@@ -32,15 +36,25 @@ webapp.url_map.converters['regex'] = RegexConverter
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 
-
+class DummySHA224Authorizer(DummyAuthorizer):
+    def validate_authentication(self, username, password, handler):
+        hash = hashlib.sha224(password.encode('utf8')).hexdigest()
+        try:
+            if self.user_table[username]['pwd'] != hash:
+                raise KeyError
+        except KeyError:
+            raise AuthenticationFailed
 
 class herveapp:
 
     def __init__(self):
-        self.forever_ = []
         self.settings = json.loads(open("datas/settings.json").read())
+        self.FTPAuthorizer = DummySHA224Authorizer()
+        self.forever_ = []
+        self.arduino = False
         self.users = dict()
         for user in self.settings:
+            self.FTPAuthorizer.add_user(user, self.settings[user]["profile"]["code"], "nas/"+user, perm='elradfmw')
             self.users[user] = {
                 "apps": {},
                 "menu": {"Accueil": "/", "Déconnexion": "/deconnexion", "Apps": "/apps", "Widgets": "/widgets"},
@@ -49,7 +63,8 @@ class herveapp:
                 #"agenda" : agenda()
             }
 
-    def start(self):
+    def start(self,host):
+        self.host=host
         def __forever():
             while True:
                 for function in self.forever_:
@@ -61,8 +76,14 @@ class herveapp:
                 sleep(1)
         threading.Thread(target=__forever).start()
         threading.Thread(target=forschedule).start()
+        threading.Thread(target=self.FTP).start()
 
     # Décorateurs
+    def FTP(self):
+        handler = FTPHandler
+        handler.authorizer = self.FTPAuthorizer
+        server = FTPServer((self.host, 21), handler)
+        server.serve_forever()
 
     def forever(self, function):
         def decorator(function):
@@ -327,10 +348,11 @@ def desactive(type, what):
 @webapp.route('/localiser')
 @login_required
 def localiser():
+    #MaxMind, GeoIP, minFraud, and related trademarks are the trademarks of MaxMind, Inc.
     message = {"error":[],"message":[]}
     ip = request.args.get("ip")
     rawdata = pygeoip.GeoIP('datas/GeoLiteCity.dat')
-    #dataclient = rawdata.record_by_name(ip)
+    dataclient = rawdata.record_by_name(ip)
     #dataserver = rawdata.record_by_name(load_datas("settings")["sys"]["house_ip"])
     #cordoneesclient = (dataclient["longitude"],dataclient["latitude"])
     #cordoneesserver = (dataserver["longitude"],dataserver["latitude"])
@@ -386,11 +408,25 @@ def updateuserdatas():
             else:
                 print("L'application '" + dir + "' n'éxiste pas !")
 
+@myapp.in_thread
+def arduino_():
+    ser = False
+    while True:
+        if ser :
+            myapp.arduino = True
+            arduinojson = ser.readline()
+            arduinojson = json.loads(arduinojson)
+            if arduinojson["value"] < 500 :
+                print("il y a peut de lumière !")
+            print(arduinojson["level"])
+        else :
+            sleep(5)
+            myapp.arduino = False
+            ser = arduino.connect(error=False)
 
 if "run" in argv:
     loadsystemdatas()
     updateuserdatas()
-    myapp.start()
     host = "0.0.0.0"
     port = 8080
     if "--host" in argv:
@@ -401,7 +437,8 @@ if "run" in argv:
         port = int(argv[argv.index("--port") + 1])
     if "-p" in argv:
         port = int(argv[argv.index("-p") + 1])
-    webapp.run(host=host, port=port, debug=True)
+    myapp.start(host)
+    webapp.run(host=host, port=port, debug=True, use_reloader=False)
 
 if "installapp" in argv:
     try:
@@ -413,31 +450,26 @@ if "installapp" in argv:
         if os.path.isfile(dir + "/manifest.json"):
             print("Lecture du manifest...")
             packetmanifest = json.loads(
-                open(dir + "/" + "manifest.json").read())
+                open(dir + "/" + "manifest.json").read()
+            )
             print("Description: " + packetmanifest["description"])
             print("V:" + packetmanifest["version"])
             print("Voulez vous vraiment installer cette application ?")
             while 1:
                 yesornot = input("y/n>")
                 if yesornot == "y":
-                    print("Déplacement du packet")
-                    os.system("mv " + dir + " apps")
-                    packetfiles = os.listdir("apps/" + packetmanifest["name"])
-                    for element in packetfiles:
-                        elementapppath = "apps/" + \
-                            packetmanifest["name"] + "/" + element
-                        print("Traitement de:", elementapppath)
-                        if os.path.isdir(elementapppath) and os.path.isdir(element):
-                            print("Déplacement de " + elementapppath)
-                            os.system("mv " + elementapppath +
-                                      " " + element + "/apps")
-                    sys = load_datas("settings")
-                    if not packetmanifest["name"] in sys["sys"]["installed_apps"]:
-                        sys["sys"]["installed_apps"].append(
-                            packetmanifest["name"])
-                        sys["sys"]["widgets"].extend(
-                            packetmanifest.get("widgets", []))
-                        update_datas(sys, "settings")
+                    thesys = load_datas("settings")
+                    if not packetmanifest["name"] in thesys["sys"]["installed_apps"]:
+                        os.system("cp -r "+dir+ " apps")
+                        files = os.listdir("apps/"+packetmanifest["name"])
+                        for i in files :
+                            if os.path.isdir(i) :
+                                print(i)
+                        # Ajout de l'app dans les settings
+                        thesys["sys"]["installed_apps"].append(packetmanifest["name"])
+                        thesys["sys"]["actived_apps"].append(packetmanifest["name"])
+                        thesys["sys"]["widgets"].extend(packetmanifest.get("widgets", []))
+                        update_datas(thesys, "settings")
                         print("\n******** L'application a été installée ********")
                     else:
                         print(
@@ -478,21 +510,21 @@ if "createapp" in argv:
 @webapp.route("/{name}")
 @login_required
 def index_{name}():
-	'''
-	Votre code
-	'''
-	return render_template("apps/{name}/index.html",datas=locals(),myapp=myapp)
-		""".format(name=name))
+    '''
+    Votre code
+    '''
+    return render_template("apps/{name}/index.html",datas=locals(),myapp=myapp)
+        """.format(name=name))
         print("Le fichier apps/" + name + "/" +
               name + ".py de votre packet a été créé.")
         os.system("mkdir templates/apps/" + name)
         open("templates/apps/" + name + "/index.html", "w").write("""{% extends "default/design.html" %}{% block title %}""" + displayName + """{% endblock %}
 {% block content %}
-	<div class="container">
-		<h1>""" + displayName + """</h1>
-	</div>
+    <div class="container">
+        <h1>""" + displayName + """</h1>
+    </div>
 {% endblock %}
-	""")
+    """)
         print("Le fichier templates/apps/" + name + "/index.html a été créé")
         print("L'utilisateur sys peux y acceder")
         sys["sys"]["installed_apps"].append(name)
@@ -501,6 +533,7 @@ def index_{name}():
         print("Création de l'application terminée")
     else:
         print("Cette application éxiste déja")
+
 
 if "exportapp" in argv:
     try:
@@ -521,7 +554,7 @@ if "exportapp" in argv:
                 if os.path.isdir(dir + name):
                     print("Création de " + path + "/" +
                           name + "/" + dir.split("/")[0])
-                    print("Copie récursif des fichiers contenus dans " + dir + name)
+                    print("Copie récursive des fichiers contenus dans " + dir + name)
                     os.system("cp -r " + dir + name + " " + path +
                               "/" + name + "/" + dir.split("/")[0])
             print("L'application a été exportée")

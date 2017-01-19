@@ -1,63 +1,65 @@
 {
-    "sys": {
-        "profile": {
-            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
-        },
-        "widgets": [],
-        "actived_apps": [],
-        "installed_apps": [],
-        "serveur_ip":"#",
-        "house_ip":"#"
-    },
     "Demo": {
-        "templates": {
-            "dir": "templates/"
-        },
-        "job_file": "job.py",
+        "widgets": [],
         "profile": {
-            "prenom": "Demo",
-            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
-            "phrase": "courant",
-            "sexe": "h",
+            "id": 1,
+            "nom": "Demo",
             "age": 40,
             "location": "paris",
-            "nom": "Demo",
+            "sexe": "h",
             "email": "Demo@demomail.com",
             "civilite": "monsieur",
-            "id": 1
+            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
+            "prenom": "Demo",
+            "phrase": "courant"
         },
-        "widgets": [],
+        "actived_apps": [],
         "chatbot": {
             "history": []
         },
-        "actived_apps": [],
-        "herve_serveur": {
-            "url": "https://siteherve-julesmichael.c9users.io/"
-        },
         "theme": {
-            "update_time": 60,
+            "actual": "Herve",
             "Herve": {
-                "head": "",
+                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json",
                 "js": [
                     {
-                        "dir": "js/",
                         "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js",
-                        "file": "script.js"
+                        "file": "script.js",
+                        "dir": "js/"
                     }
                 ],
+                "head": "",
                 "css": [
                     {
-                        "dir": "css/",
                         "url": "https://siteherve-julesmichael.c9users.io/static/default/css/stylesheet.css",
-                        "file": "stylesheet.css"
+                        "file": "stylesheet.css",
+                        "dir": "css/"
                     }
-                ],
-                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json"
+                ]
             },
-            "actual": "Herve"
+            "update_time": 60
+        },
+        "herve_serveur": {
+            "url": "https://siteherve-julesmichael.c9users.io/"
         },
         "pushbullet": {
             "api_key": ""
         }
+    },
+    "sys": {
+        "widgets": [
+            
+        ],
+        "profile": {
+            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
+        },
+        "installed_apps": [
+         
+        ],
+        "house_ip": "#",
+        "actived_apps": [
+          
+        ],
+        "serveur_ip": "#"
     }
 }

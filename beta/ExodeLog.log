@@ -1,0 +1,123 @@
+2017-01-18 18:10:38,417|Exode.Core|INFO|Here we go!
+2017-01-18 18:10:38,564|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:10:38,565|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:16:23,215|Exode.Core|INFO|Here we go!
+2017-01-18 18:16:23,503|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:18:06,060|Exode.Core|INFO|Here we go!
+2017-01-18 18:18:06,079|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:18:29,361|Exode.Core|INFO|Here we go!
+2017-01-18 18:18:29,379|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:18:29,380|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:18:31,659|Exode.Core|CORE|/dev/ttyACM0 answered [202, 404]
+2017-01-18 18:18:31,659|Exode.Core|CORE|Arduino board detected with Exode at : /dev/ttyACM0
+2017-01-18 18:18:33,726|Exode.Core|CORE|Board-0 init at : /dev/ttyACM0
+2017-01-18 18:18:33,726|Exode.Core|CORE|speaker-Board-0 send  : [5, 0, 0, 1, 0, 0]
+2017-01-18 18:18:33,730|Exode.Core|OBJC|Board-0.anaPin(1).AnaPinMode(0)
+2017-01-18 18:18:33,730|Exode.Core|CORE|speaker-Board-0 send  : [4, 0, 5, 1, 0]
+2017-01-18 18:18:33,733|Exode.Core|OBJC|Board-0.anaPin(1).read()
+2017-01-18 18:19:47,188|Exode.Core|INFO|Here we go!
+2017-01-18 18:19:47,208|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:19:47,209|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:19:49,489|Exode.Core|CORE|/dev/ttyACM0 answered [202, 404]
+2017-01-18 18:19:49,489|Exode.Core|CORE|Arduino board detected with Exode at : /dev/ttyACM0
+2017-01-18 18:19:51,555|Exode.Core|CORE|Board-0 init at : /dev/ttyACM0
+2017-01-18 18:19:51,556|Exode.Core|CORE|speaker-Board-0 send  : [5, 0, 0, 1, 0, 0]
+2017-01-18 18:19:51,559|Exode.Core|OBJC|Board-0.anaPin(1).AnaPinMode(0)
+2017-01-18 18:19:51,560|Exode.Core|CORE|speaker-Board-0 send  : [4, 0, 5, 1, 0]
+2017-01-18 18:19:51,563|Exode.Core|OBJC|Board-0.anaPin(1).read()
+2017-01-18 18:24:37,170|Exode.Core|INFO|Here we go!
+2017-01-18 18:24:37,189|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:24:37,190|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:24:39,474|Exode.Core|CORE|/dev/ttyACM0 answered [202, 404]
+2017-01-18 18:24:39,474|Exode.Core|CORE|Arduino board detected with Exode at : /dev/ttyACM0
+2017-01-18 18:24:41,540|Exode.Core|CORE|Board-0 init at : /dev/ttyACM0
+2017-01-18 18:24:41,540|Exode.Core|CORE|speaker-Board-0 send  : [5, 0, 0, 1, 0, 0]
+2017-01-18 18:24:41,554|Exode.Core|OBJC|Board-0.anaPin(1).AnaPinMode(0)
+2017-01-18 18:24:41,555|Exode.Core|CORE|speaker-Board-0 send  : [4, 0, 5, 1, 0]
+2017-01-18 18:24:41,558|Exode.Core|OBJC|Board-0.anaPin(1).read()
+2017-01-18 18:24:49,932|Exode.Core|INFO|Here we go!
+2017-01-18 18:24:49,953|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:24:49,954|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:24:52,239|Exode.Core|CORE|/dev/ttyACM0 answered [202, 404]
+2017-01-18 18:24:52,239|Exode.Core|CORE|Arduino board detected with Exode at : /dev/ttyACM0
+2017-01-18 18:24:54,304|Exode.Core|CORE|Board-0 init at : /dev/ttyACM0
+2017-01-18 18:24:54,304|Exode.Core|CORE|speaker-Board-0 send  : [5, 0, 0, 1, 0, 0]
+2017-01-18 18:24:54,319|Exode.Core|OBJC|Board-0.anaPin(1).AnaPinMode(0)
+2017-01-18 18:24:54,319|Exode.Core|CORE|speaker-Board-0 send  : [4, 0, 5, 1, 0]
+2017-01-18 18:24:54,322|Exode.Core|OBJC|Board-0.anaPin(1).read()
+2017-01-18 18:25:10,666|Exode.Core|INFO|Here we go!
+2017-01-18 18:25:10,688|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:25:10,689|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:25:12,961|Exode.Core|CORE|/dev/ttyACM0 answered [202, 404]
+2017-01-18 18:25:12,961|Exode.Core|CORE|Arduino board detected with Exode at : /dev/ttyACM0
+2017-01-18 18:25:34,989|Exode.Core|INFO|Here we go!
+2017-01-18 18:25:35,011|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:25:35,012|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:25:37,286|Exode.Core|CORE|/dev/ttyACM0 answered [202, 404]
+2017-01-18 18:25:37,286|Exode.Core|CORE|Arduino board detected with Exode at : /dev/ttyACM0
+2017-01-18 18:25:39,358|Exode.Core|CORE|Board-0 init at : /dev/ttyACM0
+2017-01-18 18:25:39,358|Exode.Core|CORE|speaker-Board-0 send  : [5, 0, 0, 1, 0, 0]
+2017-01-18 18:25:39,366|Exode.Core|OBJC|Board-0.anaPin(1).AnaPinMode(0)
+2017-01-18 18:25:39,366|Exode.Core|CORE|speaker-Board-0 send  : [4, 0, 5, 1, 0]
+2017-01-18 18:25:39,369|Exode.Core|OBJC|Board-0.anaPin(1).read()
+2017-01-18 18:25:39,369|Exode.Core|OBJC|Board-0.anaPin(1).attachEvent(update, <function printValue at 0x7f01adfdaae8>
+2017-01-18 18:25:50,808|Exode.Core|INFO|Here we go!
+2017-01-18 18:25:50,840|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:25:50,841|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:25:53,105|Exode.Core|CORE|/dev/ttyACM0 answered [202, 404]
+2017-01-18 18:25:53,105|Exode.Core|CORE|Arduino board detected with Exode at : /dev/ttyACM0
+2017-01-18 18:25:55,174|Exode.Core|CORE|Board-0 init at : /dev/ttyACM0
+2017-01-18 18:25:55,174|Exode.Core|CORE|speaker-Board-0 send  : [5, 0, 0, 1, 0, 0]
+2017-01-18 18:25:55,182|Exode.Core|OBJC|Board-0.anaPin(1).AnaPinMode(0)
+2017-01-18 18:25:55,182|Exode.Core|CORE|speaker-Board-0 send  : [4, 0, 5, 1, 0]
+2017-01-18 18:25:55,185|Exode.Core|OBJC|Board-0.anaPin(1).read()
+2017-01-18 18:25:55,186|Exode.Core|OBJC|Board-0.anaPin(1).attachEvent(update, <function printValue at 0x7f743ad3fae8>
+2017-01-18 18:25:55,186|Exode.Core|CORE|analogRead((1, 1)) add to the <boardThread at 0x7f743b03efd0>
+2017-01-18 18:25:55,186|Exode.Core|CORE|speaker-fake send  : [4, 0, 5, 1, 1]
+2017-01-18 18:25:55,186|Exode.Core|CORE|speaker-Board-0 send  : [13, 0, 12, 2, 100, 0, 0, 0, 5, 4, 0, 5, 1, 1]
+2017-01-18 18:25:55,190|Exode.Core|CORE|<boardThread at 0x7f743b03efd0> has been started with a cycle of 100ms 
+2017-01-18 18:25:55,190|Exode.Core|OBJC|Board-0.anaPin(1).listen(100)
+2017-01-18 18:26:00,352|Exode.Core|INFO|Here we go!
+2017-01-18 18:26:00,373|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:26:00,374|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:26:02,654|Exode.Core|CORE|/dev/ttyACM0 answered [0, 23462144]
+2017-01-18 18:26:22,304|Exode.Core|INFO|Here we go!
+2017-01-18 18:26:22,334|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:26:22,335|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:26:24,606|Exode.Core|CORE|/dev/ttyACM0 answered [202, 404]
+2017-01-18 18:26:24,606|Exode.Core|CORE|Arduino board detected with Exode at : /dev/ttyACM0
+2017-01-18 18:26:26,665|Exode.Core|CORE|Board-0 init at : /dev/ttyACM0
+2017-01-18 18:26:26,666|Exode.Core|CORE|speaker-Board-0 send  : [5, 0, 0, 1, 0, 0]
+2017-01-18 18:26:26,683|Exode.Core|OBJC|Board-0.anaPin(1).AnaPinMode(0)
+2017-01-18 18:26:26,683|Exode.Core|CORE|speaker-Board-0 send  : [4, 0, 5, 1, 0]
+2017-01-18 18:26:26,686|Exode.Core|OBJC|Board-0.anaPin(1).read()
+2017-01-18 18:26:26,687|Exode.Core|OBJC|Board-0.anaPin(1).attachEvent(update, <function printValue at 0x7ff4fc208ae8>
+2017-01-18 18:26:26,687|Exode.Core|CORE|analogRead((1, 1)) add to the <boardThread at 0x7ff4fda60eb8>
+2017-01-18 18:26:26,687|Exode.Core|CORE|speaker-fake send  : [4, 0, 5, 1, 1]
+2017-01-18 18:26:26,687|Exode.Core|CORE|speaker-Board-0 send  : [13, 0, 12, 2, 100, 0, 0, 0, 5, 4, 0, 5, 1, 1]
+2017-01-18 18:26:26,691|Exode.Core|CORE|<boardThread at 0x7ff4fda60eb8> has been started with a cycle of 100ms 
+2017-01-18 18:26:26,691|Exode.Core|OBJC|Board-0.anaPin(1).listen(100)
+2017-01-18 18:27:08,598|Exode.Core|INFO|Here we go!
+2017-01-18 18:27:08,618|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:27:08,619|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:27:10,891|Exode.Core|CORE|/dev/ttyACM0 answered [1, 302]
+2017-01-18 18:27:12,724|Exode.Core|INFO|Here we go!
+2017-01-18 18:27:12,746|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:27:12,747|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:27:15,017|Exode.Core|CORE|/dev/ttyACM0 answered [202, 404]
+2017-01-18 18:27:15,017|Exode.Core|CORE|Arduino board detected with Exode at : /dev/ttyACM0
+2017-01-18 18:27:17,080|Exode.Core|CORE|Board-0 init at : /dev/ttyACM0
+2017-01-18 18:27:17,081|Exode.Core|CORE|speaker-Board-0 send  : [5, 0, 0, 1, 0, 0]
+2017-01-18 18:27:17,102|Exode.Core|OBJC|Board-0.anaPin(1).AnaPinMode(0)
+2017-01-18 18:27:17,102|Exode.Core|CORE|speaker-Board-0 send  : [4, 0, 5, 1, 0]
+2017-01-18 18:27:17,105|Exode.Core|OBJC|Board-0.anaPin(1).read()
+2017-01-18 18:27:17,105|Exode.Core|OBJC|Board-0.anaPin(1).attachEvent(update, <function printValue at 0x7f994939cae8>
+2017-01-18 18:27:17,106|Exode.Core|CORE|analogRead((1, 1)) add to the <boardThread at 0x7f99496620f0>
+2017-01-18 18:27:17,106|Exode.Core|CORE|speaker-fake send  : [4, 0, 5, 1, 1]
+2017-01-18 18:27:17,106|Exode.Core|CORE|speaker-Board-0 send  : [13, 0, 12, 2, 100, 0, 0, 0, 5, 4, 0, 5, 1, 1]
+2017-01-18 18:27:17,109|Exode.Core|CORE|<boardThread at 0x7f99496620f0> has been started with a cycle of 100ms 
+2017-01-18 18:27:17,110|Exode.Core|OBJC|Board-0.anaPin(1).listen(100)
+2017-01-18 18:27:30,269|Exode.Core|INFO|Here we go!
+2017-01-18 18:27:30,298|Exode.Core|CORE|Searching for a board...
+2017-01-18 18:27:30,299|Exode.Core|CORE|Try to connect to :/dev/ttyACM0
+2017-01-18 18:27:32,596|Exode.Core|CORE|/dev/ttyACM0 answered [1, 738263040]

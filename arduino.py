@@ -7,7 +7,7 @@ class ConnectionError(Exception):
     pass
 
 
-def connect(locations=[
+def connect(error=True,locations=[
     '/dev/ttyUSB0',
     '/dev/ttyUSB1',
     '/dev/ttyUSB2',
@@ -34,7 +34,10 @@ def connect(locations=[
             #print ("Impossible de se connecter a :",device)
             pass
     if ser == False:
-        raise ConnectionError("Aucune connexion n'a pu être établie...")
+        if error == True :
+            raise ConnectionError("Aucune connexion n'a pu être établie...")
+        else :
+            print("Aucune connexion n'a pu être établie...")
 
 
 def output(pin, connexion):

@@ -1,0 +1,24 @@
+{% extends "default/design.html" %} {% block title %}Météo{% endblock %} {% block content %}
+<div class="container">
+    <h1>Meteo</h1>
+    <div class="masonry">
+        <div class="item">
+            <div class="card white shadows" id="meteoajd">
+                <h1>Aujourd'hui</h1>
+                {% for key in datas["meteo"] %}
+                    <p>{{key}}: {{datas["meteo"][key]}}</p>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="item">
+            <div class="card white shadows" id="meteodemain">
+                <h1>Demain</h1>
+                {% for key in getnow(1) %}
+                    <p>{{key}}: {{ getnow(1)[key]}}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
