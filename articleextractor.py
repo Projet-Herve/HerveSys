@@ -4,7 +4,7 @@ import json
 
 
 def extract(url):
-    file = open("datas/website.json", "r").read()
+    file = open("datas/websites.json", "r").read()
     i = None
     for i in json.loads(file):
         if i["url"] in url:

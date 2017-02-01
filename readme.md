@@ -11,19 +11,22 @@ source venv/bin/activate
 pip3 install --upgrade -r requirements.txt
 ```
 
-Si vous souhaitez utiliser un tunnel [Ngrok](https://ngrok.com/) pour Hervé, suivez les instructions d'instalation de [Ngrok](https://ngrok.com/download). Noubliez pas de vous sitez dans le dossier Hervé.
-Déplacez l'éxecutable de Ngrok à la racine du dossier Hervé.
+Si vous souhaitez utiliser un tunnel [Ngrok](https://ngrok.com/) pour Hervé, suivez les [instructions d’installation de Ngrok](https://ngrok.com/download). N'oubliez pas de vous situez dans le dossier Hervé.
+Déplacez l’exécutable de Ngrok à la racine du dossier Hervé.
 
-Lorsque vous exécuterez Hervé, un server des tunnels seront créé
+Lorsque vous exécuterez Hervé, une instance Ngrok serra créée.
 
 
 ## Exécuter Hervé :
 
 ```shell
-python3 __main__.py run [--host IP] [--port PORT]
+python3 __main__.py run [-host IP] [-port PORT]
 ```
+Concernant les arguments, tous les arguments commençant par `-` peuvent modifier les variables de `myapp`.
+
 
 ## Les applications :
+<!--
 
 ### Création d'une application :
 
@@ -36,7 +39,7 @@ python3 __main__.py createapp [nom du packet]
 ```
 
 Cette commande aura pour effet de poser certaines questions puis générer une application déjà installée dans Hervé. Seul l'utilisateur `sys` pourra utiliser l'application par défaut. Les utilisateurs devrons l'activer eux-mêmes.
-
+-->
 
 #### Pendant le développement :
 
@@ -127,12 +130,12 @@ def mafonction():
 	print("Je fonctionne en background")
 ```
 
-##### Autoriser l'acces qu'aux utilisateurs ayants activés l'application :
+##### Autoriser l’accès qu'aux utilisateurs ayants activés l'application :
 
 ```python
 @need_app_active
 ```
-
+<!--
 
 ### Exportation d'une application
 
@@ -150,11 +153,11 @@ Pour installer une application, exécutez la commande :
 
 L'application devrait être installée si les arguments donnés ne sont pas erronés. Seul l'utilisateur `sys` pourra utiliser l'application par défaut. Les utilisateurs devrons l'activée eux-mêmes.
 
-
+-->
 
 ## Les utilisateurs :
 
-Par défaut, il existe deux utilisateurs.
+Par défaut, il n'existe qu'un utilisateur.
 
 | Id           | null  |
 |--------------|-------|
@@ -162,10 +165,9 @@ Par défaut, il existe deux utilisateurs.
 | Mot de passe | 1234  |
 | Profile      | Non   |
 
-L'utilisateur sys est le super-utilisateur il a donc tout les pouvoirs sur votre infrastructure.
-L'utilisateur demo est un utilisateur classique.
+L'utilisateur `sys` est le super-utilisateur il a donc tout les pouvoirs sur votre infrastructure.
 
 Il n'est pas encore possible de modifier un profile sauf en éditant le fichier `settings.json` qui se trouve dans `/datas`.
 
-L'utilisateur sys est le seul utilisateur qui ne doit pas être supprimé. Si une supprésion a lieux, votre installation Hervé ne fonctionnera plus.
+L'utilisateur `sys` est le seul utilisateur qui ne doit pas être supprimé. Si une suppression a lieux, votre installation Hervé ne fonctionnera plus.
 
