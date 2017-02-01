@@ -1,65 +1,13 @@
 {
-    "Demo": {
-        "widgets": [],
-        "profile": {
-            "id": 1,
-            "nom": "Demo",
-            "age": 40,
-            "location": "paris",
-            "sexe": "h",
-            "email": "Demo@demomail.com",
-            "civilite": "monsieur",
-            "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319",
-            "prenom": "Demo",
-            "phrase": "courant"
-        },
-        "actived_apps": [],
-        "chatbot": {
-            "history": []
-        },
-        "theme": {
-            "actual": "Herve",
-            "Herve": {
-                "safeurl": "https://siteherve-julesmichael.c9users.io/static/default/safefile.json",
-                "js": [
-                    {
-                        "url": "https://siteherve-julesmichael.c9users.io/static/default/js/script.js",
-                        "file": "script.js",
-                        "dir": "js/"
-                    }
-                ],
-                "head": "",
-                "css": [
-                    {
-                        "url": "https://siteherve-julesmichael.c9users.io/static/default/css/stylesheet.css",
-                        "file": "stylesheet.css",
-                        "dir": "css/"
-                    }
-                ]
-            },
-            "update_time": 60
-        },
-        "herve_serveur": {
-            "url": "https://siteherve-julesmichael.c9users.io/"
-        },
-        "pushbullet": {
-            "api_key": ""
-        }
-    },
+    
     "sys": {
-        "widgets": [
-            
-        ],
         "profile": {
             "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
         },
-        "installed_apps": [
-         
-        ],
+        "installed_apps": [],
         "house_ip": "#",
-        "actived_apps": [
-          
-        ],
+        "actived_apps": [],
+        "widgets": [],
         "serveur_ip": "#"
     }
 }

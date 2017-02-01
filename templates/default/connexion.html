@@ -10,6 +10,7 @@
             <div>
                 <input placeholder="Mot de passe" type="password" name="code">
             </div>
+            <input type="hidden" value='{{ "/"+"/".join(request.url.split("/")[3:]) if "/"+"/".join(request.url.split("/")[3:]) if "/"+"/".join(request.url.split("/")[3:]) if "/"+"/".join(request.url.split("/")[3:]) not in  ["/connexion","/deconnexion"] else "/" }}' name="next">
             <button type="submit">Connexion !</button>
         </form>
         <div class="footer"><a style="color:#fff;" href="/inscriptions">Se créer un compte</a></div>

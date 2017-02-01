@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <script type="text/javascript" src="/static/default/js/script.js"></script>
+    <script type="text/javascript" src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js?bc893"></script>
+    <script type="text/javascript" src="/static/default/jms/dashboard.js"></script>
+    <link rel="stylesheet" href="/static/default/css/stylesheet.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <script>
+        var user = {%if session %}{{ myapp["users"][session["utilisateur"]]|tojson|safe }}{% else %}''{% endif %};
+    </script>
+    <style type="text/css">
+         .item {
+            transition: 1s;
+         }
+         .select{
+            border:5px solid #000;
+         }
+    </style>
+    <title>Dashboard</title>
+</head>
+<body>
+{% if datas.get('message')['succes'] %}
+<div class="container">
+    <div class="card green shadows">
+        <div class="content">
+            {% for item in datas['message']['succes'] %}
+            <p>{{ item }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %} {% if datas.get('message')['error'] %}
+<div class="container">
+    <div class="card red shadows">
+        <div class="content">
+            {% for item in datas['message']['error'] %}
+            <p>{{ item }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+        {% endif %}
+        
+            <div class="text-green">
+            </div>
+
+</body>
+<script type="text/javascript" src="static/default/jms/dashboard.js"></script>
+</html>

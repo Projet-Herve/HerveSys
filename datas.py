@@ -1,7 +1,7 @@
 import json
 
 def load_datas(file):
-    file = open("datas/" + file.split(".")[0] + ".json").read()
+    file = open("datas/" + ".".join(file.split(".")[:-1]) + ".json").read()
     return json.loads(file)
 
 

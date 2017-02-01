@@ -67,7 +67,9 @@ class question ():
             tocorect = self.message[2]
             try:
                 requette = requests.get(
-                    "http://herveprojet.hol.es/web-app/api/ortho.php", params={'text': tocorect}).text
+                    "http://herveprojet.hol.es/web-app/api/ortho.php",
+                    params={'text': tocorect}
+                ).text
                 correct = json.loads(requette)["AutoCorrectedText"].lower()
             except:
                 print("can't correct")
@@ -109,7 +111,11 @@ class question ():
         return self.listdephrases
 
     def reponse(self):
-        return list(map(lambda reponse: self.getreponse(reponse.get_text()), self.final["reponses"]))
+        return list(
+            map(
+                lambda reponse: self.getreponse(reponse.get_text()),
+                self.final["reponses"]
+            ))
         # return self.final["reponses"]
 
     def json(self):
@@ -140,6 +146,6 @@ class question ():
         for res_ in self.final["reponses"]:
             toreturn["reponses"]["links"].extend(res_.get_links())
 
-        #toreturn["regexs"] = self.final["regexs"]
+        # toreturn["regexs"] = self.final["regexs"]
         toreturn = json.dumps(toreturn, sort_keys=True, indent=4)
         return toreturn

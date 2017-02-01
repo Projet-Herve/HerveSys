@@ -41,18 +41,24 @@ hr {
     font-size: 50px;
 }
 
+
 #content button,
 #content .btn,
 #content .button {
     margin: 10px;
     background-color: #46a28d;
     border: 2px solid #fff;
-    /*    border-radius: 5px;
-*/
     color: #fff;
     padding: 10px;
     min-width: 200px;
     font-size: 20px;
+    transition: 0.8s;
+}
+
+#content button:hover,
+#content .btn:hover,
+#content .button:hover {
+    background-color: #25846D;
 }
 
 #video {
@@ -65,8 +71,6 @@ hr {
 
 nav {
     width: 100%;
-    /*padding:1px;*/
-    /*background-color: #F2F2F2;*/
     background-color: #fff;
     color: #46a28;
     border-bottom: #46a28d solid 5px;
@@ -74,7 +78,6 @@ nav {
     top: 0px;
     height: 60px;
     transition: 0.5s;
-    /* 0.5 second transition effect to slide in the sidenav */
     z-index: 2;
 }
 
@@ -95,7 +98,6 @@ nav {
     position: absolute;
     height: 100vh;
     -webkit-filter: blur(2px);
-    /* Safari */
     filter: blur(2px);
 }
 
@@ -119,27 +121,18 @@ nav span {
 }
 
 
-/* The side navigation menu */
 
 #sidenav {
     height: 100%;
-    /* 100% Full-height */
     width: 0;
-    /* 0 width - change this with JavaScript */
     position: fixed;
-    /* Stay in place */
     z-index: 3;
-    /* Stay on top */
     top: 0;
     left: 0;
     background-color: #25846D;
     overflow-x: hidden;
-    /* Disable horizontal scroll */
     padding-top: 60px;
-    /* Place content 60px from the top */
     transition: 0.5s;
-    /* 0.5 second transition effect to slide in the sidenav */
-    /*border-right: 5px #fff solid;*/
     overflow-x: scroll;
 }
 
@@ -151,8 +144,6 @@ footer {
     width:100%;
 }
 
-/* The navigation menu links */
-
 #sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
@@ -160,6 +151,10 @@ footer {
     display: block;
     transition: 0.8s;
     color: #fff;
+}
+
+#sidenav a:hover{
+    background-color: #46a28d;
 }
 
 #sidenav .closebtn {
@@ -198,7 +193,6 @@ h1 {
 #content {
     margin-top: 65px;
     transition: 0.5s;
-    /* 0.5 second transition effect to slide in the sidenav */
     height: 100%;
 }
 
@@ -223,14 +217,14 @@ a {
 }
 
 .card .front{
-    position: absolute:
+    position: absolute;
     top:0px;
     z-index: 100;
     backface-visibility: hidden;
 }
 
 .card .back{
-    position: absolute:
+    position: absolute;
     top:0px;
     z-index: 50;
     transform: rotateY(-180deg);
@@ -311,6 +305,10 @@ a {
     background-color: #46a28d;
 }
 
+.text-green {
+    color: #46a28d;
+}
+
 .masonry {
     /* Masonry container */
     column-count: 1;
@@ -354,11 +352,28 @@ input[type=password] {
     height: 20px;
     /*width: 100%;*/
     border: none;
-    border-bottom: #25846D 2px solid;
+    border-bottom: #46a28d 2px solid;
     outline: none;
     transition: 0.2s;
     min-width: 200px;
     font-size: 20px;
+}
+
+input[type=text]:hover,
+input[type=email]:hover,
+input[type=number]:hover,
+input[type=password]:hover {
+    border-bottom: #25846D 2px solid;
+}
+
+
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=number]:focus,
+input[type=password]:focus {
+    border: none;
+    border-bottom: #25846D 5px solid;
+    outline: none;
 }
 
 select {
@@ -383,15 +398,6 @@ select {
 }
 
 
-
-input[type=text]:focus,
-input[type=email]:focus,
-input[type=number]:focus,
-input[type=password]:focus {
-    border: none;
-    border-bottom: #46a28d 5px solid;
-    outline: none;
-}
 
 /*.user {
     background-image: url("/static/default/imgs/flaticones/user.png");

@@ -3,3 +3,5 @@ schedule
 pushbullet.py
 geopy
 pygeoip
+pyftpdlib
+python-ngrok

@@ -9,13 +9,18 @@ cd HerveSys/
 virtualenv venv
 source venv/bin/activate
 pip3 install --upgrade -r requirements.txt
-python3 __main__.py run
 ```
+
+Si vous souhaitez utiliser un tunnel [Ngrok](https://ngrok.com/) pour Hervé, suivez les instructions d'instalation de [Ngrok](https://ngrok.com/download). Noubliez pas de vous sitez dans le dossier Hervé.
+Déplacez l'éxecutable de Ngrok à la racine du dossier Hervé.
+
+Lorsque vous exécuterez Hervé, un server des tunnels seront créé
+
 
 ## Exécuter Hervé :
 
 ```shell
-python3 __main__.py run [-h/--host IP] [-p/--port PORT]
+python3 __main__.py run [--host IP] [--port PORT]
 ```
 
 ## Les applications :
@@ -128,7 +133,6 @@ def mafonction():
 @need_app_active
 ```
 
-<!--
 
 ### Exportation d'une application
 
@@ -146,17 +150,17 @@ Pour installer une application, exécutez la commande :
 
 L'application devrait être installée si les arguments donnés ne sont pas erronés. Seul l'utilisateur `sys` pourra utiliser l'application par défaut. Les utilisateurs devrons l'activée eux-mêmes.
 
--->
+
 
 ## Les utilisateurs :
 
 Par défaut, il existe deux utilisateurs.
 
-| Id           | 1      | null  |
-|--------------|--------|-------|
-| Pseudo       | Demo   | sys   |
-| Mot de passe | 1234   | 1234  |
-| Profile      | Oui    | Non   |
+| Id           | null  |
+|--------------|-------|
+| Pseudo       | sys   |
+| Mot de passe | 1234  |
+| Profile      | Non   |
 
 L'utilisateur sys est le super-utilisateur il a donc tout les pouvoirs sur votre infrastructure.
 L'utilisateur demo est un utilisateur classique.

@@ -1,0 +1,12 @@
+tunnels:
+  http:
+    proto: http
+    addr: 8080
+  logs:
+    proto: http
+    addr: 4040
+    auth: "admin:root"
+  ftp:
+    proto: tcp
+    addr: 21
+
