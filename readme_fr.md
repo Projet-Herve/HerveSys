@@ -26,7 +26,7 @@ Concernant les arguments, tous les arguments commençant par `-` peuvent modifie
 
 
 ## Les applications :
-<!--
+
 
 ### Création d'une application :
 
@@ -35,11 +35,10 @@ Concernant les arguments, tous les arguments commençant par `-` peuvent modifie
 Que les applications créées soient des applications web ou backend elles s'initialisent de la même façon. Pour en créer une, exécutez dans le dossier Hervé la commande :
 
 ```shell
-python3 __main__.py createapp [nom du packet]
+python3 __main__.py createapp
 ```
 
-Cette commande aura pour effet de poser certaines questions puis générer une application déjà installée dans Hervé. Seul l'utilisateur `sys` pourra utiliser l'application par défaut. Les utilisateurs devrons l'activer eux-mêmes.
--->
+Cette commande aura pour effet de vous poser certaines questions puis générer une application `tmp/`.
 
 #### Pendant le développement :
 
@@ -135,15 +134,7 @@ def mafonction():
 ```python
 @need_app_active
 ```
-<!--
 
-### Exportation d'une application
-
-Pour exporter votre application par exemple pour le store, exécutez la commande :
-
-```python3 __main__.py exportapp [nom du packet] [path du dossier où exporter l'application] ```
-
-Cette commande exportera votre application dans `[path du dossier où exporter l'application]` si l'application demandée existe. Le packet créé sera installable.
 
 ### Installer une application :
 
@@ -151,9 +142,8 @@ Pour installer une application, exécutez la commande :
 
 ```python3__main__.py installapp [path de l'application] ```
 
-L'application devrait être installée si les arguments donnés ne sont pas erronés. Seul l'utilisateur `sys` pourra utiliser l'application par défaut. Les utilisateurs devrons l'activée eux-mêmes.
+L'application devrait être installée si les arguments donnés ne sont pas erronés. L'application serra installée mais pas activée.
 
--->
 
 ## Les utilisateurs :
 
