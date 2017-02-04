@@ -119,7 +119,7 @@ $(document).ready(function() {
                         <div class="header"><h1>Connexion</h1></div>\
                         <form class="content" method="post" action="/connexion">\
                             <div>\
-                                <input placeholder="Prénom" type="text" name="nom">\
+                                <input id="user" placeholder="Prénom" type="text" name="nom">\
                             </div>\
                             <div>\
                                 <input placeholder="Mot de passe" type="password" name="code">\
@@ -130,5 +130,7 @@ $(document).ready(function() {
                         <div class="footer"><a style="color:#fff;" href="/inscriptions">Se créer un compte</a></div>\
                     </div>\
                 </div>').fadeIn(300);
+        
+        $("#user").focus();
     }
 });

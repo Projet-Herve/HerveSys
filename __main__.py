@@ -365,22 +365,23 @@ def chatbot_request():
     text = request.args.get("text")
     settings = myapp.settings()
     settings[session["utilisateur"]]["chatbot"][
-        "history"].append("USER - " + text)
-    q = chatbot.question(text)
+        "history"].append({session["utilisateur"]: text})
+    q = chatbot.question(text, settings_file=myapp.settings_file)
     q.load_user(session["utilisateur"])
     q.load_plugins(["default", "blagues"])
     # q.checkortho()
     try:
         r = q.json()
         settings[session["utilisateur"]]["chatbot"][
-            "history"].append("SYS - " + str(r))
+            "history"].append({"sys": r})
         update_datas(settings, myapp.settings_file)
         return(Response(response=r, status=200, mimetype="application/json"))
     except Exception as e:
         print("\nUne erreur est survenu lors d'une requette au chatbot")
         print("----------------------------\n", e,
               "\n----------------------------\n")
-        return(Response(response=json.dumps({"ERREUR": e}), status=200, mimetype="application/json"))
+        raise e
+        return(Response(response='{"erreur"}', status=200, mimetype="application/json"))
 
 
 @webapp.route('/active/<type>/<what>')

@@ -33,27 +33,33 @@ class Reponse():
 
 class question ():
 
-    def __init__(self, message):
+    def __init__(self,message,**kwargs):
         self.message = [message, message.lower(), message.lower()]
         self.final = {"reponses": [], "regexs": [], "nbcorrection": 0}
         self.user = None
         self.listdephrases = []
         self.plugins = []
+        self.settings_file = "datas/settings.json"
+        self.__dict__.update(kwargs)
 
-    def load_user(self, user="Demo"):
-        users = load_datas("settings")
-        try:
-            self.user = users[user]
-        except:
-            self.user = users['Demo']
+    def load_user(self,user):
+        users = load_datas(self.settings_file)
+        if user != "":
+            try:
+                self.user = users[user]
+            except:
+                pass# A finir
+                self.user["profile"]["e"] = "e" if self.user[
+                "profile"]["sexe"] == "f" else ""
+            return self.user
+        # except:
+        #    self.user = users['Demo']
 
-        self.user["profile"]["e"] = "e" if self.user[
-            "profile"]["sexe"] == "f" else ""
-        return self.user
+        
 
     def load_plugins(self, plugins):
         for plugin in plugins:
-            with open("apps/" + plugin.split(".")[0] + ".py") as plugin_src:
+            with open("apps/chatbot/" + plugin.split(".")[0] + ".py") as plugin_src:
                 src = plugin_src.read()
                 exec(src, {'q': self})
         return True
