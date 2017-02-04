@@ -33,7 +33,7 @@ class Reponse():
 
 class question ():
 
-    def __init__(self,message,**kwargs):
+    def __init__(self, message, **kwargs):
         self.message = [message, message.lower(), message.lower()]
         self.final = {"reponses": [], "regexs": [], "nbcorrection": 0}
         self.user = None
@@ -42,20 +42,18 @@ class question ():
         self.settings_file = "datas/settings.json"
         self.__dict__.update(kwargs)
 
-    def load_user(self,user):
+    def load_user(self, user):
         users = load_datas(self.settings_file)
         if user != "":
             try:
                 self.user = users[user]
             except:
-                pass# A finir
+                pass  # A finir
                 self.user["profile"]["e"] = "e" if self.user[
-                "profile"]["sexe"] == "f" else ""
+                    "profile"]["sexe"] == "f" else ""
             return self.user
         # except:
         #    self.user = users['Demo']
-
-        
 
     def load_plugins(self, plugins):
         for plugin in plugins:
