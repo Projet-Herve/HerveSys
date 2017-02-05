@@ -20,20 +20,23 @@ if "installapp" in argv:
                     os.system("mv " + dir + " apps")
                     packetfiles = os.listdir("apps/" + packetmanifest["name"])
                     for element in packetfiles:
-                        elementapppath = "apps/" + packetmanifest["name"] + "/" + element
+                        elementapppath = "apps/" + \
+                            packetmanifest["name"] + "/" + element
                         print("Traitement de:", elementapppath)
                         if os.path.isdir(elementapppath) and os.path.isdir(element):
                             print("Déplacement de " + elementapppath)
-                            os.system("mv -v " + elementapppath+"/* " + element + "/apps")
+                            os.system(
+                                "mv -v " + elementapppath+"/* " + element + "/apps")
                             os.system("rm " + elementapppath)
-                    sys = load_datas( "settings")
+                    sys = load_datas("settings")
                     if not packetmanifest["name"] in sys["sys"]["installed_apps"]:
                         sys["sys"]["installed_apps"].append(
                             packetmanifest["name"])
                         sys["sys"]["widgets"].extend(
                             packetmanifest.get("widgets", []))
                         update_datas(sys, "settings")
-                        print("\n******** L'application a été installée ********")
+                        print(
+                            "\n******** L'application a été installée ********")
                     else:
                         print(
                             "\n******** L'application a déja été installée ********")
@@ -62,7 +65,8 @@ if "createapp" in argv:
         manifest = {"name": name, "version": "0.1", "description": description, "license": license, "displayName": displayName,
                     "author": author, "datas": [], "templates": ["index.html"], "urls": {"menu": {displayName: "/" + name}, "api": []}, "widgets": []}
         print("Création de l'application (préinstallée)...")
-        print("Pour exporter votre application une fois finie executée: exportapp " + name)
+        print(
+            "Pour exporter votre application une fois finie executée: exportapp " + name)
         os.system("mkdir apps/" + name)
         open("apps/" + name + "/manifest.json",
              "w").write(json.dumps(manifest, indent=4, ensure_ascii=False))
@@ -116,12 +120,14 @@ if "exportapp" in argv:
                 if os.path.isdir(dir + name):
                     print("Création de " + path + "/" +
                           name + "/" + dir.split("/")[0])
-                    print("Copie récursive des fichiers contenus dans " + dir + name)
+                    print(
+                        "Copie récursive des fichiers contenus dans " + dir + name)
                     os.system("cp -r " + dir + name + " " + path +
                               "/" + name + "/" + dir.split("/")[0])
             print("L'application a été exportée")
         else:
-            print("/!\ L'application que vous essayez d'exporter n'existe pas.")
+            print(
+                "/!\ L'application que vous essayez d'exporter n'existe pas.")
     else:
         while 1:
             r = input(

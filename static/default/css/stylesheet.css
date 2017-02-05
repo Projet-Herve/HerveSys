@@ -69,18 +69,6 @@ hr {
     transition: 0.5s;
 }
 
-nav {
-    width: 100%;
-    background-color: #fff;
-    color: #46a28;
-    border-bottom: #46a28d solid 5px;
-    position: fixed;
-    top: 0px;
-    height: 60px;
-    transition: 0.5s;
-    z-index: 2;
-}
-
 .sections {}
 
 .section {
@@ -101,13 +89,25 @@ nav {
     filter: blur(2px);
 }
 
-nav .button {
+nav {
+    width: 100%;
+    background-color: #fff;
+    color: #46a28d;
+    border-bottom: #46a28d solid 5px;
+    position: fixed;
+    top: 0px;
+    height: 60px;
+    transition: 0.5s;
+    z-index: 2;
+}
+
+nav #nav-button {
     color: #46a28d;
     font-size: 40px;
     display: inline-block;
 }
 
-nav .text {
+nav #nav-text {
     font-size: 40px;
     text-align: center;
     margin: 0px;
@@ -116,10 +116,39 @@ nav .text {
     color: #46a28d;
 }
 
-nav span {
-    color: #46a28d;
+nav #nav-notif{
+    position:absolute;
+    right: 0px;
+    height: 40px;
+    padding: 10px;
 }
 
+.dropdown{
+    display: none;
+    position: absolute;
+    width: 300px;
+    background-color: #fff ;
+    border: solid 2px #46a28d;
+    border-radius: 3px;
+    max-height: 400px;
+    overflow: auto;
+
+}
+
+.dropdown ul {
+    padding: 10px;
+}
+
+.dropdown li {
+    list-style: none;
+    margin: 0px;
+    padding: 10px;
+    border-bottom: solid #46a28d 5px;
+}
+.dropdown li:last-child {
+    padding-bottom: 0px;
+    border-bottom: 0px;
+}
 
 
 #sidenav {

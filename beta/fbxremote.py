@@ -2,6 +2,7 @@ import requests
 
 
 class remote():
+
     """docstring for remote"""
 
     def __init__(self, code, box=1):

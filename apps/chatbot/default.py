@@ -46,9 +46,12 @@ def how(regex):
         #   print (e,requette)
         return {"text": toreturn, "html": html}
 
+
 @q.script([r"tu vas bien ?"])
 def chatbot(regex):
-    return {"text":"Oui merci !"}
+    return {"text": "Oui merci !"}
+
+
 @q.script([r"commençons à nous connaître"])
 def learnaboutuser(regex):
     return {"text": "tres bien"}

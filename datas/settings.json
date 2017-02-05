@@ -8,6 +8,7 @@
         "house_ip": "#",
         "actived_apps": [],
         "widgets": [],
-        "serveur_ip": "#"
+        "serveur_ip": "#",
+        "beta" : false
     }
 }

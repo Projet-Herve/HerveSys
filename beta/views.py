@@ -821,7 +821,8 @@ def reveil_web(request):
             temps_cycle = 6 * 90
             # Total
             reveil_time = minutes_heures_travail + minutes_travail - minutes_heure_preparation + \
-                minutes_preparation + minutes_heures_itineraire + minutes_itineraire + temps_cycle
+                minutes_preparation + minutes_heures_itineraire + \
+                minutes_itineraire + temps_cycle
             print(reveil_web)
             reveil_web_2 = float(reveil_web) / 60
             print(reveil_web_2)

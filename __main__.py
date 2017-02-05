@@ -64,11 +64,12 @@ class herveapp:
         self.datas_dir = "datas/"
         self.ngrok = True
         self.ftp = True
+        self.tests = False
         self.ngrok_location = "./"
 
     def settings(self):
         try:
-            return json.loads(open(self.settings_file, "r").read())
+            return load_datas(self.settings_file)
         except FileNotFoundError as e:
             print("Le fichier des settings n'existe pas")
             print(e)
@@ -85,6 +86,17 @@ class herveapp:
         server = FTPServer((self.host, self.FTP_port), handler)
         server.serve_forever()
 
+    def start_tests(self):
+        for file in os.listdir('tests/'):
+            test_src = open("tests/" + file)
+            src = test_src.read()
+            try:
+                exec(src)
+            except Exception as e:
+                print("Un des test a échoué")
+                print(e)
+                print("Dans " + file)
+
     def start(self):
         self.forever_ = []
         self.users = dict()
@@ -100,6 +112,9 @@ class herveapp:
                 "datas": self.settings()[user]
                 #"agenda" : agenda()
             }
+
+        if self.tests is True:
+            self.start_tests()
 
         def __forever():
             while True:
@@ -456,16 +471,6 @@ def localiser():
     ip = request.args.get("ip")
     rawdata = pygeoip.GeoIP('datas/GeoLiteCity.dat')
     dataclient = rawdata.record_by_name(ip)
-    # dataserver = rawdata.record_by_name(load_datas(myapp.settings_file)["sys"]["house_ip"])
-    # cordoneesclient = (dataclient["longitude"],dataclient["latitude"])
-    # cordoneesserver = (dataserver["longitude"],dataserver["latitude"])
-    # d = vincenty(cordoneesclient, cordoneesserver).meters
-    # if d > 5 * 1000 :
-    #    print ("Vous êtes loins de votre maison ! ({km} km)".format(km=d/1000))
-    # elif d == 0:
-    #    print("Vous êtes chez vous.")
-    # else:
-    #    print("Vous êtes proche de chez vous.")
     if dataclient:
         message["result"] = dataclient
     else:
@@ -482,25 +487,6 @@ def ajax(url):
     except Exception as e:
         print(e)
         pass
-
-# schedule.every(10).minutes().do(localiser)
-# @myapp.in_thread
-# def arduino_():
-#     ser = False
-#     delais = 10
-#     while True:
-#         if ser :
-#             myapp.arduino = True
-#             arduinojson = ser.readline()
-#             arduinojson = json.loads(arduinojson)
-#             if arduinojson["value"] < 500 :
-#                 pass#print("il y a peut de lumière !")
-#             #print(arduinojson["level"])
-#         else :
-#             sleep(delais)
-#             myapp.arduino = False
-#             ser = arduino.connect(error=False)
-#             delais = delais + 10
 
 argvs = dict()
 for argv in sys.argv[1:]:
@@ -538,9 +524,9 @@ if "run" in argvs:
     myapp.__dict__.update(start_arguments)
     myapp.start()
     webapp.run(host=myapp.host,
-            port=myapp.port,
-            debug=True,
-            use_reloader=False)
+               port=myapp.port,
+               debug=True,
+               use_reloader=False)
 
 
 if "createapp" in argvs:
@@ -552,15 +538,16 @@ if "createapp" in argvs:
     app["licence"] = input("Choisissez une licence: \n>")
     manifest = json.dumps(app)
     os.makedirs("tmp/{name}/".format(**app), exist_ok=True)
-    open("tmp/{name}/manifest.json".format(name = app["name"]),"w").write(manifest)
-    files = open("datas/new_app.json","r").read()
+    open(
+        "tmp/{name}/manifest.json".format(name=app["name"]), "w").write(manifest)
+    files = open("datas/new_app.json", "r").read()
     files = files.format(**app)
     files = json.loads(files)
     for file in files:
-        os.makedirs("tmp/{name}/".format(**app)+os.path.dirname(file), exist_ok=True)
-        open("tmp/{name}/".format(**app)+file,"w").write(files[file])
+        os.makedirs(
+            "tmp/{name}/".format(**app)+os.path.dirname(file), exist_ok=True)
+        open("tmp/{name}/".format(**app)+file, "w").write(files[file])
     print("L'application a été crée dans tmp/")
-
 
 
 if "installapp" in argvs:
@@ -582,7 +569,7 @@ if "installapp" in argvs:
                 else:
                     os.sytem("cp -r "+path+" apps/")
                     s["sys"]["installed_apps"].append(manifest["name"])
-                    update_datas(s,myapp.settings_file)
+                    update_datas(s, myapp.settings_file)
                     print("L'application a été installée")
             except Exception as e:
                 ptin(e)
