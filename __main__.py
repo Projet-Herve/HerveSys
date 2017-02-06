@@ -396,7 +396,7 @@ def list_user_widget():
 def chatbot_request():
     text = request.args.get("text")
     settings = myapp.settings()
-    settings[session["utilisateur"]]["chatbot"][
+    settings[session["utilisateur"]]["herve"]["chatbot"][
         "history"].append({session["utilisateur"]: text})
     q = chatbot.question(text, settings_file=myapp.settings_file)
     q.load_user(session["utilisateur"])
@@ -404,7 +404,7 @@ def chatbot_request():
     # q.checkortho()
     try:
         r = q.json()
-        settings[session["utilisateur"]]["chatbot"][
+        settings[session["utilisateur"]]["herve"]["chatbot"][
             "history"].append({"sys": r})
         update_datas(settings, myapp.settings_file)
         return(Response(response=r, status=200, mimetype="application/json"))
@@ -421,15 +421,15 @@ def chatbot_request():
 def active(type, what):
     if type == "widget":
         settings = myapp.settings()
-        settings[session["utilisateur"]]["widgets"].append(what)
-        myapp.users[session["utilisateur"]]["widgets"].append(what)
+        settings[session["utilisateur"]]["herve"]["widgets"].append(what)
+        myapp.users[session["utilisateur"]]["herve"]["widgets"].append(what)
         update_datas(settings, myapp.settings_file)
         toreturn = json.dumps("ok")
         return(Response(response=toreturn, status=200, mimetype="application/json"))
 
     if type == "application":
         settings = myapp.settings()
-        settings[session["utilisateur"]]["actived_apps"].append(what)
+        settings[session["utilisateur"]]["herve"]["actived_apps"].append(what)
         update_datas(settings, myapp.settings_file)
         toreturn = json.dumps("ok")
         # loadsystemdatas()
@@ -442,8 +442,8 @@ def active(type, what):
 def desactive(type, what):
     if type == "widget":
         settings = myapp.settings()
-        settings[session["utilisateur"]]["widgets"].remove(what)
-        myapp.users[session["utilisateur"]]["widgets"].remove(what)
+        settings[session["utilisateur"]]["herve"]["widgets"].remove(what)
+        myapp.users[session["utilisateur"]]["herve"]["widgets"].remove(what)
         update_datas(settings, myapp.settings_file)
         toreturn = json.dumps("ok")
         return(Response(response=toreturn, status=200, mimetype="application/json"))
@@ -451,12 +451,12 @@ def desactive(type, what):
     if type == "application":
         manifest = json.loads(open("apps/" + what + "/manifest.json").read())
         settings = myapp.settings()
-        settings[session["utilisateur"]]["actived_apps"].remove(what)
-        del myapp.users[session["utilisateur"]][
+        settings[session["utilisateur"]]["herve"]["actived_apps"].remove(what)
+        del myapp.users[session["utilisateur"]]["herve"][
             "apps"][manifest["displayName"]]
         for widget in manifest["widgets"]:
-            if widget.replace("/", "%2F") in myapp.users[session["utilisateur"]]["widgets"]:
-                myapp.users[session["utilisateur"]][
+            if widget.replace("/", "%2F") in myapp.users[session["utilisateur"]]["herve"]["widgets"]:
+                myapp.users[session["utilisateur"]]["herve"][
                     "widgets"].remove(widget.replace("/", "%2F"))
         update_datas(settings, myapp.settings_file)
         toreturn = json.dumps("ok")
@@ -559,18 +559,18 @@ if "installapp" in argvs:
         path = input("Choisissez le chemin de l'application:\n>")
     else:
         path = argvs["path"]
-    myapp.__dict__.update(start_arguments)
 
     if os.path.isdir(path):
         if os.path.isfile(path + "manifest.json"):
             try:
                 manifest = load_datas(path + "manifest.json", "r")
                 s = load_datas(myapp.settings_file)
-                if manifest["name"] in s["sys"]["installed_apps"]:
+                if manifest["name"] in s["sys"]["herve"]["installed_apps"]:
                     print("L'application a déjà été installée")
                 else:
                     os.sytem("cp -r "+path+" apps/")
-                    s["sys"]["installed_apps"].append(manifest["name"])
+                    s["sys"]["herve"]["installed_apps"].append(
+                        manifest["name"])
                     update_datas(s, myapp.settings_file)
                     print("L'application a été installée")
             except Exception as e:
