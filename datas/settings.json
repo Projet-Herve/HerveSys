@@ -5,10 +5,10 @@
             "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
         },
         "herve":{
-            "installed_apps": ["notes"],
+            "installed_apps": ["notes","musique"],
             "house_ip": "#",
-            "actived_apps": ["notes"],
-            "widgets": [],
+            "actived_apps": ["notes","musique"],
+            "widgets": [".vosmusiques /widgets/vosmusiques"],
             "serveur_ip": "#",
             "beta" : false
         },

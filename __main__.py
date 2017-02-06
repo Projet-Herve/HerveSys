@@ -538,6 +538,7 @@ if "createapp" in argvs:
     app["version"] = 0.1
     app["description"] = input("Choisissez une description: \n>",)
     app["licence"] = input("Choisissez une licence: \n>")
+    app["urls"] = {"menu":{app["displayName"],"/"+app["name"]}}
     manifest = json.dumps(app)
     os.makedirs("tmp/{name}/".format(**app), exist_ok=True)
     open(

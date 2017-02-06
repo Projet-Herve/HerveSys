@@ -1,0 +1,21 @@
+{% extends "default/design.html" %}{% block title %}Musique{% endblock %} {% block content %}
+
+<div class="container">
+    <h1>Musique</h1>
+    <div id="vosmusiques" class="card white shadows">
+        <div class="content">
+            <h1>Vos musique</h1>
+            <!-- AJOUT DES MUSIQUE DYNAMIQUE VIA JS-->
+            <script type="text/javascript" src="/static/musique/jms/musique.js"></script>
+        </div>
+    </div>
+</div>
+<footer class="fixed">
+    <div class="container">
+        <div id="musique-status">
+            <center>Pas de morceau en cours</center>
+        </div>
+    </div>
+</footer>
+
+{% endblock %}
