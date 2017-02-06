@@ -1,0 +1,20 @@
+{% extends "default/design.html" %}{% block title %} notes {% endblock %}{% block content %}
+<script src="//cloud.tinymce.com/stable/tinymce.min.js"></script>
+<script>tinymce.init({ selector:'textarea' });</script>
+<div class="container">
+   <h1>Notes</h1>
+	<h1>Créer une nouvelle note</h1>
+	{% for note in datas.notes %}
+	<div class="card shadows white">
+		<div class="card-content container">
+			{{ note.text|safe }}	
+		</div>
+	</div><br>
+	{% endfor %}
+	<form method="POST">
+		<textarea name="note" ></textarea>
+		<button type="submit">Nouvelle note</button>
+	</form>
+</div>
+
+{% endblock %}

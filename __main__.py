@@ -159,12 +159,12 @@ class herveapp:
                     manifest = json.loads(
                         open("apps/" + dir + "/manifest.json").read())
                     if manifest["urls"].get("menu"):
-                        self.users[user]["herve"]["menu"].update(
+                        self.users[user]["menu"].update(
                             manifest["urls"]["menu"])
                         for url in manifest["urls"]["menu"]:
-                            self.users[user]["herve"]["urls"].append(
+                            self.users[user]["urls"].append(
                                 manifest["urls"]["menu"][url])
-                    self.users[user]["herve"]["apps"].update(
+                    self.users[user]["apps"].update(
                         {manifest["displayName"]: manifest})
 
                 else:

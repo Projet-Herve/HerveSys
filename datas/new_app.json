@@ -1,4 +1,4 @@
 {{
-	"{name}.py": "import json\nfrom flask import *\nfrom __main__ import login_required\n\n@webapp.route('/{name}')\n@login_required\ndef {name}_index():\n    # Vote code pour {name}\n     return render_template(\"/{name}/index.html\",datas=locals(),myapp=myapp)\n",
+	"{name}.py": "import json\nfrom flask import *\nfrom __main__ import login_required\n\n@webapp.route('/{name}')\n@login_required\ndef {name}_index():\n    # Vote code pour {name}\n     return render_template(\"{name}/templates/index.html\",datas=locals(),myapp=myapp)\n",
 	"templates/index.html":"{{% extends \"default/design.html\" %}} {{% block title %}} {name} {{% endblock %}}{{% block content %}}\n<div class=\"container\">\n   <h1>{name}</h1>\n</div>\n{{% endblock %}}\n"
 }}

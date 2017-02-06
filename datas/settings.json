@@ -5,12 +5,15 @@
             "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
         },
         "herve":{
-            "installed_apps": [],
+            "installed_apps": ["notes"],
             "house_ip": "#",
-            "actived_apps": [],
+            "actived_apps": ["notes"],
             "widgets": [],
             "serveur_ip": "#",
             "beta" : false
+        },
+        "datas":{
+
         }
     }
     
