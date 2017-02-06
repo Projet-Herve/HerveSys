@@ -13,13 +13,11 @@
         <a id="nav-button" href="#" >&#9776;</a>
         <span id="nav-text">Hervé</span>
 {% if session and myapp.users.get(session["utilisateur"]) %}
-    {% if  myapp.users[session["utilisateur"]]["datas"]["beta"]  %}
+    {% if  myapp.users[session["utilisateur"]]["herve"]["beta"]  %}
         <img id="nav-notif" class="dropdown-btn" data-action="nav-dropdown" src="/static/default/imgs/flaticones/notif.png">
         <div id="nav-dropdown" class="dropdown">
             <div class="dropdown-content">
-                <ul>
-                
-                    
+                <ul>    
                     {% if myapp.users[session["utilisateur"]].get("notif") %}
                         {% for n in myapp.users.get(session["utilisateur"]).get("notif") %}
                             <li><p>{{ n }}</p></li>
@@ -27,8 +25,6 @@
                     {% else %}
                         <li>Vous n'avez pas de notification</li>
                     {% endif %}
-
-                
                 </ul>
             </div>
         </div>
@@ -38,7 +34,7 @@
     <div id="sidenav">
         <div class="content">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> {% if session and myapp.users.get(session["utilisateur"]) %}
-            <img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" class="rounded"></img>
+            <img src={{ "https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" if not myapp.users[session["utilisateur"]]["profile"].get("image") else myapp.users[session["utilisateur"]]["profile"]["image"] }} class="rounded"></img>
             <a>{{session["utilisateur"]}}</a> {% for i in myapp.users[session["utilisateur"]]["menu"] %}
             <a href='{{myapp.users[session["utilisateur"]]["menu"][i]}}'>{{i}}</a> {% endfor %}
             {% else %}

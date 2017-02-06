@@ -6,4 +6,4 @@ def createnotif():
         else:
             myapp.users[user]["notif"] = list()
     return True
-schedule.every().seconds.do(createnotif)
+schedule.every(10).minutes.do(createnotif)

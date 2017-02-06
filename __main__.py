@@ -104,14 +104,13 @@ class herveapp:
             self.FTPAuthorizer.add_user(
                 user, self.settings()[user]["profile"]["code"], "nas/"+user, perm='elradfmw')
             self.users[user] = {
-                "name": user,
                 "apps": {},
                 "menu": {"Accueil": "/", "Déconnexion": "/deconnexion", "Apps": "/apps", "Widgets": "/widgets"},
-                "widgets": list(map(lambda x: x.replace("/", "%2F"), self.settings()[user]["widgets"])),
-                "urls": [],
-                "datas": self.settings()[user]
+                "widgets": list(map(lambda x: x.replace("/", "%2F"), self.settings()[user]["herve"]["widgets"])),
+                "urls": []
                 #"agenda" : agenda()
             }
+            self.users[user].update(self.settings()[user])
 
         if self.tests is True:
             self.start_tests()
@@ -132,9 +131,11 @@ class herveapp:
             threading.Thread(target=self.start_FTP).start()
         if self.ngrok:
             threading.Thread(target=self.start_ngrok).start()
+        self.start_apps()
+        self.updateuserdatas()
 
-    def loadsystemdatas(self):
-        for app in self.settings()["sys"]["installed_apps"]:
+    def start_apps(self):
+        for app in self.settings()["sys"]["herve"]["installed_apps"]:
             dir = app
             file = app + ".py"
             if os.path.isdir("apps/" + dir):
@@ -151,20 +152,19 @@ class herveapp:
                 print("L'application '" + dir + "' n’existe pas !")
 
     def updateuserdatas(self):
-        self.__init__()
         for user in self.settings():
-            for app in self.settings()[user]["actived_apps"]:
+            for app in self.settings()[user]["herve"]["actived_apps"]:
                 dir = app
                 if os.path.isdir("apps/" + dir):
                     manifest = json.loads(
                         open("apps/" + dir + "/manifest.json").read())
                     if manifest["urls"].get("menu"):
-                        self.users[user]["menu"].update(
+                        self.users[user]["herve"]["menu"].update(
                             manifest["urls"]["menu"])
                         for url in manifest["urls"]["menu"]:
-                            self.users[user]["urls"].append(
+                            self.users[user]["herve"]["urls"].append(
                                 manifest["urls"]["menu"][url])
-                    self.users[user]["apps"].update(
+                    self.users[user]["herve"]["apps"].update(
                         {manifest["displayName"]: manifest})
 
                 else:
@@ -323,14 +323,16 @@ def inscriptions():
             user = {
                 nom: {
                     "profile": nouveauutilisateur,
-                    "actived_apps": [],
-                    "widgets": []
+                    "herve": {
+                        "actived_apps": [],
+                        "widgets": []
+                    }
                 }
             }
             os.makedirs("nas/" + nom)
             datas.update(user)
             myapp.users.update(user)
-            update_datas(datas, myapp.settings())
+            update_datas(datas, myapp.settings_file)
             message["succes"].append(
                 'Bravo ' + nom + " vous êtes dès à present inscrit! Ceci est votre DashBoard")
             myapp.updateuserdatas()
@@ -385,7 +387,7 @@ def deconnexion():
 @login_required
 def list_user_widget():
     user = session["utilisateur"]
-    toreturn = json.dumps(myapp.users[user]["widgets"])
+    toreturn = json.dumps(myapp.users[user]["herve"]["widgets"])
     return(Response(response=toreturn, status=200, mimetype="application/json"))
 
 

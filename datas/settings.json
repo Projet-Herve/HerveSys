@@ -4,11 +4,14 @@
         "profile": {
             "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
         },
-        "installed_apps": [],
-        "house_ip": "#",
-        "actived_apps": [],
-        "widgets": [],
-        "serveur_ip": "#",
-        "beta" : false
+        "herve":{
+            "installed_apps": [],
+            "house_ip": "#",
+            "actived_apps": [],
+            "widgets": [],
+            "serveur_ip": "#",
+            "beta" : false
+        }
     }
+    
 }

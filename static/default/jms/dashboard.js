@@ -4,12 +4,10 @@ function ù() {
 }
 
 Mousetrap.bind('right', function(e) {
-    log>"hey";
     $(".select").removeClass("select").next().addClass("select");
 })
 
 Mousetrap.bind('left', function(e) {
-    log>"hey";
     $(".select").removeClass("select").prev().addClass("select");
 })
 
@@ -20,7 +18,7 @@ $(document).ready(function() {
                     <center>\
                     <div id="hello">\
                         <p class="text" style="font-size: 50px;">\
-                            Bonjour ' + user.name + ' !\
+                            Bonjour ' + user.profile.nom + ' !\
                         </p>\
                         <img src="static/default/imgs/smiley_herve.gif">\
                     </div>\
@@ -35,10 +33,10 @@ $(document).ready(function() {
                             $(".text").fadeOut(300, function() {
                                 setTimeout(
                                     function() {
-                                        if ("github" in user.datas){
+                                        if ("github" in user.profile){
                                         $.ajax({
 
-                                            url: '/ajax/' + encodeURIComponent(user.datas.github.rss),
+                                            url: '/ajax/' + encodeURIComponent(user.profile.github.rss),
                                             type: 'GET',
                                             dataType: 'xml',
                                             error: function(xhr, status, e) {},

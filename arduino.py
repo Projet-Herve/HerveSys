@@ -37,7 +37,7 @@ def connect(error=True, locations=[
         if error == True:
             raise ConnectionError("Aucune connexion n'a pu être établie...")
         else:
-            print("Aucune connexion n'a pu être établie...")
+            raise ConnectionError("Aucune connexion n'a pu être établie...")
 
 
 def output(pin, connexion):
