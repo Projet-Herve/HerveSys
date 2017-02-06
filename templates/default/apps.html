@@ -1,5 +1,4 @@
 {% extends "default/design.html" %}{% block title %}Vos applications{% endblock %} {% block content %}
-<script type="text/javascript" src="/static/default/jms/managewidgets.js"></script>
 <div class="container">
     <div class="masonry">
         <!--<div class="item">
@@ -24,7 +23,7 @@
                         <div class="">
                             <pre><code>{{myapp.users[session["utilisateur"]]["apps"][app]|tojson|safe}}</code></pre>
                         </div>
-                        <p><a class="del button" href="{{url_for('desactive', type='application', what=myapp.users['sys']['apps'][app]['name'] )}}">Désactiver</a></p>
+                        <p><a class="del button" href="{{url_for('desactive_app',  what=myapp.users['sys']['apps'][app]['name'] )}}">Désactiver</a></p>
                     </div>
 
                 </div>
@@ -43,7 +42,7 @@
                     <div class="">
                         <pre><code>{{myapp.users["sys"]["apps"][app]|tojson|safe}}</code></pre>
                     </div>
-                    <p><a class="new button" href="{{url_for('active', type='application', what=myapp.users['sys']['apps'][app]['name'] )}}">Ajouter</a></p>
+                    <p><a class="new button" href="{{url_for('active_app', what=myapp.users['sys']['apps'][app]['name'] )}}">Ajouter</a></p>
                 </div>
             </div>
             {% endif %} {% endfor %}

@@ -45,13 +45,10 @@ hr {
 #content button,
 #content .btn,
 #content .button {
-    margin: 10px;
     background-color: #46a28d;
     border: 2px solid #fff;
     color: #fff;
-    padding: 10px;
-    min-width: 200px;
-    font-size: 20px;
+    padding: 5px;
     transition: 0.8s;
 }
 

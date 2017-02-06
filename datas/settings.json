@@ -8,7 +8,7 @@
             "installed_apps": ["notes","musique"],
             "house_ip": "#",
             "actived_apps": ["notes","musique"],
-            "widgets": [".vosmusiques /widgets/vosmusiques"],
+            "widgets": [".vosmusiques /widgets/vosmusiques",".notes /widgets/notes"],
             "serveur_ip": "#",
             "beta" : false
         },

@@ -1,22 +1,24 @@
 $(function() {
-    $('.new').click(function (event){ 
-         event.preventDefault(); 
-         $.ajax({
-            url: $(this).attr('href')
-            ,success: function(response) {
+    $('.new').click(function (event){
+         log>encodeURIComponent($(this).attr('data-what'));
+         $.get({
+            url: "/active/widget",
+            data : {what :$(this).attr('data-what')},
+            success: function(response) {
                 location.reload();
             }
          })
-         return false; //for good measure
+         return false;
     });
      $('.del').click(function (event){ 
          event.preventDefault(); 
-         $.ajax({
-            url: $(this).attr('href')
-            ,success: function(response) {
+         $.get({
+            url: "/desactive/widget",
+            data : {what :$(this).attr('data-what')},
+            success: function(response) {
                 location.reload();
             }
          })
-         return false; //for good measure
-    });
+         return false;
 });
+     });

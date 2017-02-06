@@ -106,7 +106,7 @@ class herveapp:
             self.users[user] = {
                 "apps": {},
                 "menu": {"Accueil": "/", "Déconnexion": "/deconnexion", "Apps": "/apps", "Widgets": "/widgets"},
-                "widgets": list(map(lambda x: x.replace("/", "%2F"), self.settings()[user]["herve"]["widgets"])),
+                "widgets": list(map(lambda x: x, self.settings()[user]["herve"]["widgets"])),
                 "urls": []
                 #"agenda" : agenda()
             }
@@ -416,52 +416,55 @@ def chatbot_request():
         return(Response(response='{"erreur"}', status=200, mimetype="application/json"))
 
 
-@webapp.route('/active/<type>/<what>')
+@webapp.route('/active/widget')
 @login_required
-def active(type, what):
-    if type == "widget":
-        settings = myapp.settings()
-        settings[session["utilisateur"]]["herve"]["widgets"].append(what)
-        myapp.users[session["utilisateur"]]["herve"]["widgets"].append(what)
-        update_datas(settings, myapp.settings_file)
-        toreturn = json.dumps("ok")
-        return(Response(response=toreturn, status=200, mimetype="application/json"))
+def active_widget():
+    what = request.args.get("what")
+    settings = myapp.settings()
+    settings[session["utilisateur"]]["herve"]["widgets"].append(what)
+    myapp.users[session["utilisateur"]]["herve"]["widgets"].append(what)
+    update_datas(settings, myapp.settings_file)
+    toreturn = json.dumps("ok")
+    return(Response(response=toreturn, status=200, mimetype="application/json"))
 
-    if type == "application":
-        settings = myapp.settings()
-        settings[session["utilisateur"]]["herve"]["actived_apps"].append(what)
-        update_datas(settings, myapp.settings_file)
-        toreturn = json.dumps("ok")
-        # loadsystemdatas()
-        myapp.updateuserdatas()
-        return(Response(response=toreturn, status=200, mimetype="application/json"))
-
-
-@webapp.route('/desactive/<type>/<what>')
+@webapp.route('/desactive/widget')
 @login_required
-def desactive(type, what):
-    if type == "widget":
-        settings = myapp.settings()
-        settings[session["utilisateur"]]["herve"]["widgets"].remove(what)
-        myapp.users[session["utilisateur"]]["herve"]["widgets"].remove(what)
-        update_datas(settings, myapp.settings_file)
-        toreturn = json.dumps("ok")
-        return(Response(response=toreturn, status=200, mimetype="application/json"))
+def desactive_widget():
+    what = request.args.get("what")
+    settings = myapp.settings()
+    settings[session["utilisateur"]]["herve"]["widgets"].remove(what)
+    myapp.users[session["utilisateur"]]["herve"]["widgets"].remove(what)
+    update_datas(settings, myapp.settings_file)
+    toreturn = json.dumps("ok")
+    return(Response(response=toreturn, status=200, mimetype="application/json"))
 
-    if type == "application":
-        manifest = json.loads(open("apps/" + what + "/manifest.json").read())
-        settings = myapp.settings()
-        settings[session["utilisateur"]]["herve"]["actived_apps"].remove(what)
-        del myapp.users[session["utilisateur"]]["herve"][
-            "apps"][manifest["displayName"]]
-        for widget in manifest["widgets"]:
-            if widget.replace("/", "%2F") in myapp.users[session["utilisateur"]]["herve"]["widgets"]:
-                myapp.users[session["utilisateur"]]["herve"][
-                    "widgets"].remove(widget.replace("/", "%2F"))
-        update_datas(settings, myapp.settings_file)
-        toreturn = json.dumps("ok")
-        myapp.updateuserdatas()
-        return(Response(response=toreturn, status=200, mimetype="application/json"))
+
+@webapp.route('/active/app/<what>')
+@login_required
+def active_app(what):
+    settings = myapp.settings()
+    settings[session["utilisateur"]]["herve"]["actived_apps"].append(what)
+    update_datas(settings, myapp.settings_file)
+    toreturn = json.dumps("ok")
+    myapp.updateuserdatas()
+    return render_template("default/apps.html", datas=locals(), myapp=myapp)
+
+
+@webapp.route('/desactive/app/<what>')
+@login_required
+def desactive_app(what):
+    manifest = json.loads(open("apps/" + what + "/manifest.json").read())
+    settings = myapp.settings()
+    settings[session["utilisateur"]]["herve"]["actived_apps"].remove(what)
+    del myapp.users[session["utilisateur"]]["apps"][manifest["displayName"]]
+    for widget in manifest["widgets"]:
+        if widget in myapp.users[session["utilisateur"]]["herve"]["widgets"]:
+            myapp.users[session["utilisateur"]]["herve"][
+                "widgets"].remove(widget)
+    update_datas(settings, myapp.settings_file)
+    toreturn = json.dumps("ok")
+    myapp.updateuserdatas()
+    return render_template("default/apps.html", datas=locals(), myapp=myapp)
 
 
 @webapp.route('/localiser')
