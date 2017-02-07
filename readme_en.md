@@ -29,22 +29,6 @@ Concerning the arguments, all arguments starting with `-` can modify the` myapp`
 
 #### During development:
 
-During the creation of your application it will be necessary to submit to certain conventions.
-
-```python
-
-@webapp.route ("/mynewapp")
-@login_required
-def index_mynewapp ():
-	"" "
-	Your code
-	"" "
-return render_template ("apps/mynewapp/index.html", datas = locals (), myapp = myapp)
-```
-
-It will be necessary to define the arguments `datas` and` myapp` to have a good functioning of Hervé and your application:
-Otherwise, Flask will report an error.
-
 ##### Defining a widget for its application:
 
 To define a widget in its application add in the manifest.json the `` [page element] [url of the page] `` to the `widgets` list.

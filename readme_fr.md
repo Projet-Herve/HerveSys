@@ -42,22 +42,6 @@ Cette commande aura pour effet de vous poser certaines questions puis générer 
 
 #### Pendant le développement :
 
-Durant la création de votre application il faudra se soumettre à certaines conventions.
-
-```python
-
-@webapp.route("/mynewapp")
-@login_required
-def index_mynewapp():
-	"""
-	Votre code
-	"""
-	return render_template("apps/mynewapp/index.html",datas=locals(),myapp=myapp)
-```
-
-Il sera indispensable de définir les arguments `datas` et `myapp` pour avoir un bon fonctionnement d'Hervé et de votre application :
-Dans le cas contraire, Flask relèvera une erreur.
-
 ##### Définir un widget pour son application :
 
 Pour définir un widget dans son application ajouter dans le manifest.json les valeurs `"[élément de la page] [url de la page]"` à la liste `widgets`.

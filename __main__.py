@@ -169,7 +169,6 @@ class herveapp:
 
                 else:
                     print("L'application '" + dir + "' n’existe pas !")
-
     # Décorateurs
 
     def forever(self, function):
@@ -204,7 +203,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not session.get("utilisateur"):
-            return render_template("default/connexion.html", datas=locals(), myapp=myapp)
+            return render_template("default/connexion.html", datas=locals())
         return f(*args, **kwargs)
     return decorated_function
 
@@ -228,22 +227,29 @@ def need_app_active(f):
         return f(*args, **kwargs)
     return decorated
 
+
+##
+
+@webapp.context_processor
+def inject_user():
+    return dict(myapp=myapp)
+
 # Erreurs
 
 
 @webapp.errorhandler(404)
 def page_not_found(e):
-    return render_template('default/error.html', datas=locals(), myapp=myapp)
+    return render_template('default/error.html', datas=locals())
 
 
 @webapp.errorhandler(403)
 def Forbidden(e):
-    return render_template('default/error.html', datas=locals(), myapp=myapp)
+    return render_template('default/error.html', datas=locals())
 
 
 @webapp.errorhandler(500)
 def Internal_Server_Error(e):
-    return render_template('default/error.html', datas=locals(), myapp=myapp)
+    return render_template('default/error.html', datas=locals())
 
 # Static Files
 
@@ -274,25 +280,25 @@ def jms_page(app, script):
 @webapp.route('/apps', methods=['GET'])
 @login_required
 def apps():
-    return render_template("default/apps.html", datas=locals(), myapp=myapp)
+    return render_template("default/apps.html", datas=locals())
 
 
 @webapp.route('/index')
 @webapp.route('/')
 @login_required
 def index():
-    return render_template("default/index.html", datas=locals(), myapp=myapp)
+    return render_template("default/index.html", datas=locals())
 
 
 @webapp.route('/widgets')
 @login_required
 def widgets():
-    return render_template("default/widgets.html", datas=locals(), myapp=myapp)
+    return render_template("default/widgets.html", datas=locals())
 
 
 @webapp.route('/dashboard')
 def dashboard():
-    return render_template("default/dashboard.html", datas=locals(), myapp=myapp)
+    return render_template("default/dashboard.html", datas=locals())
 
 # Inscriptions Connexion Déconnexion
 
@@ -336,11 +342,11 @@ def inscriptions():
             message["succes"].append(
                 'Bravo ' + nom + " vous êtes dès à present inscrit! Ceci est votre DashBoard")
             myapp.updateuserdatas()
-            return render_template("default/index.html", datas=locals(), myapp=myapp)
+            return render_template("default/index.html", datas=locals())
         else:
-            return render_template("default/inscriptions.html", datas=locals(), myapp=myapp)
+            return render_template("default/inscriptions.html", datas=locals())
     else:
-        return render_template("default/inscriptions.html", datas=locals(), myapp=myapp)
+        return render_template("default/inscriptions.html", datas=locals())
 
 
 @webapp.route('/connexion', methods=['GET', 'POST'])
@@ -367,9 +373,9 @@ def connexion():
                 return(Response(response=json.dumps(locals()), status=200, mimetype="application/json"))
             else:
                 return redirect(request.form.get("next"), code=302)
-                # return render_template("default/index.html", datas=locals(),
-                # myapp=myapp)
-    return render_template("default/connexion.html", datas=locals(), myapp=myapp)
+                # return render_template("default/index.html", datas=locals()),
+                
+    return render_template("default/connexion.html", datas=locals())
 
 
 @webapp.route('/deconnexion')
@@ -380,7 +386,7 @@ def deconnexion():
         message["succes"] = ['Vous avez été deconnecté']
     else:
         message["error"] = ['Vous n\'étiez pas connecté']
-    return render_template("default/connexion.html", datas=locals(), myapp=myapp)
+    return render_template("default/connexion.html", datas=locals())
 
 
 @webapp.route('/list/widgets', methods=['GET'])
@@ -447,7 +453,7 @@ def active_app(what):
     update_datas(settings, myapp.settings_file)
     toreturn = json.dumps("ok")
     myapp.updateuserdatas()
-    return render_template("default/apps.html", datas=locals(), myapp=myapp)
+    return render_template("default/apps.html", datas=locals())
 
 
 @webapp.route('/desactive/app/<what>')
@@ -464,7 +470,7 @@ def desactive_app(what):
     update_datas(settings, myapp.settings_file)
     toreturn = json.dumps("ok")
     myapp.updateuserdatas()
-    return render_template("default/apps.html", datas=locals(), myapp=myapp)
+    return render_template("default/apps.html", datas=locals())
 
 
 @webapp.route('/localiser')
@@ -541,8 +547,8 @@ if "createapp" in argvs:
     app["version"] = 0.1
     app["description"] = input("Choisissez une description: \n>",)
     app["licence"] = input("Choisissez une licence: \n>")
-    app["urls"] = {"menu":{app["displayName"],"/"+app["name"]}}
-    manifest = json.dumps(app)
+    app["urls"] = {"menu":{app["displayName"]:"/"+app["name"]}}
+    manifest = json.dumps(app, indent=4)
     os.makedirs("tmp/{name}/".format(**app), exist_ok=True)
     open(
         "tmp/{name}/manifest.json".format(name=app["name"]), "w").write(manifest)
@@ -565,20 +571,22 @@ if "installapp" in argvs:
         path = argvs["path"]
 
     if os.path.isdir(path):
-        if os.path.isfile(path + "manifest.json"):
+        if os.path.isfile(os.pardir.join(path,"manifest.json")):
             try:
-                manifest = load_datas(path + "manifest.json", "r")
+                manifest = load_datas(os.pardir.join(path,"manifest.json"))
                 s = load_datas(myapp.settings_file)
                 if manifest["name"] in s["sys"]["herve"]["installed_apps"]:
                     print("L'application a déjà été installée")
                 else:
-                    os.sytem("cp -r "+path+" apps/")
+                    os.system("cp -r "+path+" apps/")
                     s["sys"]["herve"]["installed_apps"].append(
+                        manifest["name"])
+                    s["sys"]["herve"]["actived_apps"].append(
                         manifest["name"])
                     update_datas(s, myapp.settings_file)
                     print("L'application a été installée")
             except Exception as e:
-                ptin(e)
+                print(e)
         else:
             print(app_nexiste_pas)
     else:

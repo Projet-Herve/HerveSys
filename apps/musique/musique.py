@@ -52,4 +52,4 @@ def ajax_musique():
 @login_required
 @need_app_active
 def index_musique():
-    return render_template("musique/templates/index.html", datas=locals(), myapp=myapp)
+    return render_template("musique/templates/index.html")

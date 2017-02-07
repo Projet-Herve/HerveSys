@@ -1,1 +1,1 @@
-{"description": "Ecoutez votre musique","urls":{"menu":{"Musique":"/musique"}}, "displayName": "Musique", "licence": "GPL", "name": "musique", "version": 0.1,"widgets": [".vosmusiques /widgets/vosmusiques"]}
+{"description": "Ecoutez votre musique","urls":{"menu":{"Musique":"/musique"}}, "displayName": "Musique", "licence": "MIT", "name": "musique", "version": 0.1,"widgets": [".vosmusiques /widgets/vosmusiques"]}

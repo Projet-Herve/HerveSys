@@ -1,0 +1,57 @@
+{% extends "default/design.html" %} {% block title %} Agenda {% endblock %}{% block content %}
+<div class="container">
+   <h1>Agenda</h1>
+   <div class="masonry" id="widgets">
+        <div class="item">
+            <div class="card white shadows">
+            <div class="content">
+	            <h1>Créer un nouvel événement</h1>
+					<form method="POST" action="/agenda/new">
+					<label for="title">Intitulé :</label><input type="text" name="title"><br>
+					<label for="description">Description :</label><input type="text" name="description"><br>
+					<label for="type">Type:</label>
+					<select name="type">
+					  <option value="once" selected>Date fixe</option> 
+					  <!-- <option value="" >Période</option> -->
+					  <!-- <option value="valeur3">Valeur 3</option> -->
+					</select><br>
+					<label for="date">Date :</label><br>
+						<input name="date" id="datetimepicker" type="text" ><br>
+						<button type="submit">Créer</button>
+					</form>
+	            </div>
+            </div>
+       </div>
+       {% for  i in future_events %}
+       <div class="item">
+       	Pour le {{i}}:
+       		<div class="card shadows white">
+			<div class="content">
+				{% for y in future_events[i] %}
+					<p>{{ y.title }} à {{ y.date.split(" ")[1] }}<p>
+					<p>{{ y.description }}</p>
+				{% endfor %}
+			</div>
+		</div>
+       </div>
+	{% endfor %}
+    </div>
+   <link rel="stylesheet" type="text/css" href="/static/agenda/datetimepicker/jquery.datetimepicker.css"/ >
+
+   <script type="text/javascript" src="/static/agenda/datetimepicker/build/jquery.datetimepicker.full.js"></script>
+   <!-- <script type="text/javascript" src="/static/agenda/datetimepicker/jquery.datetimepicker.min.js"></script> -->
+
+<script type="text/javascript">
+	$('#datetimepicker').datetimepicker({
+	  format:'Y-m-d H:i',
+	  inline:true,
+	  lang:'fr',
+	  step:10,
+	  //minDate:0,
+	  defaultDate:new Date(),
+	  onChangeDateTime:function(dp,$input){
+	    console.log($input.val())
+	  }
+	});
+</script>
+{% endblock %}

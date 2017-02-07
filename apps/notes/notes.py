@@ -18,8 +18,7 @@ def notes_index():
     return render_template("notes/templates/index.html",
                            datas={
                                "notes": s[session["utilisateur"]]["datas"]["notes"]
-                           },
-                           myapp=myapp)
+                           })
 
 
 @webapp.route('/widgets/notes')

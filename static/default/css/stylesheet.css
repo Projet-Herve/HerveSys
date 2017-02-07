@@ -50,6 +50,7 @@ hr {
     color: #fff;
     padding: 5px;
     transition: 0.8s;
+    font-size: 20px;
 }
 
 #content button:hover,
@@ -102,12 +103,13 @@ nav #nav-button {
     color: #46a28d;
     font-size: 40px;
     display: inline-block;
+    margin-left: 10px;
 }
 
 nav #nav-text {
     font-size: 40px;
     text-align: center;
-    margin: 0px;
+    margin-left: 10px;
     padding: 0px;
     display: inline-block;
     color: #46a28d;

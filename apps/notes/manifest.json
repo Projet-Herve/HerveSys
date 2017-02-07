@@ -1,1 +1,1 @@
-{"description": "Ecrivez vos notes rapidement", "displayName": "Notes", "licence": "GPL", "name": "notes", "version": 0.1, "urls":{"menu":{"Notes":"/notes"}},"widgets":[".notes /widgets/notes"]}
+{"description": "Ecrivez vos notes rapidement", "displayName": "Notes", "licence": "MIT", "name": "notes", "version": 0.1, "urls":{"menu":{"Notes":"/notes"}},"widgets":[".notes /widgets/notes"]}
