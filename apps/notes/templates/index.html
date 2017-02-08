@@ -1,6 +1,9 @@
 {% extends "default/design.html" %}{% block title %} notes {% endblock %}{% block content %}
 <script src="//cloud.tinymce.com/stable/tinymce.min.js"></script>
-<script>tinymce.init({ selector:'textarea' });</script>
+<script>tinymce.init({ 
+	selector:'textarea',
+	plugins: "table"
+	});</script>
 <div class="container">
    <h1>Notes</h1>
    <div class="masonry" id="widgets">

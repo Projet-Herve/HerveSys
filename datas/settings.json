@@ -19,7 +19,8 @@
             ],
             "widgets": [
                 ".vosmusiques /widgets/vosmusiques",
-                ".notes /widgets/notes"
+                ".notes /widgets/notes",
+                ".future_events /agenda"
             ],
             "beta": false
         }

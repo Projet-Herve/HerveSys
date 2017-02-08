@@ -16,12 +16,12 @@ from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
 from pyftpdlib.authorizers import DummyAuthorizer, AuthenticationFailed
 import requests
+from pushbullet import Pushbullet
 # import ngrok
 
 from myhtml import tag
 from datas import load_datas, update_datas
 from jms import parse
-from notify import *
 import arduino
 import chatbot
 
@@ -107,7 +107,8 @@ class herveapp:
                 "apps": {},
                 "menu": {"Accueil": "/", "Déconnexion": "/deconnexion", "Apps": "/apps", "Widgets": "/widgets"},
                 "widgets": list(map(lambda x: x, self.settings()[user]["herve"]["widgets"])),
-                "urls": []
+                "urls": [],
+                "notif":[]
                 #"agenda" : agenda()
             }
             self.users[user].update(self.settings()[user])
@@ -184,6 +185,18 @@ class herveapp:
 
     def in_thread(self, function):
         threading.Thread(target=function).start()
+
+    def notif(self, users, title, body, pushbullet_notif= True):
+        for user in users:
+            if self.settings()[user]["profile"].get("pushbullet") and pushbullet_notif is True:
+                try:
+                    pb = Pushbullet(self.settings()[user]["profile"]["pushbullet"]["api_key"])
+                    pb.push_note("Hervé | {title}".format(title=title), body)
+                except Exception as e:
+                    print("[erreur] " + e)
+            self.users[user]["notif"].append(
+                {"title": title, "body": body}
+            )
 
 
 myapp = herveapp()
@@ -374,7 +387,7 @@ def connexion():
             else:
                 return redirect(request.form.get("next"), code=302)
                 # return render_template("default/index.html", datas=locals()),
-                
+
     return render_template("default/connexion.html", datas=locals())
 
 
@@ -432,6 +445,7 @@ def active_widget():
     update_datas(settings, myapp.settings_file)
     toreturn = json.dumps("ok")
     return(Response(response=toreturn, status=200, mimetype="application/json"))
+
 
 @webapp.route('/desactive/widget')
 @login_required
@@ -547,7 +561,7 @@ if "createapp" in argvs:
     app["version"] = 0.1
     app["description"] = input("Choisissez une description: \n>",)
     app["licence"] = input("Choisissez une licence: \n>")
-    app["urls"] = {"menu":{app["displayName"]:"/"+app["name"]}}
+    app["urls"] = {"menu": {app["displayName"]: "/"+app["name"]}}
     manifest = json.dumps(app, indent=4)
     os.makedirs("tmp/{name}/".format(**app), exist_ok=True)
     open(
@@ -571,9 +585,9 @@ if "installapp" in argvs:
         path = argvs["path"]
 
     if os.path.isdir(path):
-        if os.path.isfile(os.pardir.join(path,"manifest.json")):
+        if os.path.isfile(os.pardir.join(path, "manifest.json")):
             try:
-                manifest = load_datas(os.pardir.join(path,"manifest.json"))
+                manifest = load_datas(os.pardir.join(path, "manifest.json"))
                 s = load_datas(myapp.settings_file)
                 if manifest["name"] in s["sys"]["herve"]["installed_apps"]:
                     print("L'application a déjà été installée")

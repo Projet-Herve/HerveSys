@@ -20,7 +20,10 @@
                 <ul>    
                     {% if myapp.users[session["utilisateur"]].get("notif") %}
                         {% for n in myapp.users.get(session["utilisateur"]).get("notif") %}
-                            <li><p>{{ n }}</p></li>
+                            <li>
+                                <p>{{ n.title }}</p>
+                                <p>{{ n.body }}</p>
+                            </li>
                         {% endfor %}
                     {% else %}
                         <li>Vous n'avez pas de notification</li>

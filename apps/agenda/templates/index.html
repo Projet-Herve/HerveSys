@@ -22,19 +22,32 @@
 	            </div>
             </div>
        </div>
-       {% for  i in future_events %}
-       <div class="item">
-       	Pour le {{i}}:
-       		<div class="card shadows white">
-			<div class="content">
-				{% for y in future_events[i] %}
-					<p>{{ y.title }} à {{ y.date.split(" ")[1] }}<p>
-					<p>{{ y.description }}</p>
-				{% endfor %}
+       <div class="future_events">
+       
+       <div class="item ">
+       {% if future_events%}
+       		<h1>Vos événements</h1>
+	       {% for  i in future_events %}
+	       	Pour le {{i}}:
+	       		<div class="card shadows white">
+				<div class="content">
+					{% for y in future_events[i] %}
+						<p>{{ y.title }} à {{ y.date.split(" ")[1] }}</p>
+						<p>{{ y.description }}</p>
+					{% endfor %}
+				</div>
 			</div>
+		{% endfor %}
+		{% else %}
+		<div class="card  white">
+				<div class="content">
+		<p> Vous n'avez pas d'événement prévue</p>
 		</div>
-       </div>
-	{% endfor %}
+		</div>
+		{% endif %}
+
+	</div>
+	</div>
     </div>
    <link rel="stylesheet" type="text/css" href="/static/agenda/datetimepicker/jquery.datetimepicker.css"/ >
 

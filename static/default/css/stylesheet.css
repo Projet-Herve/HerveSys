@@ -46,11 +46,14 @@ hr {
 #content .btn,
 #content .button {
     background-color: #46a28d;
-    border: 2px solid #fff;
+    /* border: 2px solid #fff; */
+    border: none;
     color: #fff;
     padding: 5px;
     transition: 0.8s;
     font-size: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 #content button:hover,
@@ -104,7 +107,7 @@ nav #nav-button {
     font-size: 40px;
     display: inline-block;
     margin-left: 10px;
-}
+s}
 
 nav #nav-text {
     font-size: 40px;

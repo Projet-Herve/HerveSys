@@ -31,7 +31,7 @@ def send_musique(file):
 @webapp.route('/widgets/vosmusiques')
 @login_required
 def widget_musique():
-    list_ = "<h1>Vos musiques</h1>"
+    list_ = "<h1><a href=\"/musique\">Vos musiques</a></h1>"
     listmusiques = list_user_musique(session["utilisateur"])
     for m in listmusiques:
         list_ += "<p href=\"#\" class=\"musique-item\" data-val=\"{m}\">{m}</p>".format(

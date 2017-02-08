@@ -1,9 +1,9 @@
 def createnotif():
-    print("NOTIF")
     for user in myapp.users:
         if "notif" in myapp.users[user]:
-            myapp.users[user]["notif"].append("Hey !")
+            myapp.notif([user],"Salut","je t'envoie une notif :)", pushbullet_notif= False)
         else:
             myapp.users[user]["notif"] = list()
     return True
-schedule.every(10).minutes.do(createnotif)
+    
+schedule.every(10).seconds.do(createnotif)
