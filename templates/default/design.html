@@ -1,61 +1,62 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+    <meta name="theme-color" content="#46a28d">
+    <link rel="icon" sizes="192x192" href="/static/default/imgs/icones/android-icon-192x192.png">
+    <meta name=apple-mobile-web-app-capable content=yes>
+    <meta name=apple-mobile-web-app-status-bar-style content=default>
+    <meta name=mobile-web-app-capable content=yes>
+    <meta name=apple-mobile-web-app-title content=Hervé>
+    <meta name=application-name content=Hervé>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <link rel="stylesheet" href="/static/default/css/stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <!-- <script type="text/javascript" src="/static/default/libs/slideout/dist/slideout.min.js"></script> -->
     <script type="text/javascript" src="/static/default/js/script.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
-    <title>Hervé > {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Hervé | {% block title %}{% endblock %}</title>
 </head>
+
 <body>
     <nav id="nav">
-        <a id="nav-button" href="#" >&#9776;</a>
-        <span id="nav-text">Hervé</span>
-{% if session and myapp.users.get(session["utilisateur"]) %}
-    {% if  myapp.users[session["utilisateur"]]["herve"]["beta"]  %}
+        <a id="nav-button" href="#">&#9776;</a>
+        <span id="nav-text">Hervé</span> {% if session and myapp.users.get(session["utilisateur"]) %} {% if myapp.users[session["utilisateur"]]["herve"]["beta"] %}
         <img id="nav-notif" class="dropdown-btn" data-action="nav-dropdown" src="/static/default/imgs/flaticones/notif.png">
         <div id="nav-dropdown" class="dropdown">
             <div class="dropdown-content">
-                <ul>    
-                    {% if myapp.users[session["utilisateur"]].get("notif") %}
-                        {% for n in myapp.users.get(session["utilisateur"]).get("notif") %}
-                            <li>
-                                <p>{{ n.title }}</p>
-                                <p>{{ n.body }}</p>
-                            </li>
-                        {% endfor %}
-                    {% else %}
-                        <li>Vous n'avez pas de notification</li>
+                <ul>
+                    {% if myapp.users[session["utilisateur"]].get("notif") %} {% for n in myapp.users.get(session["utilisateur"]).get("notif") %}
+                    <li>
+                        <p>
+                            {{ n.title }}<br>
+                            {{ n.body }}
+                        </p>
+                    </li>
+                    {% endfor %} {% else %}
+                    <li>Vous n'avez pas de notification</li>
                     {% endif %}
                 </ul>
             </div>
         </div>
-       {% endif %}
-    {% endif %} 
+        {% endif %} {% endif %}
     </nav>
     <div id="sidenav">
         <div class="content">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
-            {% if session and myapp.users.get(session["utilisateur"]) %}
-                    <img src={{ "https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" if not myapp.users[session["utilisateur"]]["profile"].get("image") else myapp.users[session["utilisateur"]]["profile"]["image"] }} class="rounded"></img>
-                    <a>{{session["utilisateur"]}}</a>
-                {% for i in myapp.users[session["utilisateur"]]["menu"].keys() %}
-                    <a href='{{myapp.users[session["utilisateur"]]["menu"][i]}}'>{{i}}</a>
-                {% endfor %}
-            {% else %}
-                <a href="/connexion">Se connecter</a>
-                <a href="/inscriptions">S'inscrire</a>
-            {% endif %}
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> {% if session and myapp.users.get(session["utilisateur"]) %}
+            <img src={{ "https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" if not myapp.users[session[ "utilisateur"]][ "profile"].get( "image") else myapp.users[session[ "utilisateur"]][ "profile"][ "image"] }} class="rounded"></img>
+            <a>{{session["utilisateur"]}}</a> {% for i in myapp.users[session["utilisateur"]]["menu"].keys() %}
+            <a href='{{myapp.users[session["utilisateur"]]["menu"][i]}}'>{{i}}</a> {% endfor %} {% else %}
+            <a href="/connexion">Se connecter</a>
+            <a href="/inscriptions">S'inscrire</a> {% endif %}
         </div>
         <footer>
             <div class="container">©JulesMichael</div>
         </footer>
     </div>
     <div id="content">
-    {% if datas %}
-        {% if datas.get('message')['succes']  %}
+        {% if datas %} {% if datas.get('message')['succes'] %}
         <div class="container">
             <div class="card green shadows">
                 <div class="content">
@@ -75,9 +76,8 @@
                 </div>
             </div>
         </div>
-        {% endif %}
-    {% endif %}
-    {% block content %}{% endblock %}
+        {% endif %} {% endif %} {% block content %}{% endblock %}
     </div>
 </body>
+
 </html>

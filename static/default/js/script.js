@@ -38,5 +38,14 @@ $( document ).ready(function() {
     }
     
   })
+
+  
+
+
 });
 
+// var slideout = new Slideout({
+//     'panel': document.getElementById('content'),
+//     'menu': document.getElementById('sidenav'),
+//     'tolerance': 70
+//   });

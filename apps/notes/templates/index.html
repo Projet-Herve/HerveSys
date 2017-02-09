@@ -1,35 +1,34 @@
-{% extends "default/design.html" %}{% block title %} notes {% endblock %}{% block content %}
+{% extends "default/design.html" %}{% block title %}Notes{% endblock %}{% block content %}
 <script src="//cloud.tinymce.com/stable/tinymce.min.js"></script>
-<script>tinymce.init({ 
-	selector:'textarea',
-	plugins: "table"
-	});</script>
+<script>
+	tinymce.init({
+	    selector: 'textarea',
+	    plugins: "table"
+	});
+</script>
 <div class="container">
-   <h1>Notes</h1>
-   <div class="masonry" id="widgets">
+    <h1>Notes</h1>
+    <div class="masonry" id="widgets">
         <div class="item">
             <div class="card white shadows">
-            <div class="content">
-	            <h1>Créer une nouvelle note</h1>
-					<form method="POST">
-						<textarea name="note" ></textarea>
-						<button type="submit">Nouvelle note</button>
-					</form>
-	            </div>
+                <div class="content">
+                    <h1>Créer une nouvelle note</h1>
+                    <form method="POST">
+                        <textarea name="note"></textarea>
+                        <button type="submit">Nouvelle note</button>
+                    </form>
+                </div>
             </div>
-       </div>
-       {% for note in datas.notes %}
-       <div class="item">
-       		<div class="card shadows white">
-			<div class="content">
-				{{ note.text|safe }}	
-			</div>
-		</div>
-       </div>
-		
-	{% endfor %}
+        </div>
+        {% for note in datas.notes %}
+        <div class="item">
+            <div class="card shadows white">
+                <div class="content">
+                    {{ note.text|safe }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-	
 </div>
-
 {% endblock %}

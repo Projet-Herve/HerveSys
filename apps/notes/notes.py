@@ -33,10 +33,15 @@ def widget_notes():
         list_ += "<hr>"+n["text"]
     list_ += "<a class=\"btn\" href=\"/notes\" >Créer une nouvelle note</a>"
     notes = tag("div",
-                class_=["notes", "card", "white", "shadows"],
-                contenu=tag(
-                    "div",
-                    class_=["content"], contenu=list_
+                class_=["notes"],
+                contenu=tag("div",
+                            class_=[
+                                "card", "white", "shadows"],
+                            contenu=tag(
+                                "div",
+                                class_=["content"], contenu=list_
+                            )
+                            )
                 )
-                )
+
     return(Response(response=notes, status=200, mimetype="text/html"))

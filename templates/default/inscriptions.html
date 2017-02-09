@@ -52,20 +52,22 @@
             </div>
             <p class="status"></p>
             <a class="btn prev">Précédent</a>
-            <a class="btn next">Suivant</a><br><br>
+            <a class="btn next">Suivant</a>
+            <br>
+            <br>
         </form>
     </div>
     <div class="footer"><a style="color:#fff;" href="/connexion">J'ai déjà un compte</a></div>
 </div>
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('.slide').slick({
-            infinite: false,
-            prevArrow: $('.prev'),
-            nextArrow: $('.next'),
-            focusOnSelect: false,
-        });
+$(document).ready(function() {
+    $('.slide').slick({
+        infinite: false,
+        prevArrow: $('.prev'),
+        nextArrow: $('.next'),
+        focusOnSelect: false,
     });
+});
 </script>
 {% endblock %}

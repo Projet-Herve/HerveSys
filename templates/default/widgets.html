@@ -4,9 +4,7 @@
     <h1>Widgets:</h1>
     <div class="masonry">
         <div class="item">
-            <h1>Vos widgets </h1>
-            {% for widget in myapp.settings()[session["utilisateur"]]["herve"]["widgets"] %}
-
+            <h1>Vos widgets </h1> {% for widget in myapp.settings()[session["utilisateur"]]["herve"]["widgets"] %}
             <div class="card white shadows">
                 <div class="content">
                     <p>{{ widget }}</p>
@@ -16,8 +14,7 @@
             {% endfor %}
         </div>
         <div class="item">
-            <h1>Widgets disponibles : </h1>
-            {% for widget in myapp.users["sys"]["herve"]["widgets"]%}{% if not widget in myapp.users[session["utilisateur"]]["herve"]["widgets"]%}
+            <h1>Widgets disponibles : </h1> {% for widget in myapp.users["sys"]["herve"]["widgets"]%}{% if not widget in myapp.users[session["utilisateur"]]["herve"]["widgets"]%}
             <div class="card white shadows">
                 <div class="content">
                     <p>{{ widget }} </p>

@@ -1,8 +1,8 @@
 {% extends "default/design.html" %} {% block title %}Connexion{% endblock %} {% block content %}
 <div class="container">
-    
     <div class="card white shadows logincard">
-        <div class="header"><h1>Connexion</h1></div>
+        <div class="header">
+            <h1>Connexion</h1></div>
         <form class="content" method="post" action="/connexion">
             <div>
                 <input placeholder="Prénom" type="text" name="nom">
@@ -16,5 +16,4 @@
         <div class="footer"><a style="color:#fff;" href="/inscriptions">Se créer un compte</a></div>
     </div>
 </div>
-
 {% endblock %}

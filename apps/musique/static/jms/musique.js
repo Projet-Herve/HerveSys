@@ -9,7 +9,7 @@ $(function() {
         $('.musique-item').click(function() {
             file = $(this).data('val');
             $("#musique-status").html(`Lecture de ${file} <br><figure id="audioplayer">
-                                                    <audio class="player" autoplay controls src="get/musique/${file}" id="audiotrack"></audio>
+                                                    <audio preload="auto" autoplay controls src="get/musique/${file}" id="audiotrack"></audio>
                                                 </figure>`);
         });
     });

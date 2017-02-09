@@ -1,6 +1,11 @@
 
 function update(widget){
-    $("#widgets").append('<div class="item"><div id="'+widget["element"].slice(1, -1)+'" class="card white shadows"><center><img src="/static/default/imgs/loader.gif"/></center></div></div>')
+    if ($(window).width() < 601){ //smal screen
+        $("#widgets").append('<div class="item"><div id="'+widget["element"].slice(1, -1)+'"><center><img src="/static/default/imgs/loader.gif"/></center></div></div>').addClass('animated fadeInUp')
+    }else{
+                $("#widgets").append('<div class="item"><div id="'+widget["element"].slice(1, -1)+'"><center><img src="/static/default/imgs/loader.gif"/></center></div></div>')
+
+    }
     $.get(widget["url"], function(datas) {
         var html = $('<div/>').append(jQuery.parseHTML(datas)).find(widget["element"]).html();
         if (html != undefined){

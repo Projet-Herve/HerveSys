@@ -21,6 +21,7 @@ def list_user_musique(user):
             "Vous n'avez pas de dossier personel pour le nas.")
     return audio_files
 
+
 @webapp.route('/get/musique/<file>')
 @login_required
 def send_musique(file):
@@ -31,13 +32,20 @@ def send_musique(file):
 @webapp.route('/widgets/vosmusiques')
 @login_required
 def widget_musique():
-    list_ = "<h1><a href=\"/musique\">Vos musiques</a></h1>"
+    list_ = "<a href=\"/musique\"><h1>Vos musiques</h1></a>"
     listmusiques = list_user_musique(session["utilisateur"])
     for m in listmusiques:
         list_ += "<p href=\"#\" class=\"musique-item\" data-val=\"{m}\">{m}</p>".format(
             m=m)
-    audio_files = tag("div", class_=["vosmusiques", "card", "white", "shadows"], contenu=tag(
-        "div", class_=["content"], contenu=list_))
+    audio_files = tag("div",
+                      class_=["vosmusiques"],
+                      contenu=tag("div",
+                                  class_=["card", "white", "shadows"],
+                                  contenu=tag("div",
+                                              class_=["content"],
+                                              contenu=list_)
+                                  )
+                      )
     return(Response(response=audio_files, status=200, mimetype="text/html"))
 
 

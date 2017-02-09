@@ -252,17 +252,17 @@ def inject_user():
 
 @webapp.errorhandler(404)
 def page_not_found(e):
-    return render_template('default/error.html', datas=locals())
+    return render_template('default/error.html', datas=locals(),code=404)
 
 
 @webapp.errorhandler(403)
 def Forbidden(e):
-    return render_template('default/error.html', datas=locals())
+    return render_template('default/error.html', datas=locals(),code=403)
 
 
 @webapp.errorhandler(500)
 def Internal_Server_Error(e):
-    return render_template('default/error.html', datas=locals())
+    return render_template('default/error.html', datas=locals(),code=500)
 
 # Static Files
 

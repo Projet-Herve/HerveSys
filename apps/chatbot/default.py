@@ -82,9 +82,13 @@ def jtm(regex):
     return {"text": "mais enfin {civilite} ce n'est pas possible"}
 
 
-@q.script([r"ca va"])
+@q.script([r"ca va","ça va"])
 def chatbot(regex):
     return {"text": "oui {civilite}"}
+
+@q.script([r"cool"])
+def chatbot(regex):
+    return {"text": "Je trouve ça cool aussi! "}
 
 
 @q.script([r"lis moi (cet article |cette page )?(?P<url>(.)*)"])
