@@ -37,9 +37,9 @@ $( document ).ready(function() {
       s.css("display","none");
     }
     
-  })
+  });
 
-  ('.search input').keypress(function (e) {
+  $('.search input').keypress(function (e) {
     if (e.which == 13) {
       $('.search form').submit();
       return false;
