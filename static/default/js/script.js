@@ -39,13 +39,14 @@ $( document ).ready(function() {
     
   })
 
+  ('.search input').keypress(function (e) {
+    if (e.which == 13) {
+      $('.search form').submit();
+      return false;
+    }
+  });
+
   
 
 
 });
-
-// var slideout = new Slideout({
-//     'panel': document.getElementById('content'),
-//     'menu': document.getElementById('sidenav'),
-//     'tolerance': 70
-//   });

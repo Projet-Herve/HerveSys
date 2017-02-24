@@ -55,7 +55,58 @@ class DummySHA224Authorizer(DummyAuthorizer):
             raise AuthenticationFailed
 
 
-class herveapp:
+class Events(object):
+
+    def __init__(self):
+        self._events = []
+        self.Processs = []
+        self.actions = {}
+
+    def Create(self, event):
+        def decorator(function):
+            self._events.append({"Function": function, "Name": event})
+            return function
+        return decorator
+
+    def On(self, name):
+        def decorator(function):
+            if self.actions.get(name):
+                self.actions[name].append(function)
+            else:
+                self.actions[name] = [function]
+
+            return function
+        return decorator
+
+    def Start(self):
+        for i in self._events:
+            self.Processs.append({"Id": len(self.Processs)+1, "Name": i[
+                                 "Name"], "Process": multiprocessing.Process(target=self.__StartProcess, args=[i], name=i["Name"])})
+        for Process in self.Processs:
+            Process["Process"].start()
+
+    def Kill(self, name):
+        for Process in self.Processs:
+            if Process["Name"] == name:
+                Process["Process"].terminate()
+                time.sleep(0.1)
+                if not Process["Process"].is_alive():
+                    self.Processs.remove(Process)
+                    return True
+                else:
+                    return False
+
+    def __StartProcess(self, event):
+        for u in event["Function"]():
+            self.__ExecFor(event["Name"])
+
+    def __ExecFor(self, name):
+        if self.actions.get(name):
+            for f in self.actions[name]:
+                f()
+
+
+class HerveApp:
 
     def __init__(self):
         self.FTPAuthorizer = DummySHA224Authorizer()
@@ -66,6 +117,7 @@ class herveapp:
         self.ftp = True
         self.tests = False
         self.ngrok_location = "./"
+        self.Events = Event()
 
     def settings(self):
         try:
@@ -75,18 +127,18 @@ class herveapp:
             print(e)
             raise e
 
-    def start_ngrok(self):
+    def StartNgrok(self):
         os.system('{ngrok_location}ngrok start -config ~/.ngrok2/ngrok.yml -config=datas/ngrox.yml --all'.format(
             ngrok_location=self.ngrok_location
         ))
 
-    def start_FTP(self):
+    def StartFTP(self):
         handler = FTPHandler
         handler.authorizer = self.FTPAuthorizer
         server = FTPServer((self.host, self.FTP_port), handler)
         server.serve_forever()
 
-    def start_tests(self):
+    def StartTests(self):
         for file in os.listdir('tests/'):
             test_src = open("tests/" + file)
             src = test_src.read()
@@ -105,7 +157,7 @@ class herveapp:
                 user, self.settings()[user]["profile"]["code"], "nas/"+user, perm='elradfmw')
             self.users[user] = {
                 "apps": {},
-                "menu": {"Accueil": "/", "Déconnexion": "/deconnexion", "Apps": "/apps", "Widgets": "/widgets"},
+                "menu_items": {"Accueil": "/", "Déconnexion": "/deconnexion", "Apps": "/apps", "Widgets": "/widgets"},
                 "widgets": list(map(lambda x: x, self.settings()[user]["herve"]["widgets"])),
                 "urls": [],
                 "notif":[]
@@ -114,7 +166,7 @@ class herveapp:
             self.users[user].update(self.settings()[user])
 
         if self.tests is True:
-            self.start_tests()
+            self.StartTests()
 
         def __forever():
             while True:
@@ -129,9 +181,9 @@ class herveapp:
         threading.Thread(target=__forever).start()
         threading.Thread(target=forschedule).start()
         if self.ftp:
-            threading.Thread(target=self.start_FTP).start()
+            threading.Thread(target=self.StartFTP).start()
         if self.ngrok:
-            threading.Thread(target=self.start_ngrok).start()
+            threading.Thread(target=self.StartNgrok).start()
         self.start_apps()
         self.updateuserdatas()
 
@@ -160,7 +212,7 @@ class herveapp:
                     manifest = json.loads(
                         open("apps/" + dir + "/manifest.json").read())
                     if manifest["urls"].get("menu"):
-                        self.users[user]["menu"].update(
+                        self.users[user]["menu_items"].update(
                             manifest["urls"]["menu"])
                         for url in manifest["urls"]["menu"]:
                             self.users[user]["urls"].append(
@@ -170,6 +222,8 @@ class herveapp:
 
                 else:
                     print("L'application '" + dir + "' n’existe pas !")
+
+            self.users[user]["menu"] = sorted(list(self.users[user]["menu_items"].keys()))
     # Décorateurs
 
     def forever(self, function):
@@ -199,7 +253,7 @@ class herveapp:
             )
 
 
-myapp = herveapp()
+myapp = HerveApp()
 
 # Décorteurs
 
@@ -592,6 +646,10 @@ if "installapp" in argvs:
                 if manifest["name"] in s["sys"]["herve"]["installed_apps"]:
                     print("L'application a déjà été installée")
                 else:
+                    if manifest.get("pip") :
+                        import pip
+                        for i in manifest.get("pip"):
+                            pip.main(['install', i])
                     os.system("cp -r "+path+" apps/")
                     s["sys"]["herve"]["installed_apps"].append(
                         manifest["name"])

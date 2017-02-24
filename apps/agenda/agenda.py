@@ -23,7 +23,7 @@ class calendar():
                 else:
                     self.cal[date] = [event]
 
-    def get_future_events(self):
+    def GetFutureEvents(self):
         '''
                 Read calendar and get future events.
         '''
@@ -36,7 +36,7 @@ class calendar():
                     Prochains[date] = self.cal[date]
         return (Prochains)
 
-    def create_a_new_event(self, title, datetime, type, description=None):
+    def CreateNewEvent(self, title, datetime, type, description=None):
         '''
                 Create a new event.
         '''
@@ -56,12 +56,11 @@ class calendar():
             return (False, e)
 
 
-
 @webapp.route('/agenda')
 @login_required
 def agenda_index():
     user_cal = calendar(session["utilisateur"])
-    future_events = user_cal.get_future_events()
+    future_events = user_cal.GetFutureEvents()
     return render_template("agenda/templates/index.html", future_events=future_events)
 
 
@@ -75,6 +74,7 @@ def creat():
         event["type"] = request.form.get("type")
         event["description"] = request.form.get("description")
         event["datetime"] = datetime.strptime(request.form.get("date"), '%Y-%m-%d %H:%M')
-        user_cal.create_a_new_event(**event)
-        future_events = user_cal.get_future_events()
+        user_cal.CreateNewEvent(**event)
+        future_events = user_cal.GetFutureEvents()
     return render_template("agenda/templates/index.html", future_events=future_events)
+

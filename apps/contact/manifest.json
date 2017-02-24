@@ -1,0 +1,15 @@
+{
+    "description": "",
+    "displayName": "Contact",
+    "licence": "MIT",
+    "name": "contact",
+    "urls": {
+        "menu": {
+            "Contact": "/contact"
+        }
+    },
+    "version": 0.1,
+    "widgets":[
+        ""
+    ]
+}

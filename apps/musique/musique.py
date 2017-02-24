@@ -33,7 +33,7 @@ def send_musique(file):
 @login_required
 def widget_musique():
     list_ = "<a href=\"/musique\"><h1>Vos musiques</h1></a>"
-    listmusiques = list_user_musique(session["utilisateur"])
+    listmusiques = list_user_musique(session["utilisateur"])[:5]
     for m in listmusiques:
         list_ += "<p href=\"#\" class=\"musique-item\" data-val=\"{m}\">{m}</p>".format(
             m=m)

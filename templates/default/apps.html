@@ -1,34 +1,26 @@
 {% extends "default/design.html" %}{% block title %}Vos applications{% endblock %} {% block content %}
 <div class="container">
-    <div class="masonry">
-        <!--<div class="item">
-            <h1>Installer une application</h1>
-            <div class="item card white shadows">
-                <form>
-                    <input type="text" placeholder="URL / depot git" name="url" />
-                    <button type="submit" value="Submit">Installer</button>
-                </form>
-            </div>
-        </div>-->
-        <div class="item">
-            <h1>Vos applications</h1> {% for app in myapp.users[session["utilisateur"]]["apps"]%}
-            <div class="item">
-                <div class="card white shadows">
-                    <div class="content">
-                        <h1>{{app}}</h1> {% for key in myapp.users[session["utilisateur"]]["apps"][app] %}
-                        <p>{{key}}: {{myapp.users[session["utilisateur"]]["apps"][app][key]}}</p>
-                        {% endfor %}
-                        <div class="">
-                            <pre><code>{{myapp.users[session["utilisateur"]]["apps"][app]|tojson|safe}}</code></pre>
-                        </div>
-                        <p><a class="del button" href="{{url_for('desactive_app',  what=myapp.users['sys']['apps'][app]['name'] )}}">Désactiver</a></p>
+    <div class="row">
+        <h1>Vos applications</h1> {% for app in myapp.users[session["utilisateur"]]["apps"]%}
+        <div class="col s12 m6 l3">
+            <div class="card white shadows">
+                <div class="content">
+                    <h1>{{app}}</h1> {% for key in myapp.users[session["utilisateur"]]["apps"][app] %}
+                    <p>{{key}}: {{myapp.users[session["utilisateur"]]["apps"][app][key]}}</p>
+                    {% endfor %}
+                    <div class="">
+                        <pre><code>{{myapp.users[session["utilisateur"]]["apps"][app]|tojson|safe}}</code></pre>
                     </div>
+                    <p><a class="del button" href="{{url_for('desactive_app',  what=myapp.users['sys']['apps'][app]['name'] )}}">Désactiver</a></p>
                 </div>
             </div>
-            {% endfor %}
         </div>
-        <div class="item">
-            <h1>Applications disponibles</h1> {% for app in myapp.users["sys"]["apps"]%} {% if not app in myapp.users[session["utilisateur"]]["apps"]%}
+        {% endfor %}
+    </div>
+    <hr>
+    <div class="row">
+        <h1>Applications disponibles</h1> {% for app in myapp.users["sys"]["apps"]%} {% if not app in myapp.users[session["utilisateur"]]["apps"]%}
+        <div class="col s12 m4">
             <div class="card white shadows">
                 <div class="content">
                     <h1>{{ app}}</h1> {% for key in myapp.users["sys"]["apps"][app] %}
@@ -40,8 +32,9 @@
                     <p><a class="new button" href="{{url_for('active_app', what=myapp.users['sys']['apps'][app]['name'] )}}">Ajouter</a></p>
                 </div>
             </div>
-            {% endif %} {% endfor %}
         </div>
+        {% endif %} {% endfor %}
     </div>
+</div>
 </div>
 {% endblock %}

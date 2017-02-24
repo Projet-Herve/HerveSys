@@ -1,0 +1,26 @@
+{% extends "default/design.html" %} {% block title %} Contacts {% endblock %}{% block content %}
+<div class="container">
+    <h1>Contacts</h1>
+    <div class="masonry" id="widgets">
+        {% for contact in list %}
+        <div class="item">
+            <div class="card white shadows">
+                <div class="content">
+                    {% for i in contact %}
+                        {% if i == "Name" %}
+                            <span class="big">Nom :</span>
+                        {% elif i == "FirstName" %}
+                            <span class="big">Prénom :</span>
+                        {% else %}
+                            {{ i }} :
+                        {% endif %}
+                        {{ contact[i] }}<br>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

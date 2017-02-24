@@ -44,16 +44,23 @@
     </nav>
     <div id="sidenav">
         <div class="content">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> {% if session and myapp.users.get(session["utilisateur"]) %}
+            <span class="closebtn" onclick="closeNav()">&times;</span>
+            {% if session and myapp.users.get(session["utilisateur"]) %}
             <img src={{ "https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" if not myapp.users[session[ "utilisateur"]][ "profile"].get( "image") else myapp.users[session[ "utilisateur"]][ "profile"][ "image"] }} class="rounded"></img>
-            <a>{{session["utilisateur"]}}</a> {% for i in myapp.users[session["utilisateur"]]["menu"].keys() %}
-            <a href='{{myapp.users[session["utilisateur"]]["menu"][i]}}'>{{i}}</a> {% endfor %} {% else %}
+            {% if myapp.users[session["utilisateur"]]["herve"]["beta"] %}
+                <form class="search" action="search/" >
+                    <input type="text" name="search">
+                </form>
+            {% endif %}
+
+            <a>{{session["utilisateur"]}}</a> {% for i in myapp.users[session["utilisateur"]]["menu"] %}
+            <a href='{{myapp.users[session["utilisateur"]]["menu_items"][i]}}'>{{i}}</a> {% endfor %} {% else %}
             <a href="/connexion">Se connecter</a>
             <a href="/inscriptions">S'inscrire</a> {% endif %}
         </div>
-        <footer>
+        <!-- <footer>
             <div class="container">©JulesMichael</div>
-        </footer>
+        </footer> -->
     </div>
     <div id="content">
         {% if datas %} {% if datas.get('message')['succes'] %}

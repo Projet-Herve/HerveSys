@@ -1,6 +1,8 @@
 {% extends "default/design.html" %} {% block title %} Dashboard {% endblock %}{% block content %}
 <script type="text/javascript" src="static/default/jms/widgets.js"></script>
 <script type="text/javascript" src="static/default/jms/chatbot.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 <script type="text/javascript" src="static/default/jms/localisation.js"></script>
 <div class="container">
     <div class="masonry" id="widgets">
@@ -17,6 +19,18 @@
                 </div>
             </div>
         </div>
+        {% if myapp.users[session["utilisateur"]]["herve"]["beta"] %}
+        
+        <div class="item">
+                <div class="card white shadows">
+                    <div class="content">
+                        <h1>Votre position</h1>
+                        <div id="map" style="height: 500px;"></div>
+                    </div>
+                </div>
+        </div>
+        
+    {% endif %}
     </div>
 </div>
 {% endblock %}
