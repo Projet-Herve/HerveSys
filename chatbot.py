@@ -2,7 +2,6 @@ import re
 import json
 import random
 import requests
-from myhtml import tag
 from datas import *
 
 
@@ -11,10 +10,10 @@ class Reponse():
     """docstring for reponse"""
 
     def __init__(self, arg={}):
-        self.text = arg.get("text", "")
-        self.links = arg.get("links", "")
-        self.html = arg.get("html", "")
-        self.datas = arg.get("datas", "")
+        self.text = arg.get("text", None)
+        self.links = arg.get("links", None)
+        self.html = arg.get("html", None)
+        self.datas = arg.get("datas", None)
 
     def get_text(self):
         return self.text
@@ -94,7 +93,7 @@ class question ():
             except:
                 return reponse
         elif type(reponse) == dict:
-            return (self.getreponse(reponse[self.user["profile"]["phrase"]]))
+            return (self.getreponse(reponse[self.user["profile"].get("phrase","courant")]))
         elif type(reponse) == list:
             try:
                 return (random.choice(reponse).format(**self.user))

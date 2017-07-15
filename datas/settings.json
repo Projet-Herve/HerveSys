@@ -1,28 +1,30 @@
 {
     "sys": {
-        "datas": {},
         "profile": {
             "code": "99fb2f48c6af4761f904fc85f95eb56190e5d40b1f44ec3a9c1fa319"
         },
+        "datas": {},
         "herve": {
             "actived_apps": [
                 "notes",
                 "musique",
-                "agenda"
+                "agenda",
+                "cozy"
+            ],
+            "beta": false,
+            "widgets": [
+                ".vosmusiques /widgets/vosmusiques",
+                ".notes /widgets/notes",
+                ".future_events /agenda"
             ],
             "serveur_ip": "#",
             "house_ip": "#",
             "installed_apps": [
                 "notes",
                 "musique",
-                "agenda"
-            ],
-            "widgets": [
-                ".vosmusiques /widgets/vosmusiques",
-                ".notes /widgets/notes",
-                ".future_events /agenda"
-            ],
-            "beta": false
+                "agenda",
+                "cozy"
+            ]
         }
     }
 }

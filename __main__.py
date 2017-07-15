@@ -11,7 +11,7 @@ import schedule
 import threading
 import hashlib
 import pygeoip
-from geopy.distance import vincenty
+# from geopy.distance import vincenty
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
 from pyftpdlib.authorizers import DummyAuthorizer, AuthenticationFailed
@@ -19,10 +19,10 @@ import requests
 from pushbullet import Pushbullet
 # import ngrok
 
-from myhtml import tag
+# from myhtml import tag
 from datas import load_datas, update_datas
 from jms import parse
-import arduino
+# import arduino
 import chatbot
 
 webapp = Flask(__name__)
@@ -106,6 +106,30 @@ class Events(object):
                 f()
 
 
+class Colors():
+    def __init__(self):
+        self.HEADER = '\033[95m'
+        self.BLUE = '\033[94m'
+        self.GREEN = '\033[92m'
+        self.WARNING = '\033[93m'
+        self.FAIL = '\033[91m'
+        self.ENDC = '\033[0m'
+        self.BOLD = '\033[1m'
+        self.UNDERLINE = '\033[4m'
+
+    def printBlue(self, *args):
+        print(self.HEADER + self.BLUE + " " + " ".join(args) + self.ENDC)
+
+    def printGreen(self, *args):
+        print(self.HEADER + self.GREEN + " " + " ".join(args) + self.ENDC)
+
+    def printWarning(self, *args):
+        print(self.HEADER + self.WARNING + " " + " ".join(args) + self.ENDC)
+
+    def printFail(self, *args):
+        print(self.HEADER + self.FAIL + " " + " ".join(args) + self.ENDC)
+
+
 class HerveApp:
 
     def __init__(self):
@@ -117,18 +141,19 @@ class HerveApp:
         self.ftp = True
         self.tests = False
         self.ngrok_location = "./"
-        self.Events = Event()
+        self.Events = Events()
+        self.colors = Colors()
 
     def settings(self):
         try:
             return load_datas(self.settings_file)
-        except FileNotFoundError as e:
-            print("Le fichier des settings n'existe pas")
-            print(e)
-            raise e
+        except FileNotFoundError:
+            self.colors.printFail("Le fichier settings n'existe pas")
+            exit()
 
     def StartNgrok(self):
-        os.system('{ngrok_location}ngrok start -config ~/.ngrok2/ngrok.yml -config=datas/ngrox.yml --all'.format(
+        notFormated = '{ngrok_location}ngrok start -config ~/.ngrok2/ngrok.yml -config=datas/ngrox.yml --all'
+        os.system(notFormated.format(
             ngrok_location=self.ngrok_location
         ))
 
@@ -145,7 +170,7 @@ class HerveApp:
             try:
                 exec(src)
             except Exception as e:
-                print("Un des test a échoué")
+                print("Un des tests a échoué")
                 print(e)
                 print("Dans " + file)
 
@@ -153,8 +178,9 @@ class HerveApp:
         self.forever_ = []
         self.users = dict()
         for user in self.settings():
-            self.FTPAuthorizer.add_user(
-                user, self.settings()[user]["profile"]["code"], "nas/"+user, perm='elradfmw')
+            if self.ftp:
+                self.FTPAuthorizer.add_user(
+                    user, self.settings()[user]["profile"]["code"], "nas/"+user, perm='elradfmw')
             self.users[user] = {
                 "apps": {},
                 "menu_items": {"Accueil": "/", "Déconnexion": "/deconnexion", "Apps": "/apps", "Widgets": "/widgets"},
@@ -469,6 +495,8 @@ def list_user_widget():
 def chatbot_request():
     text = request.args.get("text")
     settings = myapp.settings()
+    if not settings[session["utilisateur"]]["herve"].get("chatbot"):
+        settings[session["utilisateur"]]["herve"]["chatbot"] = {"history":[]}
     settings[session["utilisateur"]]["herve"]["chatbot"][
         "history"].append({session["utilisateur"]: text})
     q = chatbot.question(text, settings_file=myapp.settings_file)
@@ -639,9 +667,9 @@ if "installapp" in argvs:
         path = argvs["path"]
 
     if os.path.isdir(path):
-        if os.path.isfile(os.pardir.join(path, "manifest.json")):
+        if os.path.isfile(os.path.join(path, "manifest.json")):
             try:
-                manifest = load_datas(os.pardir.join(path, "manifest.json"))
+                manifest = load_datas(os.path.join(path, "manifest.json"))
                 s = load_datas(myapp.settings_file)
                 if manifest["name"] in s["sys"]["herve"]["installed_apps"]:
                     print("L'application a déjà été installée")
